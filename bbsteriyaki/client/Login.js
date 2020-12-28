@@ -17,6 +17,7 @@ function Login({ navigation }) {
       email: value
     });
     console.log("state: ", state)
+    console.log('api key: ', api_key)
   }
   function handleChangePassword(e) {
     const value = e.target.value;
@@ -29,7 +30,7 @@ function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.input}>
-        <Text style={styles.font}>Email: </Text>
+        <Text style={styles.font}>Submit: </Text>
         <TextInput style={styles.inputBox} type="text" name="email" onChange={handleChangeEmail}></TextInput>
       </View>
       <View style={styles.input}>

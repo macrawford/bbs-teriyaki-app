@@ -1,4 +1,4 @@
-mapsapikey.txt
+mapsapikey.js
 node_modules/**/*
 .expo/*
 npm-debug.*

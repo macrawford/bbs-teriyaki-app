@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { api_key } from '../mapsapikey.js';
 
 function Location({ navigation }) {
   // Webview won't work when inside of another component it seems (inside of View currently)
@@ -15,7 +16,7 @@ function Location({ navigation }) {
     //   </View>
       <WebView
         originWhitelist={['*']}
-        source={{ html: "<iframe height='600' width='450' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/search?key={ INSERT API KEY HERE AND GET RID OF BRACKETS }&q=bbs+teriyaki+grill+seattle' allowfullscreen><iframe/>"}}
+        source={{ html: `<iframe height='600' width='450' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/search?key=${api_key}&q=bbs+teriyaki+grill+seattle' allowfullscreen><iframe/>`}}
         // source={{ html: "<iframe src='https://www.google.com/'/>"}}
       />
     //   <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
