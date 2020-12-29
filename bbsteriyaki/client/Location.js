@@ -10,19 +10,20 @@ import { api_key } from '../mapsapikey.js';
 function Location({ navigation }) {
   // Webview won't work when inside of another component it seems (inside of View currently)
   return (
-    // <View style={styles.container}>
-    //   <View style={styles.input}>
-    //     <Text style={styles.font}>THIS IS THE LOCATIONz PAGE</Text>
-    //   </View>
-      <WebView
+    <View style={styles.container}>
+      <View style={styles.input}>
+        <Text style={styles.font}>THIS IS THE LOCATIONz PAGE</Text>
+      </View>
+
+      {/* <WebView
         originWhitelist={['*']}
         source={{ html: `<iframe height='600' width='450' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/search?key=${api_key}&q=bbs+teriyaki+grill+seattle' allowfullscreen><iframe/>`}}
-        // source={{ html: "<iframe src='https://www.google.com/'/>"}}
-      />
-    //   <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
-    //   <Button style={styles.button} title="Proceed to Order" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Order')}/>
-    //   <StatusBar style="auto" />
-    // </View>
+      /> */}
+
+      <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
+      <Button style={styles.button} title="Proceed to Order" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Order')}/>
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
