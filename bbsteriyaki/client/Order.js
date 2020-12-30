@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button, CheckBox, Pressable } from 'react-native';
@@ -21,6 +21,18 @@ function Order({ navigation }) {
   const [beefBrisket, setBeefBrisket] = React.useState(false);
   const [tofu, setTofu] = React.useState(false);
   const [proteinCounter, setProteinCounter] = React.useState(0);
+
+  const [regSauce, setRegSauce] = React.useState(false);
+  const [spicySauce, setSpicySauce] = React.useState(false);
+  const [noSauce, setNoSauce] = React.useState(false);
+  const [sideRegSauce, setSideRegSauce] = React.useState(false);
+  const [sideSpicySauce, setSideSpicySauce] = React.useState(false);
+  const [saladDressing, setSaladDressing] = React.useState(false);
+  const [sauceCounter, setSauceCounter] = React.useState(0);
+
+  // useEffect(() => {
+  //   console.log('state: ', whiteRice)
+  // });
 
   function handlePress(item, stateFunction, max, counter, counterFunction) {
     // Could consolidate this further by introducing three more variables: max (in this case, 3), counter (in this case, baseCounter), and counterFunction (in this case, setBaseCounter) - that way we could re-use this function for all ingredient lists (base, protein, etc.)
@@ -74,13 +86,13 @@ function Order({ navigation }) {
           </Text>
         </View>
         <View style={styles.choices} title="Protein">
-        <View style={styles.selectionHeader}>
-          <Text>Step 2: Protein (Choose Up To 2)</Text>
-          <Text>Please choose 1 and up to 2</Text>
-          <Text>
-            {`${spicyChicken || regChicken || shreddedPork || beefBrisket || tofu ? 'Good to Go' : 'Required'} `}
-            {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
-          </Text>
+          <View style={styles.selectionHeader}>
+            <Text>Step 2: Protein (Choose Up To 2)</Text>
+            <Text>Please choose 1 and up to 2</Text>
+            <Text>
+              {`${spicyChicken || regChicken || shreddedPork || beefBrisket || tofu ? 'Good to Go' : 'Required'} `}
+              {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
+            </Text>
           </View>
           <Text style={ (spicyChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicyChicken, setSpicyChicken, 2, proteinCounter, setProteinCounter)}>
           {`Spicy Chicken: ${spicyChicken ? 'Selected' : 'Not Selected '}`}
@@ -96,6 +108,34 @@ function Order({ navigation }) {
           </Text>
           <Text style={ (tofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(tofu, setTofu, 2, proteinCounter, setProteinCounter)}>
           {`Tofu: ${tofu ? 'Selected' : 'Not Selected'}`}
+          </Text>
+        </View>
+        <View style={styles.choices} title="Sauce">
+          <View style={styles.selectionHeader}>
+            <Text>Step 3: Sauce (Choose Up To 2)</Text>
+            <Text>Please choose 1 and up to 2</Text>
+            <Text>
+              {`${regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing ? 'Good to Go' : 'Required'} `}
+              {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
+            </Text>
+          </View>
+          <Text style={ (regSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(regSauce, setRegSauce, 2, sauceCounter, setSauceCounter)}>
+          {`Regular Sauce: ${regSauce ? 'Selected' : 'Not Selected '}`}
+          </Text>
+          <Text style={ (spicySauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicySauce, setSpicySauce, 2, sauceCounter, setSauceCounter)}>
+          {`Spicy Sauce: ${spicySauce ? 'Selected' : 'Not Selected '}`}
+          </Text>
+          <Text style={ (noSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(noSauce, setNoSauce, 2, sauceCounter, setSauceCounter)}>
+          {`No Sauce: ${noSauce ? 'Selected' : 'Not Selected'}`}
+          </Text>
+          <Text style={ (sideRegSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(sideRegSauce, setSideRegSauce, 2, sauceCounter, setSauceCounter)}>
+          {`Regular Sauce on Side: ${sideRegSauce ? 'Selected' : 'Not Selected'}`}
+          </Text>
+          <Text style={ (sideSpicySauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(sideSpicySauce, setSideSpicySauce, 2, sauceCounter, setSauceCounter)}>
+          {`Spicy Sauce on Side: ${sideSpicySauce ? 'Selected' : 'Not Selected'}`}
+          </Text>
+          <Text style={ (saladDressing) ? styles.selected : styles.notSelected} onPress={() => handlePress(saladDressing, setSaladDressing, 2, sauceCounter, setSauceCounter)}>
+          {`Salad Dressing on Side: ${saladDressing ? 'Selected' : 'Not Selected'}`}
           </Text>
         </View>
         <Button style={styles.button} title="Return to Location" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Location')}/>
