@@ -5,10 +5,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
-function Cart({ navigation }) {
+function Cart({ route, navigation}) {
+  const { order } = route.params
   return (
     <View style={styles.container}>
       <View style={styles.input}>
+        <Text>order: {JSON.stringify(order)}</Text>
         <Text style={styles.font}>THIS IS THE CART PAGE</Text>
       </View>
       <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>

@@ -38,8 +38,35 @@ function Order({ navigation }) {
 
   const [specialInstructions, setSpecialInstructions] = React.useState('');
 
+  var order = [
+    // Can also pass through as a straight object - not sure what will be easier to parse
+    {whiteRice: whiteRice},
+    {brownRice: brownRice},
+    {yakisoba: yakisoba},
+    {cabbageSalad: cabbageSalad},
+    {veggieStirFry: veggieStirFry},
+    {broccoli: broccoli},
+    {mixedGreenSalad: mixedGreenSalad},
+    {spicyChicken: spicyChicken},
+    {regChicken: regChicken},
+    {shreddedPork: shreddedPork},
+    {beefBrisket: beefBrisket},
+    {tofu: tofu},
+    {regSauce: regSauce},
+    {spicySauce: spicySauce},
+    {noSauce: noSauce},
+    {sideRegSauce: sideRegSauce},
+    {sideSpicySauce: sideSpicySauce},
+    {saladDressing: saladDressing},
+    {extraChicken: extraChicken},
+    {extraPork: extraPork},
+    {extraTofu: extraTofu},
+    {extraBeef: extraBeef},
+    {specialInstructions: specialInstructions}
+  ]
+
   useEffect(() => {
-    console.log('state: ', specialInstructions)
+    console.log('Order: ', order)
   });
 
   function handlePress(item, stateFunction, max, counter, counterFunction) {
@@ -176,7 +203,9 @@ function Order({ navigation }) {
           <TextInput type="text" name="specialInstructions" style={styles.inputBox} onChange={handleChange}></TextInput>
         </View>
         <Button style={styles.button} title="Return to Location" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Location')}/>
-        <Button style={styles.button} title="Proceed to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Cart')}/>
+        <Button style={styles.button} title="Submit" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Cart', {
+          order: order
+        })}/>
         <StatusBar style="auto" />
       </ScrollView>
     );
