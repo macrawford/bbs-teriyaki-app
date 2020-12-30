@@ -13,6 +13,7 @@ function Order({ navigation }) {
   const [veggieStirFry, setVeggieStirFry] = React.useState(false);
   const [broccoli, setBroccoli] = React.useState(false);
   const [mixedGreenSalad, setMixedGreenSalad] = React.useState(false);
+  const [baseCounter, setBaseCounter] = React.useState(0);
     return (
       <View style={styles.container}>
         <View style={styles.choices} title="Base">
@@ -24,11 +25,35 @@ function Order({ navigation }) {
               {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
             </Text>
           </View>
-          <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => setWhiteRice((!whiteRice))}>
-          {`White rice: ${whiteRice ? 'Selected' : 'Not Selected'}`}
+          <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => {
+            if (whiteRice) {
+              setWhiteRice((!whiteRice));
+              setBaseCounter(baseCounter - 1);
+            } else {
+              if (baseCounter >= 3) {
+                alert('Only one selection allowed')
+              } else {
+                setWhiteRice((!whiteRice));
+                setBaseCounter(baseCounter + 1)
+              }
+            }
+          } }>
+          {`White rice: ${whiteRice ? 'Selected ' + baseCounter : 'Not Selected ' + baseCounter}`}
           </Text>
-          <Text style={ (brownRice) ? styles.selected : styles.notSelected} onPress={() => setBrownRice((!brownRice))}>
-          {`Brown rice: ${brownRice ? 'Selected' : 'Not Selected'}`}
+          <Text style={ (brownRice) ? styles.selected : styles.notSelected} onPress={() => {
+            if (brownRice) {
+              setBrownRice((!brownRice));
+              setBaseCounter(baseCounter - 1);
+            } else {
+              if (baseCounter >= 3) {
+                alert('Only one selection allowed')
+              } else {
+                setBrownRice((!brownRice));
+                setBaseCounter(baseCounter + 1)
+              }
+            }
+          } }>
+          {`Brown rice: ${brownRice ? 'Selected ' + baseCounter : 'Not Selected ' + baseCounter}`}
           </Text>
           <Text style={ (yakisoba) ? styles.selected : styles.notSelected} onPress={() => setYakisoba((!yakisoba))}>
           {`Yakisoba: ${yakisoba ? 'Selected' : 'Not Selected'}`}
