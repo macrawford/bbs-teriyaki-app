@@ -15,6 +15,13 @@ function Order({ navigation }) {
   const [mixedGreenSalad, setMixedGreenSalad] = React.useState(false);
   const [baseCounter, setBaseCounter] = React.useState(0);
 
+  const [spicyChicken, setSpicyChicken] = React.useState(false);
+  const [regChicken, setRegChicken] = React.useState(false);
+  const [shreddedPork, setShreddedPork] = React.useState(false);
+  const [beefBrisket, setBeefBrisket] = React.useState(false);
+  const [tofu, setTofu] = React.useState(false);
+  const [proteinCounter, setProteinCounter] = React.useState(0);
+
   function handlePress(item, stateFunction, max, counter, counterFunction) {
     // Could consolidate this further by introducing three more variables: max (in this case, 3), counter (in this case, baseCounter), and counterFunction (in this case, setBaseCounter) - that way we could re-use this function for all ingredient lists (base, protein, etc.)
     if (item) {
@@ -66,8 +73,30 @@ function Order({ navigation }) {
           {`Mixed Green Salad: ${mixedGreenSalad ? 'Selected' : 'Not Selected'}`}
           </Text>
         </View>
-        <View style={styles.input} title="Protein">
-
+        <View style={styles.choices} title="Protein">
+        <View style={styles.selectionHeader}>
+          <Text>Step 2: Protein (Choose Up To 2)</Text>
+          <Text>Please choose 1 and up to 2</Text>
+          <Text>
+            {`${spicyChicken || regChicken || shreddedPork || beefBrisket || tofu ? 'Good to Go' : 'Required'} `}
+            {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
+          </Text>
+          </View>
+          <Text style={ (spicyChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicyChicken, setSpicyChicken, 2, proteinCounter, setProteinCounter)}>
+          {`Spicy Chicken: ${spicyChicken ? 'Selected' : 'Not Selected '}`}
+          </Text>
+          <Text style={ (regChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(regChicken, setRegChicken, 2, proteinCounter, setProteinCounter)}>
+          {`Regular Chicken: ${regChicken ? 'Selected' : 'Not Selected '}`}
+          </Text>
+          <Text style={ (shreddedPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(shreddedPork, setShreddedPork, 2, proteinCounter, setProteinCounter)}>
+          {`Shredded Pork: ${shreddedPork ? 'Selected (+$1.00)' : 'Not Selected (+$1.00)'}`}
+          </Text>
+          <Text style={ (beefBrisket) ? styles.selected : styles.notSelected} onPress={() => handlePress(beefBrisket, setBeefBrisket, 2, proteinCounter, setProteinCounter)}>
+          {`Beef Brisket: ${beefBrisket ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
+          </Text>
+          <Text style={ (tofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(tofu, setTofu, 2, proteinCounter, setProteinCounter)}>
+          {`Tofu: ${tofu ? 'Selected' : 'Not Selected'}`}
+          </Text>
         </View>
         <Button style={styles.button} title="Return to Location" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Location')}/>
         <Button style={styles.button} title="Proceed to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Cart')}/>
