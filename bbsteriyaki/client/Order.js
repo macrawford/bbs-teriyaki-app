@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, TextInput, Button, CheckBox, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TextInput, Button, CheckBox, Pressable } from 'react-native';
 
 function Order({ navigation }) {
   const [whiteRice, setWhiteRice] = React.useState(false);
@@ -30,12 +30,19 @@ function Order({ navigation }) {
   const [saladDressing, setSaladDressing] = React.useState(false);
   const [sauceCounter, setSauceCounter] = React.useState(0);
 
-  // useEffect(() => {
-  //   console.log('state: ', whiteRice)
-  // });
+  const [extraChicken, setExtraChicken] = React.useState(false);
+  const [extraPork, setExtraPork] = React.useState(false);
+  const [extraTofu, setExtraTofu] = React.useState(false);
+  const [extraBeef, setExtraBeef] = React.useState(false);
+  const [extraCounter, setExtraCounter] = React.useState(0);
+
+  const [specialInstructions, setSpecialInstructions] = React.useState('');
+
+  useEffect(() => {
+    console.log('state: ', specialInstructions)
+  });
 
   function handlePress(item, stateFunction, max, counter, counterFunction) {
-    // Could consolidate this further by introducing three more variables: max (in this case, 3), counter (in this case, baseCounter), and counterFunction (in this case, setBaseCounter) - that way we could re-use this function for all ingredient lists (base, protein, etc.)
     if (item) {
       stateFunction((!item));
       counterFunction(counter - 1)
@@ -52,8 +59,13 @@ function Order({ navigation }) {
       }
     }
   }
+  function handleChange(e) {
+    const value = e.target.value;
+    setSpecialInstructions(value)
+  }
     return (
-      <View style={styles.container}>
+      <ScrollView>
+        {/* Need to style it differently than container? */}
         <View style={styles.choices} title="Base">
           <View style={styles.selectionHeader}>
             <Text>Step 1: Base (Choose Up To 3)</Text>
@@ -64,25 +76,25 @@ function Order({ navigation }) {
             </Text>
           </View>
           <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(whiteRice, setWhiteRice, 3, baseCounter, setBaseCounter)}>
-          {`White rice: ${whiteRice ? 'Selected' : 'Not Selected '}`}
+            {`White rice: ${whiteRice ? 'Selected' : 'Not Selected '}`}
           </Text>
           <Text style={ (brownRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(brownRice, setBrownRice, 3, baseCounter, setBaseCounter)}>
-          {`Brown rice: ${brownRice ? 'Selected' : 'Not Selected '}`}
+            {`Brown rice: ${brownRice ? 'Selected' : 'Not Selected '}`}
           </Text>
           <Text style={ (yakisoba) ? styles.selected : styles.notSelected} onPress={() => handlePress(yakisoba, setYakisoba, 3, baseCounter, setBaseCounter)}>
-          {`Yakisoba: ${yakisoba ? 'Selected' : 'Not Selected'}`}
+            {`Yakisoba: ${yakisoba ? 'Selected' : 'Not Selected'}`}
           </Text>
           <Text style={ (cabbageSalad) ? styles.selected : styles.notSelected} onPress={() => handlePress(cabbageSalad, setCabbageSalad, 3, baseCounter, setBaseCounter)}>
-          {`Cabbage Salad: ${cabbageSalad ? 'Selected' : 'Not Selected'}`}
+            {`Cabbage Salad: ${cabbageSalad ? 'Selected' : 'Not Selected'}`}
           </Text>
           <Text style={ (veggieStirFry) ? styles.selected : styles.notSelected} onPress={() => handlePress(veggieStirFry, setVeggieStirFry, 3, baseCounter, setBaseCounter)}>
-          {`Veggie Stir Fry: ${veggieStirFry ? 'Selected' : 'Not Selected'}`}
+            {`Veggie Stir Fry: ${veggieStirFry ? 'Selected' : 'Not Selected'}`}
           </Text>
           <Text style={ (broccoli) ? styles.selected : styles.notSelected} onPress={() => handlePress(broccoli, setBroccoli, 3, baseCounter, setBaseCounter)}>
-          {`Broccoli: ${broccoli ? 'Selected' : 'Not Selected'}`}
+            {`Broccoli: ${broccoli ? 'Selected' : 'Not Selected'}`}
           </Text>
           <Text style={ (mixedGreenSalad) ? styles.selected : styles.notSelected} onPress={() => handlePress(mixedGreenSalad, setMixedGreenSalad, 3, baseCounter, setBaseCounter)}>
-          {`Mixed Green Salad: ${mixedGreenSalad ? 'Selected' : 'Not Selected'}`}
+            {`Mixed Green Salad: ${mixedGreenSalad ? 'Selected' : 'Not Selected'}`}
           </Text>
         </View>
         <View style={styles.choices} title="Protein">
@@ -95,19 +107,19 @@ function Order({ navigation }) {
             </Text>
           </View>
           <Text style={ (spicyChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicyChicken, setSpicyChicken, 2, proteinCounter, setProteinCounter)}>
-          {`Spicy Chicken: ${spicyChicken ? 'Selected' : 'Not Selected '}`}
+            {`Spicy Chicken: ${spicyChicken ? 'Selected' : 'Not Selected '}`}
           </Text>
           <Text style={ (regChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(regChicken, setRegChicken, 2, proteinCounter, setProteinCounter)}>
-          {`Regular Chicken: ${regChicken ? 'Selected' : 'Not Selected '}`}
+            {`Regular Chicken: ${regChicken ? 'Selected' : 'Not Selected '}`}
           </Text>
           <Text style={ (shreddedPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(shreddedPork, setShreddedPork, 2, proteinCounter, setProteinCounter)}>
-          {`Shredded Pork: ${shreddedPork ? 'Selected (+$1.00)' : 'Not Selected (+$1.00)'}`}
+            {`Shredded Pork: ${shreddedPork ? 'Selected (+$1.00)' : 'Not Selected (+$1.00)'}`}
           </Text>
           <Text style={ (beefBrisket) ? styles.selected : styles.notSelected} onPress={() => handlePress(beefBrisket, setBeefBrisket, 2, proteinCounter, setProteinCounter)}>
-          {`Beef Brisket: ${beefBrisket ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
+            {`Beef Brisket: ${beefBrisket ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
           </Text>
           <Text style={ (tofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(tofu, setTofu, 2, proteinCounter, setProteinCounter)}>
-          {`Tofu: ${tofu ? 'Selected' : 'Not Selected'}`}
+            {`Tofu: ${tofu ? 'Selected' : 'Not Selected'}`}
           </Text>
         </View>
         <View style={styles.choices} title="Sauce">
@@ -120,28 +132,53 @@ function Order({ navigation }) {
             </Text>
           </View>
           <Text style={ (regSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(regSauce, setRegSauce, 2, sauceCounter, setSauceCounter)}>
-          {`Regular Sauce: ${regSauce ? 'Selected' : 'Not Selected '}`}
+            {`Regular Sauce: ${regSauce ? 'Selected' : 'Not Selected '}`}
           </Text>
           <Text style={ (spicySauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicySauce, setSpicySauce, 2, sauceCounter, setSauceCounter)}>
-          {`Spicy Sauce: ${spicySauce ? 'Selected' : 'Not Selected '}`}
+            {`Spicy Sauce: ${spicySauce ? 'Selected' : 'Not Selected '}`}
           </Text>
           <Text style={ (noSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(noSauce, setNoSauce, 2, sauceCounter, setSauceCounter)}>
-          {`No Sauce: ${noSauce ? 'Selected' : 'Not Selected'}`}
+            {`No Sauce: ${noSauce ? 'Selected' : 'Not Selected'}`}
           </Text>
           <Text style={ (sideRegSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(sideRegSauce, setSideRegSauce, 2, sauceCounter, setSauceCounter)}>
-          {`Regular Sauce on Side: ${sideRegSauce ? 'Selected' : 'Not Selected'}`}
+            {`Regular Sauce on Side: ${sideRegSauce ? 'Selected' : 'Not Selected'}`}
           </Text>
           <Text style={ (sideSpicySauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(sideSpicySauce, setSideSpicySauce, 2, sauceCounter, setSauceCounter)}>
-          {`Spicy Sauce on Side: ${sideSpicySauce ? 'Selected' : 'Not Selected'}`}
+            {`Spicy Sauce on Side: ${sideSpicySauce ? 'Selected' : 'Not Selected'}`}
           </Text>
           <Text style={ (saladDressing) ? styles.selected : styles.notSelected} onPress={() => handlePress(saladDressing, setSaladDressing, 2, sauceCounter, setSauceCounter)}>
-          {`Salad Dressing on Side: ${saladDressing ? 'Selected' : 'Not Selected'}`}
+            {`Salad Dressing on Side: ${saladDressing ? 'Selected' : 'Not Selected'}`}
           </Text>
+        </View>
+        <View style={styles.choices} title="Extras">
+          <View style={styles.selectionHeader}>
+            <Text>Step 4: Extras</Text>
+            <Text>Choose up to 1</Text>
+          </View>
+          <Text style={ (extraChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraChicken, setExtraChicken, 1, extraCounter, setExtraCounter)}>
+            {`Extra Chicken: ${extraChicken ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
+          </Text>
+          <Text style={ (extraPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraPork, setExtraPork, 1, extraCounter, setExtraCounter)}>
+          { `Extra Pork: ${extraPork ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
+          </Text>
+          <Text style={ (extraTofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraTofu, setExtraTofu, 1, extraCounter, setExtraCounter)}>
+            {`Extra Tofu: ${extraTofu ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
+          </Text>
+          <Text style={ (extraBeef) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraBeef, setExtraBeef, 1, extraCounter, setExtraCounter)}>
+            {`Extra Beef: ${extraBeef ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
+          </Text>
+        </View>
+        <View style={styles.choices} title="Special Instructions">
+          <View style={styles.selectionHeader}>
+            <Text>Special Instructions</Text>
+            <Text>200 characters or less </Text>
+          </View>
+          <TextInput type="text" name="specialInstructions" style={styles.inputBox} onChange={handleChange}></TextInput>
         </View>
         <Button style={styles.button} title="Return to Location" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Location')}/>
         <Button style={styles.button} title="Proceed to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Cart')}/>
         <StatusBar style="auto" />
-      </View>
+      </ScrollView>
     );
 }
 
@@ -170,7 +207,13 @@ const styles = StyleSheet.create({
   },
   selectionHeader: {
     fontSize: 22,
-  }
+  },
+  inputBox: {
+    borderColor: 'grey',
+    borderWidth: 2,
+    width: 250,
+    height: 100
+  },
 });
 
 export default Order;
