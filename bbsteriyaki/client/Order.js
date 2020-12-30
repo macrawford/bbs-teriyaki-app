@@ -14,6 +14,25 @@ function Order({ navigation }) {
   const [broccoli, setBroccoli] = React.useState(false);
   const [mixedGreenSalad, setMixedGreenSalad] = React.useState(false);
   const [baseCounter, setBaseCounter] = React.useState(0);
+
+  function handlePress(item, stateFunction, max, counter, counterFunction) {
+    // Could consolidate this further by introducing three more variables: max (in this case, 3), counter (in this case, baseCounter), and counterFunction (in this case, setBaseCounter) - that way we could re-use this function for all ingredient lists (base, protein, etc.)
+    if (item) {
+      stateFunction((!item));
+      counterFunction(counter - 1)
+    } else {
+      if (counter >= max) {
+        if (max === 1) {
+          alert(`Only ${max} selection allowed`)
+        } else {
+          alert(`Only ${max} selections allowed`)
+        }
+      } else {
+        stateFunction((!item));
+        counterFunction(counter + 1)
+      }
+    }
+  }
     return (
       <View style={styles.container}>
         <View style={styles.choices} title="Base">
@@ -25,49 +44,25 @@ function Order({ navigation }) {
               {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
             </Text>
           </View>
-          <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => {
-            if (whiteRice) {
-              setWhiteRice((!whiteRice));
-              setBaseCounter(baseCounter - 1);
-            } else {
-              if (baseCounter >= 3) {
-                alert('Only one selection allowed')
-              } else {
-                setWhiteRice((!whiteRice));
-                setBaseCounter(baseCounter + 1)
-              }
-            }
-          } }>
-          {`White rice: ${whiteRice ? 'Selected ' + baseCounter : 'Not Selected ' + baseCounter}`}
+          <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(whiteRice, setWhiteRice, 3, baseCounter, setBaseCounter)}>
+          {`White rice: ${whiteRice ? 'Selected' : 'Not Selected '}`}
           </Text>
-          <Text style={ (brownRice) ? styles.selected : styles.notSelected} onPress={() => {
-            if (brownRice) {
-              setBrownRice((!brownRice));
-              setBaseCounter(baseCounter - 1);
-            } else {
-              if (baseCounter >= 3) {
-                alert('Only one selection allowed')
-              } else {
-                setBrownRice((!brownRice));
-                setBaseCounter(baseCounter + 1)
-              }
-            }
-          } }>
-          {`Brown rice: ${brownRice ? 'Selected ' + baseCounter : 'Not Selected ' + baseCounter}`}
+          <Text style={ (brownRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(brownRice, setBrownRice, 3, baseCounter, setBaseCounter)}>
+          {`Brown rice: ${brownRice ? 'Selected' : 'Not Selected '}`}
           </Text>
-          <Text style={ (yakisoba) ? styles.selected : styles.notSelected} onPress={() => setYakisoba((!yakisoba))}>
+          <Text style={ (yakisoba) ? styles.selected : styles.notSelected} onPress={() => handlePress(yakisoba, setYakisoba, 3, baseCounter, setBaseCounter)}>
           {`Yakisoba: ${yakisoba ? 'Selected' : 'Not Selected'}`}
           </Text>
-          <Text style={ (cabbageSalad) ? styles.selected : styles.notSelected} onPress={() => setCabbageSalad((!cabbageSalad))}>
+          <Text style={ (cabbageSalad) ? styles.selected : styles.notSelected} onPress={() => handlePress(cabbageSalad, setCabbageSalad, 3, baseCounter, setBaseCounter)}>
           {`Cabbage Salad: ${cabbageSalad ? 'Selected' : 'Not Selected'}`}
           </Text>
-          <Text style={ (veggieStirFry) ? styles.selected : styles.notSelected} onPress={() => setVeggieStirFry((!veggieStirFry))}>
+          <Text style={ (veggieStirFry) ? styles.selected : styles.notSelected} onPress={() => handlePress(veggieStirFry, setVeggieStirFry, 3, baseCounter, setBaseCounter)}>
           {`Veggie Stir Fry: ${veggieStirFry ? 'Selected' : 'Not Selected'}`}
           </Text>
-          <Text style={ (broccoli) ? styles.selected : styles.notSelected} onPress={() => setBroccoli((!broccoli))}>
+          <Text style={ (broccoli) ? styles.selected : styles.notSelected} onPress={() => handlePress(broccoli, setBroccoli, 3, baseCounter, setBaseCounter)}>
           {`Broccoli: ${broccoli ? 'Selected' : 'Not Selected'}`}
           </Text>
-          <Text style={ (mixedGreenSalad) ? styles.selected : styles.notSelected} onPress={() => setMixedGreenSalad((!mixedGreenSalad))}>
+          <Text style={ (mixedGreenSalad) ? styles.selected : styles.notSelected} onPress={() => handlePress(mixedGreenSalad, setMixedGreenSalad, 3, baseCounter, setBaseCounter)}>
           {`Mixed Green Salad: ${mixedGreenSalad ? 'Selected' : 'Not Selected'}`}
           </Text>
         </View>
