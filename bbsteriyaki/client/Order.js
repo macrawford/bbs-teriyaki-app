@@ -66,7 +66,7 @@ function Order({ navigation }) {
   ]
 
   useEffect(() => {
-    console.log('Order: ', order)
+    // console.log('Order: ', order)
   });
 
   function handlePress(item, stateFunction, max, counter, counterFunction) {
@@ -203,9 +203,9 @@ function Order({ navigation }) {
           <TextInput type="text" name="specialInstructions" style={styles.inputBox} onChange={handleChange}></TextInput>
         </View>
         <Button style={styles.button} title="Return to Location" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Location')}/>
-        <Button style={styles.button} title="Submit" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Cart', {
+        {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Cart', {
           order: order
-        })}/>
+        })}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
         <StatusBar style="auto" />
       </ScrollView>
     );
@@ -243,6 +243,12 @@ const styles = StyleSheet.create({
     width: 250,
     height: 100
   },
+  button: {
+    color: 'blue'
+  },
+  keepAddingButton: {
+    color: 'gray'
+  }
 });
 
 export default Order;

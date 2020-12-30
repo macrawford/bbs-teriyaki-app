@@ -3,13 +3,15 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Modal, TouchableHighlight } from 'react-native';
 
 function Login({ navigation }) {
   const [state, setState] = React.useState({
     email: "",
     password: ""
   });
+  const [modalVisible, setModalVisible] = useState(false)
+  // LEFT OFF HERE ADDING MODAL- FOLLOW REACT DOCS SHOULDN'T BE TOO HARD- BOOKMARKED UNDER MODAL - REACT-NATIVE
   function handleChangeEmail(e) {
     const value = e.target.value;
     setState({

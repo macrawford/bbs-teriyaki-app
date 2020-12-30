@@ -5,8 +5,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
+// CART TO-DOs:
+// Map over the stringified object and format the order nicely on the screen
+// Allow editing of orders (currently you just go back to the previous screen)
+// Allow adding of more orders (will need to reset the previous screen somehow - create )
+  // I think these items both need a database involved
+
 function Cart({ route, navigation}) {
-  const { order } = route.params
+  const { order } = route.params;
+  const orders = [];
+  orders.push(JSON.stringify(order))
+  console.log('ORDER: ', orders)
   return (
     <View style={styles.container}>
       <View style={styles.input}>
@@ -28,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   inputBox: {
     borderColor: 'grey',
