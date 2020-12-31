@@ -6,8 +6,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { api_key } from '../mapsapikey.js';
+import Firebase from '../firebase.js';
+import 'firebase/auth';
+import 'firebase/database';
 
 function Location({ navigation }) {
+  var database = Firebase.database();
+  // var userId = Firebase.auth().currentUser.uid;
+  // ^This shows the current user's userId and will be how we access the user's info going forward!!!
+
   // Webview won't work when inside of another component it seems (inside of View currently)
   return (
     <View style={styles.container}>
@@ -19,7 +26,6 @@ function Location({ navigation }) {
         originWhitelist={['*']}
         source={{ html: `<iframe height='600' width='450' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/search?key=${api_key}&q=bbs+teriyaki+grill+seattle' allowfullscreen><iframe/>`}}
       /> */}
-
       <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
       <Button style={styles.button} title="Proceed to Order" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <StatusBar style="auto" />
@@ -35,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   inputBox: {
     borderColor: 'grey',

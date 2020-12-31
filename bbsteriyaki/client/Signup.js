@@ -11,21 +11,39 @@ import 'firebase/database';
 function Signup({ navigation }) {
   var database = Firebase.database();
   const [state, setState] = React.useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: ""
   });
   useEffect(() => {
     console.log('Email: ', state.email)
+    console.log('firstName: ', state.firstName)
+    console.log('lastName: ', state.lastName)
   });
   // const [modalVisible, setModalVisible] = useState(false)
   // LEFT OFF HERE ADDING MODAL- FOLLOW REACT DOCS SHOULDN'T BE TOO HARD- BOOKMARKED UNDER MODAL - REACT-NATIVE
+  function handleChangeFirstName(e) {
+    const value = e;
+    setState({
+      ...state,
+      firstName: value
+    });
+  };
+  function handleChangeLastName(e) {
+    const value = e;
+    setState({
+      ...state,
+      lastName: value
+    });
+  };
   function handleChangeEmail(e) {
     const value = e;
     setState({
       ...state,
       email: value
     });
-  }
+  };
   // THERE IS NO E.TARGET.VALUE in REACT NATIVE
   // ALSO YOU HAVE TO DO HANDLECHANGETEXT IN REACT NATIVE IT APPEARS
   function handleChangePassword(e) {
@@ -34,7 +52,8 @@ function Signup({ navigation }) {
       ...state,
       password: value
     });
-  }
+  };
+
   function handleSignup() {
     Firebase.auth()
       .createUserWithEmailAndPassword(state.email, state.password)
@@ -42,15 +61,32 @@ function Signup({ navigation }) {
       .then((user) => {
         console.log('user: ', user);
         Firebase.database().ref('users/' + user.user.uid).set({
-          username: 'test',
-          email: 'test2'
+          firstName: state.firstName,
+          lastName: state.lastName,
+          email: user.user.email,
+          cart: {},
+          pastOrders: {},
+          rewardCount: 0
         })
+        // It appears cart and pastOrders won't actually be added since they are undefined at this point
         navigation.navigate('Location')
       })
-      .catch(error => console.log('error: ', error))
+      .catch(error => {
+        console.log('error: ', error)
+        alert(error)
+        // ^Can probably do something cleaner than this- the alert isn't very specific at this point
+      })
   }
   return (
     <View style={styles.container}>
+      <View style={styles.input}>
+        <Text style={styles.font}>First Name: </Text>
+        <TextInput style={styles.inputBox} type="text" name="firstName" onChangeText={(e) => handleChangeFirstName(e)}></TextInput>
+      </View>
+      <View style={styles.input}>
+        <Text style={styles.font}>Last Name: </Text>
+        <TextInput style={styles.inputBox} type="text" name="lastName" onChangeText={(e) => handleChangeLastName(e)}></TextInput>
+      </View>
       <View style={styles.input}>
         <Text style={styles.font}>Email: </Text>
         <TextInput style={styles.inputBox} type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>

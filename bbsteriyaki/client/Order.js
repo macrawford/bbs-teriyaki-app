@@ -4,8 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TextInput, Button, CheckBox, Pressable } from 'react-native';
+import Firebase from '../firebase.js';
+import 'firebase/auth';
+import 'firebase/database';
 
 function Order({ navigation }) {
+  var database = Firebase.database();
+  var userId = Firebase.auth().currentUser.uid
+
   const [whiteRice, setWhiteRice] = React.useState(false);
   const [brownRice, setBrownRice] = React.useState(false);
   const [yakisoba, setYakisoba] = React.useState(false);
@@ -89,6 +95,12 @@ function Order({ navigation }) {
   function handleChange(e) {
     const value = e.target.value;
     setSpecialInstructions(value)
+  }
+  function handleSubmit() {
+    Firebase.database().ref('users/' + userId).set({
+      cart: order
+    })
+    navigation.navigate('Cart')
   }
     return (
       <ScrollView>
@@ -203,9 +215,7 @@ function Order({ navigation }) {
           <TextInput type="text" name="specialInstructions" style={styles.inputBox} onChange={handleChange}></TextInput>
         </View>
         <Button style={styles.button} title="Return to Location" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Location')}/>
-        {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Cart', {
-          order: order
-        })}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
+        {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={handleSubmit}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
         <StatusBar style="auto" />
       </ScrollView>
     );
