@@ -9,6 +9,7 @@ import 'firebase/auth';
 import 'firebase/database';
 
 function Signup({ navigation }) {
+  var database = Firebase.database();
   const [state, setState] = React.useState({
     email: "",
     password: ""
@@ -39,7 +40,11 @@ function Signup({ navigation }) {
       .createUserWithEmailAndPassword(state.email, state.password)
       // MOST IMPT MIGHT HAVE BEEN CALLING IT STATE.EMAIL
       .then((user) => {
-        console.log('user: ', user)
+        console.log('user: ', user);
+        Firebase.database().ref('users/' + user.user.uid).set({
+          username: 'test',
+          email: 'test2'
+        })
         navigation.navigate('Location')
       })
       .catch(error => console.log('error: ', error))
