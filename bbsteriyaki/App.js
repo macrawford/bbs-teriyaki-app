@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import Signup from './client/Signup.js';
 import Login from './client/Login.js';
 import Location from './client/Location.js';
 import Order from './client/Order.js';
@@ -17,6 +18,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Location" component={Location} />
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="Cart" component={Cart} />

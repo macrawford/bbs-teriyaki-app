@@ -1,14 +1,20 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button, Modal, TouchableHighlight } from 'react-native';
+import Firebase from '../firebase.js';
+import 'firebase/auth';
+import 'firebase/database';
 
-function Login({ navigation }) {
+function Signup({ navigation }) {
   const [state, setState] = React.useState({
     email: "",
     password: ""
+  });
+  useEffect(() => {
+    console.log('Email: ', state.email)
   });
   const [modalVisible, setModalVisible] = useState(false)
   // LEFT OFF HERE ADDING MODAL- FOLLOW REACT DOCS SHOULDN'T BE TOO HARD- BOOKMARKED UNDER MODAL - REACT-NATIVE
@@ -25,7 +31,15 @@ function Login({ navigation }) {
       ...state,
       password: value
     });
-    console.log("state: ", state)
+  }
+  function handleSignup() {
+    Firebase.auth()
+      .createUserWithEmailAndPassword(state.email, state.password)
+      .then((user) => {
+        console.log('user: ', user)
+        navigation.navigate('Location')
+      })
+      .catch(error => console.log('error: ', error))
   }
   return (
     <View style={styles.container}>
@@ -37,8 +51,8 @@ function Login({ navigation }) {
         <Text style={styles.font}>Password: </Text>
         <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChange={handleChangePassword}></TextInput>
       </View>
-      <Button style={styles.button} title="Submit" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Location')}/>
-      <Button style={styles.button} title="Not Registered? Sign up" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Signup')}/>
+      <Button style={styles.button} title="Submit" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={handleSignup}/>
+      <Button style={styles.button} title="Back to Login" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Login')}/>
       <StatusBar style="auto" />
     </View>
   );
@@ -64,4 +78,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+export default Signup;
