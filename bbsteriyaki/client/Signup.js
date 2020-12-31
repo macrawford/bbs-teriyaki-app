@@ -16,17 +16,19 @@ function Signup({ navigation }) {
   useEffect(() => {
     console.log('Email: ', state.email)
   });
-  const [modalVisible, setModalVisible] = useState(false)
+  // const [modalVisible, setModalVisible] = useState(false)
   // LEFT OFF HERE ADDING MODAL- FOLLOW REACT DOCS SHOULDN'T BE TOO HARD- BOOKMARKED UNDER MODAL - REACT-NATIVE
   function handleChangeEmail(e) {
-    const value = e.target.value;
+    const value = e;
     setState({
       ...state,
       email: value
     });
   }
+  // THERE IS NO E.TARGET.VALUE in REACT NATIVE
+  // ALSO YOU HAVE TO DO HANDLECHANGETEXT IN REACT NATIVE IT APPEARS
   function handleChangePassword(e) {
-    const value = e.target.value;
+    const value = e;
     setState({
       ...state,
       password: value
@@ -46,11 +48,11 @@ function Signup({ navigation }) {
     <View style={styles.container}>
       <View style={styles.input}>
         <Text style={styles.font}>Email: </Text>
-        <TextInput style={styles.inputBox} type="text" name="email" onChange={handleChangeEmail}></TextInput>
+        <TextInput style={styles.inputBox} type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>
       </View>
       <View style={styles.input}>
         <Text style={styles.font}>Password: </Text>
-        <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChange={handleChangePassword}></TextInput>
+        <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChangeText={(e) => handleChangePassword(e)}></TextInput>
       </View>
       <Button style={styles.button} title="Submit" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={handleSignup}/>
       <Button style={styles.button} title="Back to Login" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Login')}/>

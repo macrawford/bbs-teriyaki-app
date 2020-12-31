@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button, Modal, TouchableHighlight } from 'react-native';
@@ -13,22 +13,25 @@ function Login({ navigation }) {
     email: "",
     password: ""
   });
-  const [modalVisible, setModalVisible] = useState(false)
-  // LEFT OFF HERE ADDING MODAL- FOLLOW REACT DOCS SHOULDN'T BE TOO HARD- BOOKMARKED UNDER MODAL - REACT-NATIVE
+  // useEffect(() => {
+  //   console.log('Password: ', typeof password)
+  // });
+
   function handleChangeEmail(e) {
-    const value = e.target.value;
+    const value = e;
     setState({
       ...state,
       email: value
-    });
+    })
   }
+  // THERE IS NO E.TARGET.VALUE in REACT NATIVE
+  // ALSO YOU HAVE TO DO HANDLECHANGETEXT IN REACT NATIVE IT APPEARS
   function handleChangePassword(e) {
-    const value = e.target.value;
+    const value = e;
     setState({
       ...state,
       password: value
-    });
-    console.log("state: ", state)
+    })
   }
   function handleSubmit() {
     Firebase.auth()
@@ -43,11 +46,11 @@ function Login({ navigation }) {
     <View style={styles.container}>
       <View style={styles.input}>
         <Text style={styles.font}>Email: </Text>
-        <TextInput style={styles.inputBox} type="text" name="email" onChange={handleChangeEmail}></TextInput>
+        <TextInput style={styles.inputBox} type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>
       </View>
       <View style={styles.input}>
         <Text style={styles.font}>Password: </Text>
-        <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChange={handleChangePassword}></TextInput>
+        <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChangeText={(e) => handleChangePassword(e)}></TextInput>
       </View>
       <Button style={styles.button} title="Submit" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={handleSubmit}/>
       <Button style={styles.button} title="Not Registered? Sign up" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Signup')}/>
