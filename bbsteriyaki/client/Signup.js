@@ -35,6 +35,7 @@ function Signup({ navigation }) {
   function handleSignup() {
     Firebase.auth()
       .createUserWithEmailAndPassword(state.email, state.password)
+      // MOST IMPT MIGHT HAVE BEEN CALLING IT STATE.EMAIL
       .then((user) => {
         console.log('user: ', user)
         navigation.navigate('Location')
