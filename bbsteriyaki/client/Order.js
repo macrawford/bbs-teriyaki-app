@@ -44,32 +44,32 @@ function Order({ navigation }) {
 
   const [specialInstructions, setSpecialInstructions] = React.useState('');
 
-  var order = [
+  var order = {
     // Can also pass through as a straight object - not sure what will be easier to parse
-    {whiteRice: whiteRice},
-    {brownRice: brownRice},
-    {yakisoba: yakisoba},
-    {cabbageSalad: cabbageSalad},
-    {veggieStirFry: veggieStirFry},
-    {broccoli: broccoli},
-    {mixedGreenSalad: mixedGreenSalad},
-    {spicyChicken: spicyChicken},
-    {regChicken: regChicken},
-    {shreddedPork: shreddedPork},
-    {beefBrisket: beefBrisket},
-    {tofu: tofu},
-    {regSauce: regSauce},
-    {spicySauce: spicySauce},
-    {noSauce: noSauce},
-    {sideRegSauce: sideRegSauce},
-    {sideSpicySauce: sideSpicySauce},
-    {saladDressing: saladDressing},
-    {extraChicken: extraChicken},
-    {extraPork: extraPork},
-    {extraTofu: extraTofu},
-    {extraBeef: extraBeef},
-    {specialInstructions: specialInstructions}
-  ]
+    whiteRice: whiteRice,
+    brownRice: brownRice,
+    yakisoba: yakisoba,
+    cabbageSalad: cabbageSalad,
+    veggieStirFry: veggieStirFry,
+    broccoli: broccoli,
+    mixedGreenSalad: mixedGreenSalad,
+    spicyChicken: spicyChicken,
+    regChicken: regChicken,
+    shreddedPork: shreddedPork,
+    beefBrisket: beefBrisket,
+    tofu: tofu,
+    regSauce: regSauce,
+    spicySauce: spicySauce,
+    noSauce: noSauce,
+    sideRegSauce: sideRegSauce,
+    sideSpicySauce: sideSpicySauce,
+    saladDressing: saladDressing,
+    extraChicken: extraChicken,
+    extraPork: extraPork,
+    extraTofu: extraTofu,
+    extraBeef: extraBeef,
+    specialInstructions: specialInstructions
+  }
 
   useEffect(() => {
     // console.log('Order: ', order)
@@ -97,7 +97,7 @@ function Order({ navigation }) {
     setSpecialInstructions(value)
   }
   function handleSubmit() {
-    Firebase.database().ref('users/' + userId).set({
+    Firebase.database().ref('users/' + userId).update({
       cart: order
     })
     navigation.navigate('Cart')
