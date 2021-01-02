@@ -11,6 +11,7 @@ import 'firebase/database';
 // CART TO-DOs:
 // Map over the stringified object and format the order nicely on the screen
 // Allow editing of orders (currently you just go back to the previous screen)
+  // Probably necessitates route params that you pass on navigation
 // Allow adding of more orders (will need to reset the previous screen somehow - create )
 // Set up security rules so people can only access the info in their cart
   // I think these items both need a database involved
@@ -21,7 +22,7 @@ function Cart({ route, navigation}) {
   // orders.push(JSON.stringify(order))
   // console.log('ORDER: ', orders)
   const [state, setState] = React.useState({
-    cartItems: ''
+    cartItems: [{}]
   });
   var database = Firebase.database();
   var userId = Firebase.auth().currentUser.uid;
@@ -29,19 +30,37 @@ function Cart({ route, navigation}) {
   useEffect(() => {
     cart.once('value').then((snapshot) => {
       var cartData = snapshot.val();
+      var arrayForm = [];
+      arrayForm.push(cartData)
       console.log('cartdata: ', cartData);
       console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
       setState({
-        cartItems: cartData
+        cartItems: arrayForm
       })
     })
   }, []);
   return (
     <View style={styles.container}>
       <View style={styles.input}>
-        {Object.keys(state.cartItems).map((item, itemIndex) => {
-          if (state.cartItems[item] === true) return (
-            <Text key={itemIndex}>{item}</Text>
+        {/* Rearrange this map function now that cartItems is objects inside of arrays
+        Give each item in the cart an index - that index will be used when editing the cart - take that state and send it in params to the edit screen */}
+        {state.cartItems.map((order, orderIndex) => {
+          console.log('orderIndex: ', orderIndex)
+          return (
+            <View key={orderIndex}>
+            {Object.keys(order).map((item, itemIndex) => {
+              // console.log('object.keys: ', Object.keys(order))
+              // console.log('order: ', order)
+              // console.log('item: ', item)
+              // console.log('order at item: ', order[item])
+              if (order[item] === true) {
+                return (
+                  <Text key={itemIndex}>{item}</Text>
+                )
+              }
+            })}
+            <Button>Edit this order </Button>
+            </View>
           )
         })}
       </View>

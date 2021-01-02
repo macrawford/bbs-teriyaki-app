@@ -96,6 +96,10 @@ function Order({ navigation }) {
     setSpecialInstructions(value)
   }
 
+  function reinitilizeState() {
+
+  }
+
   var userId = Firebase.auth().currentUser.uid
 
   function handleSubmit() {
