@@ -8,7 +8,10 @@ import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
 
-function Order({ navigation }) {
+// OUTANDING ERRORS
+  // YOU ARE ALLOWED TO SELECT NO SAUCE AND OTHER SAUCES - YOU SHOULD NOT BE ABLE TO DO THAT
+
+function Order({ navigation, route }) {
   var database = Firebase.database();
 
   const [whiteRice, setWhiteRice] = React.useState(false);
@@ -71,8 +74,33 @@ function Order({ navigation }) {
   }
 
   useEffect(() => {
-    // console.log('Order: ', order)
-  });
+    console.log('route params: ');
+    if (route.params) {
+      setWhiteRice(route.params.order['whiteRice'])
+      setBrownRice(route.params.order['brownRice'])
+      setYakisoba(route.params.order['yakisoba'])
+      setCabbageSalad(route.params.order['cabbageSalad'])
+      setVeggieStirFry(route.params.order['veggieStirFry'])
+      setBroccoli(route.params.order['broccoli'])
+      setMixedGreenSalad(route.params.order['mixedGreenSalad'])
+      setSpicyChicken(route.params.order['spicyChicken'])
+      setRegChicken(route.params.order['regChicken'])
+      setShreddedPork(route.params.order['shreddedPork'])
+      setBeefBrisket(route.params.order['beefBrisket'])
+      setTofu(route.params.order['tofu'])
+      setRegSauce(route.params.order['regSauce'])
+      setSpicySauce(route.params.order['spicySauce'])
+      setNoSauce(route.params.order['noSauce'])
+      setSideRegSauce(route.params.order['sideRegSauce'])
+      setSideSpicySauce(route.params.order['sideSpicySauce'])
+      setSaladDressing(route.params.order['saladDressing'])
+      setExtraChicken(route.params.order['extraChicken'])
+      setExtraPork(route.params.order['extraPork'])
+      setExtraTofu(route.params.order['extraTofu'])
+      setExtraBeef(route.params.order['extraBeef'])
+      setSpecialInstructions(route.params.order['specialInstructions'])
+    }
+  }, []);
 
   function handlePress(item, stateFunction, max, counter, counterFunction) {
     if (item) {
@@ -103,9 +131,16 @@ function Order({ navigation }) {
   var userId = Firebase.auth().currentUser.uid
 
   function handleSubmit() {
-    Firebase.database().ref('users/' + userId + '/cart').push({
-      order
-    })
+    // WILL NEED A CONDITIONAL ABOUT IF ROUTE.PARAMS.ID EXISTS => GO TO THAT ROUTE AND UPDATE, NOT PUSH
+    if (route.params) {
+      Firebase.database().ref('users/' + userId + '/cart/' + route.params.id).update({
+        order
+      })
+    } else {
+      Firebase.database().ref('users/' + userId + '/cart').push({
+        order
+      })
+    }
     navigation.navigate('Cart')
   }
     return (
@@ -113,6 +148,9 @@ function Order({ navigation }) {
         {/* Need to style it differently than container? */}
         <View style={styles.choices} title="Base">
           <View style={styles.selectionHeader}>
+            <Text>
+              {`${route.params ? route.params : 'No params'} `}
+            </Text>
             <Text>Step 1: Base (Choose Up To 3)</Text>
             <Text>Please choose 1 and up to 3</Text>
             <Text>

@@ -49,25 +49,33 @@ function Cart({ route, navigation}) {
           return (
             <View key={orderIndex}>
             {Object.keys(order).map((item, itemIndex) => {
-              console.log('object.keys: ', Object.keys(order))
-              console.log('order first time thru: ', order)
-              console.log('item: ', item)
-              console.log('order at item (first time thru): ', order[item])
+              // console.log('object.keys: ', Object.keys(order))
+              // console.log('order first time thru: ', order)
+              // console.log('item: ', item)
+              // console.log('order at item (first time thru): ', order[item])
+              // Figure out which variable is the push ID (MQ3a4L...)
+              // Make that the index instead of item index
+              // pass state at that order at 'order' in the navigation
               return (
-                <View>
+                <View key={item}>
                   <Text>BYO: </Text>
+                  {/* <Text>{order[item]['order']['beefBrisket']}</Text> */}
                   {Object.keys(order[item]['order']).map((indOrder, indOrderIndex) => {
-                    console.log('object.keys: ', Object.keys(order[item]))
-                    console.log('order: ', order[item]['order'])
-                    console.log('item: ', indOrder)
-                    console.log('order at item: ', order[item]['order'][indOrder])
-                    if (order[item]['order'][indOrder] === true) {
+                    // console.log('object.keys: ', Object.keys(order[item]))
+                    // console.log('order: ', order[item]['order'])
+                    // console.log('item: ', indOrder)
+                    // console.log('order at item: ', order[item]['order'][indOrder])
+                    // console.log('state.cartItems', state.cartItems)
+                    var orderItems = order[item]['order'][indOrder];
+                    if (orderItems === true) {
                       return (
                         <Text key={indOrderIndex}>{indOrder}</Text>
                       )
                     }
                   })}
-                  <Button title="Edit this order"></Button>
+                  <Button title="Edit this order" onPress={() => {
+                    navigation.navigate('Order', { order: order[item]['order'], id: item })
+                  }}></Button>
                 </View>
               )
             })}
