@@ -1,25 +1,46 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect, componentDidMount } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import Firebase from '../firebase.js';
+import 'firebase/auth';
+import 'firebase/database';
 
 // CART TO-DOs:
 // Map over the stringified object and format the order nicely on the screen
 // Allow editing of orders (currently you just go back to the previous screen)
 // Allow adding of more orders (will need to reset the previous screen somehow - create )
+// Set up security rules so people can only access the info in their cart
   // I think these items both need a database involved
 
 function Cart({ route, navigation}) {
-  const { order } = route.params;
-  const orders = [];
-  orders.push(JSON.stringify(order))
-  console.log('ORDER: ', orders)
+  // const { order } = route.params;
+  // const orders = [];
+  // orders.push(JSON.stringify(order))
+  // console.log('ORDER: ', orders)
+  const [state, setState] = React.useState({
+    cartItems: ''
+  });
+  var database = Firebase.database();
+  var userId = Firebase.auth().currentUser.uid;
+  var cart = Firebase.database().ref('users/' + userId + '/cart');
+  // var cartData;
+  useEffect(() => {
+    cart.once('value').then((snapshot) => {
+      var cartData = snapshot.val();
+      console.log('cartdata: ', cartData);
+      console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
+      setState({
+        cartItems: cartData
+      })
+    })
+  }, [state.cartItems]);
   return (
     <View style={styles.container}>
       <View style={styles.input}>
-        <Text>order: {JSON.stringify(order)}</Text>
+        <Text>{`order: ${state.cartItems}`}</Text>
         <Text style={styles.font}>THIS IS THE CART PAGE</Text>
       </View>
       <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>

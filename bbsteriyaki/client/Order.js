@@ -10,7 +10,6 @@ import 'firebase/database';
 
 function Order({ navigation }) {
   var database = Firebase.database();
-  var userId = Firebase.auth().currentUser.uid
 
   const [whiteRice, setWhiteRice] = React.useState(false);
   const [brownRice, setBrownRice] = React.useState(false);
@@ -96,6 +95,9 @@ function Order({ navigation }) {
     const value = e.target.value;
     setSpecialInstructions(value)
   }
+
+  var userId = Firebase.auth().currentUser.uid
+
   function handleSubmit() {
     Firebase.database().ref('users/' + userId).update({
       cart: order
