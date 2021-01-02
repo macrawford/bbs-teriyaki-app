@@ -16,11 +16,11 @@ function Signup({ navigation }) {
     email: "",
     password: ""
   });
-  useEffect(() => {
-    console.log('Email: ', state.email)
-    console.log('firstName: ', state.firstName)
-    console.log('lastName: ', state.lastName)
-  });
+  // useEffect(() => {
+  //   console.log('Email: ', state.email)
+  //   console.log('firstName: ', state.firstName)
+  //   console.log('lastName: ', state.lastName)
+  // });
   // const [modalVisible, setModalVisible] = useState(false)
   // LEFT OFF HERE ADDING MODAL- FOLLOW REACT DOCS SHOULDN'T BE TOO HARD- BOOKMARKED UNDER MODAL - REACT-NATIVE
   function handleChangeFirstName(e) {

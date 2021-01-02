@@ -13,6 +13,13 @@ import 'firebase/database';
 
 function Order({ navigation, route }) {
   var database = Firebase.database();
+  var id;
+  if (route.params) {
+    id = route.params.id;
+  } else {
+    id = 0;
+  }
+  // ^ This is used for the useEffect function
 
   const [whiteRice, setWhiteRice] = React.useState(false);
   const [brownRice, setBrownRice] = React.useState(false);
@@ -100,7 +107,7 @@ function Order({ navigation, route }) {
       setExtraBeef(route.params.order['extraBeef'])
       setSpecialInstructions(route.params.order['specialInstructions'])
     }
-  }, []);
+  }, [id]);
 
   function handlePress(item, stateFunction, max, counter, counterFunction) {
     if (item) {
@@ -124,8 +131,34 @@ function Order({ navigation, route }) {
     setSpecialInstructions(value)
   }
 
-  function reinitilizeState() {
-
+  function reinitializeState() {
+    setWhiteRice(false)
+    setBrownRice(false)
+    setYakisoba(false)
+    setCabbageSalad(false)
+    setVeggieStirFry(false)
+    setBroccoli(false)
+    setMixedGreenSalad(false)
+    setSpicyChicken(false)
+    setRegChicken(false)
+    setShreddedPork(false)
+    setBeefBrisket(false)
+    setTofu(false)
+    setRegSauce(false)
+    setSpicySauce(false)
+    setNoSauce(false)
+    setSideRegSauce(false)
+    setSideSpicySauce(false)
+    setSaladDressing(false)
+    setExtraChicken(false)
+    setExtraPork(false)
+    setExtraTofu(false)
+    setExtraBeef(false)
+    setSpecialInstructions('')
+    setBaseCounter(0)
+    setProteinCounter(0)
+    setSauceCounter(0)
+    setExtraCounter(0)
   }
 
   var userId = Firebase.auth().currentUser.uid
@@ -141,7 +174,8 @@ function Order({ navigation, route }) {
         order
       })
     }
-    navigation.navigate('Cart')
+    navigation.navigate('Cart');
+    reinitializeState();
   }
     return (
       <ScrollView>

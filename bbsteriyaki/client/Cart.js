@@ -27,8 +27,22 @@ function Cart({ route, navigation}) {
   var database = Firebase.database();
   var userId = Firebase.auth().currentUser.uid;
   var cart = Firebase.database().ref('users/' + userId + '/cart');
+
+  // useEffect(() => {
+  //   cart.once('value').then((snapshot) => {
+  //     var cartData = snapshot.val();
+  //     var arrayForm = [];
+  //     arrayForm.push(cartData)
+  //     console.log('arrayForm: ', arrayForm);
+  //     console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
+  //     setState({
+  //       cartItems: arrayForm
+  //     })
+  //   })
+  // }, []);
+
   useEffect(() => {
-    cart.once('value').then((snapshot) => {
+    cart.on('value', (snapshot) => {
       var cartData = snapshot.val();
       var arrayForm = [];
       arrayForm.push(cartData)
@@ -39,6 +53,10 @@ function Cart({ route, navigation}) {
       })
     })
   }, []);
+
+  function handleDelete(item) {
+    Firebase.database().ref('users/' + userId + '/cart/' + item).remove();
+  }
   return (
     <View style={styles.container}>
       <View style={styles.input}>
@@ -73,9 +91,12 @@ function Cart({ route, navigation}) {
                       )
                     }
                   })}
+                  <View style={styles.editDelete}>
                   <Button title="Edit this order" onPress={() => {
                     navigation.navigate('Order', { order: order[item]['order'], id: item })
                   }}></Button>
+                  <Button title="Delete this order" onPress={() => handleDelete(item)}></Button>
+                  </View>
                 </View>
               )
             })}
@@ -83,8 +104,9 @@ function Cart({ route, navigation}) {
           )
         })}
       </View>
-      <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
-      <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Checkout')}/>
+      <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
+      <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the order screen" color="blue" onPress={() => navigation.navigate('Order')}/>
+      <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout')}/>
       <StatusBar style="auto" />
     </View>
   );
@@ -107,6 +129,8 @@ const styles = StyleSheet.create({
   },
   font: {
     fontFamily: 'Helvetica-BoldOblique',
+  },
+  editDelete: {
   }
 });
 
