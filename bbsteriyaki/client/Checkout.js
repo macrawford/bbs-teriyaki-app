@@ -7,6 +7,7 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 function Checkout({ navigation }) {
   return (
+    // LOOK FOR REWARDS!!!
     <View style={styles.container}>
       <View style={styles.input}>
         <Text style={styles.font}>THIS IS THE CHECKOUT PAGE</Text>

@@ -32,7 +32,7 @@ function Cart({ route, navigation}) {
       var cartData = snapshot.val();
       var arrayForm = [];
       arrayForm.push(cartData)
-      console.log('cartdata: ', cartData);
+      console.log('arrayForm: ', arrayForm);
       console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
       setState({
         cartItems: arrayForm
@@ -49,17 +49,28 @@ function Cart({ route, navigation}) {
           return (
             <View key={orderIndex}>
             {Object.keys(order).map((item, itemIndex) => {
-              // console.log('object.keys: ', Object.keys(order))
-              // console.log('order: ', order)
-              // console.log('item: ', item)
-              // console.log('order at item: ', order[item])
-              if (order[item] === true) {
-                return (
-                  <Text key={itemIndex}>{item}</Text>
-                )
-              }
+              console.log('object.keys: ', Object.keys(order))
+              console.log('order first time thru: ', order)
+              console.log('item: ', item)
+              console.log('order at item (first time thru): ', order[item])
+              return (
+                <View>
+                  <Text>BYO: </Text>
+                  {Object.keys(order[item]['order']).map((indOrder, indOrderIndex) => {
+                    console.log('object.keys: ', Object.keys(order[item]))
+                    console.log('order: ', order[item]['order'])
+                    console.log('item: ', indOrder)
+                    console.log('order at item: ', order[item]['order'][indOrder])
+                    if (order[item]['order'][indOrder] === true) {
+                      return (
+                        <Text key={indOrderIndex}>{indOrder}</Text>
+                      )
+                    }
+                  })}
+                  <Button title="Edit this order"></Button>
+                </View>
+              )
             })}
-            <Button>Edit this order </Button>
             </View>
           )
         })}

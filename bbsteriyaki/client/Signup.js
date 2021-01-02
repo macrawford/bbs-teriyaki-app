@@ -64,8 +64,8 @@ function Signup({ navigation }) {
           firstName: state.firstName,
           lastName: state.lastName,
           email: user.user.email,
-          cart: {},
-          pastOrders: {},
+          // cart: {},
+          // pastOrders: {},
           rewardCount: 0
         })
         // It appears cart and pastOrders won't actually be added since they are undefined at this point

@@ -103,8 +103,8 @@ function Order({ navigation }) {
   var userId = Firebase.auth().currentUser.uid
 
   function handleSubmit() {
-    Firebase.database().ref('users/' + userId).update({
-      cart: order
+    Firebase.database().ref('users/' + userId + '/cart').push({
+      order
     })
     navigation.navigate('Cart')
   }
