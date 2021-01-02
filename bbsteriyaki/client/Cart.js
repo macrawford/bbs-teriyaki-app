@@ -26,7 +26,6 @@ function Cart({ route, navigation}) {
   var database = Firebase.database();
   var userId = Firebase.auth().currentUser.uid;
   var cart = Firebase.database().ref('users/' + userId + '/cart');
-  // var cartData;
   useEffect(() => {
     cart.once('value').then((snapshot) => {
       var cartData = snapshot.val();
@@ -36,12 +35,15 @@ function Cart({ route, navigation}) {
         cartItems: cartData
       })
     })
-  }, [state.cartItems]);
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.input}>
-        <Text>{`order: ${state.cartItems}`}</Text>
-        <Text style={styles.font}>THIS IS THE CART PAGE</Text>
+        {Object.keys(state.cartItems).map((item, itemIndex) => {
+          if (state.cartItems[item] === true) return (
+            <Text key={itemIndex}>{item}</Text>
+          )
+        })}
       </View>
       <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={() => navigation.navigate('Checkout')}/>
