@@ -8,6 +8,9 @@ import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
 
+// OUTANDING ERRORS
+  // ADDDRINK AND ADDGYOZA
+
 // CART TO-DOs:
 // Map over the stringified object and format the order nicely on the screen
 // Allow editing of orders (currently you just go back to the previous screen)
@@ -49,24 +52,39 @@ function Cart({ route, navigation}) {
       console.log('arrayForm: ', arrayForm);
       console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
       setCart(arrayForm)
-    })
+    });
+    // Firebase.database().ref('users/' + userId + '/gyoza').on('value', (snapshot) => {
+    //   var gyozaData = snapshot.val();
+    //   console.log('gyozaData: ', gyozaData['gyozaCount'])
+    //   setGyoza(gyozaData['gyozaCount'])
+    // })
   }, []);
+  useEffect(() => {
+    Firebase.database().ref('users/' + userId + '/gyoza').update({
+      gyozaCount
+    })
+  }, [gyozaCount])
+  useEffect(() => {
+    Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
+      fountainDrink
+    })
+  }, [fountainDrink])
   function handleDelete(item) {
     Firebase.database().ref('users/' + userId + '/cart/' + item).remove();
   }
   function addGyoza() {
     setGyoza(gyozaCount + 1)
     console.log('gyoza count: ', gyozaCount)
-    Firebase.database().ref('users/' + userId + '/gyoza').update({
-      gyozaCount
-    })
+    // Firebase.database().ref('users/' + userId + '/gyoza').update({
+    //   gyozaCount
+    // })
   }
   function addDrink() {
     setDrink(fountainDrink + 1)
     console.log('fountain drink: ', fountainDrink)
-    Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
-      fountainDrink
-    })
+    // Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
+    //   fountainDrink
+    // })
   }
   var conversion = {
     whiteRice: 'White Rice',
@@ -148,6 +166,8 @@ function Cart({ route, navigation}) {
             </View>
           )
         })}
+        <Text>{`Gyoza x ${gyozaCount} $${gyozaCount * 2}`}</Text>
+        <Text>{`Fountain drink x ${fountainDrink} $${fountainDrink * 2}`}</Text>
       </View>
       <Text>{`Subtotal: $${Object.keys(cartItems[0]).length * 9 + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
       <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => addGyoza()}/>
