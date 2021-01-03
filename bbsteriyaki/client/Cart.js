@@ -21,9 +21,9 @@ function Cart({ route, navigation}) {
   // const orders = [];
   // orders.push(JSON.stringify(order))
   // console.log('ORDER: ', orders)
-  const [state, setState] = React.useState({
-    cartItems: [{}]
-  });
+  const [cartItems, setCart] = React.useState([{}]);
+  const [gyozaCount, setGyoza] = React.useState(0);
+  const [fountainDrink, setDrink] = React.useState(0);
   var database = Firebase.database();
   var userId = Firebase.auth().currentUser.uid;
   var cart = Firebase.database().ref('users/' + userId + '/cart');
@@ -48,14 +48,25 @@ function Cart({ route, navigation}) {
       arrayForm.push(cartData)
       console.log('arrayForm: ', arrayForm);
       console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
-      setState({
-        cartItems: arrayForm
-      })
+      setCart(arrayForm)
     })
   }, []);
-
   function handleDelete(item) {
     Firebase.database().ref('users/' + userId + '/cart/' + item).remove();
+  }
+  function addGyoza() {
+    setGyoza(gyozaCount + 1)
+    console.log('gyoza count: ', gyozaCount)
+    Firebase.database().ref('users/' + userId + '/gyoza').update({
+      gyozaCount
+    })
+  }
+  function addDrink() {
+    setDrink(fountainDrink + 1)
+    console.log('fountain drink: ', fountainDrink)
+    Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
+      fountainDrink
+    })
   }
   var conversion = {
     whiteRice: 'White Rice',
@@ -87,7 +98,7 @@ function Cart({ route, navigation}) {
       <View style={styles.input}>
         {/* Rearrange this map function now that cartItems is objects inside of arrays
         Give each item in the cart an index - that index will be used when editing the cart - take that state and send it in params to the edit screen */}
-        {state.cartItems.map((order, orderIndex) => {
+        {cartItems.map((order, orderIndex) => {
           console.log('orderIndex: ', orderIndex)
           return (
             <View key={orderIndex}>
@@ -138,7 +149,9 @@ function Cart({ route, navigation}) {
           )
         })}
       </View>
-      <Text>{`Subtotal: $${Object.keys(state.cartItems[0]).length * 9}`}</Text>
+      <Text>{`Subtotal: $${Object.keys(cartItems[0]).length * 9 + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
+      <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => addGyoza()}/>
+      <Button style={styles.button} title="Add Fountain Drink +$2.00" accessibilityLabel="Adds Fountain Drink" color="blue" onPress={() => addDrink()}/>
       <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the order screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout')}/>
