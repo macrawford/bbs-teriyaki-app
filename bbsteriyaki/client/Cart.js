@@ -51,15 +51,25 @@ function Cart({ route, navigation}) {
       console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
       setCart(arrayForm)
     });
+    // if (Firebase.database().ref('users/' + userId + '/gyoza')) {
+    //   console.log('Exists!')
+    // }
+    // if (Firebase.database().ref('users/' + userId + '/fountainDrinks')) {
+    //   console.log('Exists!')
+    // }
     Firebase.database().ref('users/' + userId + '/gyoza').on('value', (snapshot) => {
       var gyozaData = snapshot.val();
-      console.log('gyozaData: ', gyozaData['gyozaCount'])
-      setGyoza(gyozaData['gyozaCount'])
+      if (gyozaData !== null) {
+        console.log('gyozaData: ', gyozaData['gyozaCount'])
+        setGyoza(gyozaData['gyozaCount'])
+      }
     });
     Firebase.database().ref('users/' + userId + '/fountainDrinks').on('value', (snapshot) => {
       var fountainData = snapshot.val();
-      console.log('fountainData: ', fountainData['fountainDrink'])
-      setDrink(fountainData['fountainDrink'])
+      if (fountainData !== null) {
+        console.log('fountainData: ', fountainData['fountainDrink'])
+        setDrink(fountainData['fountainDrink'])
+      }
     });
   }, []);
   // useEffect(() => {
@@ -171,10 +181,10 @@ function Cart({ route, navigation}) {
         })}
         <Text>{`Gyoza x ${gyozaCount} $${gyozaCount * 2}`}</Text>
         <Button title="+1" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => changeGyoza(1)}></Button>
-        <Button title="-1" accessibilityLabel="Subtracts Gyoza" color="blue" onPress={() => changeGyoza(-1)}></Button>
+        {gyozaCount > 0 ? <Button title="-1" accessibilityLabel="Subtracts Gyoza" color="blue" onPress={() => changeGyoza(-1)}></Button> : null}
         <Text>{`Fountain drink x ${fountainDrink} $${fountainDrink * 2}`}</Text>
         <Button title="+1" accessibilityLabel="Adds Drink" color="blue" onPress={() => changeDrink(1)}></Button>
-        <Button title="-1" accessibilityLabel="Subtracts Drink" color="blue" onPress={() => changeDrink(-1)}></Button>
+        {fountainDrink > 0 ? <Button title="-1" accessibilityLabel="Subtracts Drink" color="blue" onPress={() => changeDrink(-1)}></Button> : null}
       </View>
       <Text>{`Subtotal: $${Object.keys(cartItems[0]).length * 9 + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
       {/* <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => changeGyoza(1)}/>
