@@ -9,7 +9,7 @@ import 'firebase/auth';
 import 'firebase/database';
 
 // OUTANDING ERRORS
-  // ADDDRINK AND ADDGYOZA
+  // GYOZA COUNT RESETS TO 0 WHENEVER YOU GO BACK AND EDIT AN ORDER
 
 // CART TO-DOs:
 // Map over the stringified object and format the order nicely on the screen
@@ -30,7 +30,6 @@ function Cart({ route, navigation}) {
   var database = Firebase.database();
   var userId = Firebase.auth().currentUser.uid;
   var cart = Firebase.database().ref('users/' + userId + '/cart');
-
   // useEffect(() => {
   //   cart.once('value').then((snapshot) => {
   //     var cartData = snapshot.val();
@@ -43,7 +42,6 @@ function Cart({ route, navigation}) {
   //     })
   //   })
   // }, []);
-
   useEffect(() => {
     cart.on('value', (snapshot) => {
       var cartData = snapshot.val();
@@ -53,38 +51,43 @@ function Cart({ route, navigation}) {
       console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
       setCart(arrayForm)
     });
-    // Firebase.database().ref('users/' + userId + '/gyoza').on('value', (snapshot) => {
-    //   var gyozaData = snapshot.val();
-    //   console.log('gyozaData: ', gyozaData['gyozaCount'])
-    //   setGyoza(gyozaData['gyozaCount'])
-    // })
+    Firebase.database().ref('users/' + userId + '/gyoza').on('value', (snapshot) => {
+      var gyozaData = snapshot.val();
+      console.log('gyozaData: ', gyozaData['gyozaCount'])
+      setGyoza(gyozaData['gyozaCount'])
+    });
+    Firebase.database().ref('users/' + userId + '/fountainDrinks').on('value', (snapshot) => {
+      var fountainData = snapshot.val();
+      console.log('fountainData: ', fountainData['fountainDrink'])
+      setDrink(fountainData['fountainDrink'])
+    });
   }, []);
-  useEffect(() => {
-    Firebase.database().ref('users/' + userId + '/gyoza').update({
-      gyozaCount
-    })
-  }, [gyozaCount])
-  useEffect(() => {
-    Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
-      fountainDrink
-    })
-  }, [fountainDrink])
+  // useEffect(() => {
+  //   Firebase.database().ref('users/' + userId + '/gyoza').update({
+  //     gyozaCount
+  //   })
+  // }, [gyozaCount])
+  // useEffect(() => {
+  //   Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
+  //     fountainDrink
+  //   })
+  // }, [fountainDrink])
   function handleDelete(item) {
     Firebase.database().ref('users/' + userId + '/cart/' + item).remove();
   }
-  function addGyoza() {
-    setGyoza(gyozaCount + 1)
-    console.log('gyoza count: ', gyozaCount)
-    // Firebase.database().ref('users/' + userId + '/gyoza').update({
-    //   gyozaCount
-    // })
+  function changeGyoza(change) {
+    var newCount = gyozaCount + change
+    Firebase.database().ref('users/' + userId + '/gyoza').update({
+      gyozaCount: newCount
+    });
+    setGyoza(gyozaCount + change);
   }
-  function addDrink() {
-    setDrink(fountainDrink + 1)
-    console.log('fountain drink: ', fountainDrink)
-    // Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
-    //   fountainDrink
-    // })
+  function changeDrink(change) {
+    var newCount = fountainDrink + change
+    Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
+      fountainDrink: newCount
+    });
+    setDrink(fountainDrink + change);
   }
   var conversion = {
     whiteRice: 'White Rice',
@@ -167,11 +170,15 @@ function Cart({ route, navigation}) {
           )
         })}
         <Text>{`Gyoza x ${gyozaCount} $${gyozaCount * 2}`}</Text>
+        <Button title="+1" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => changeGyoza(1)}></Button>
+        <Button title="-1" accessibilityLabel="Subtracts Gyoza" color="blue" onPress={() => changeGyoza(-1)}></Button>
         <Text>{`Fountain drink x ${fountainDrink} $${fountainDrink * 2}`}</Text>
+        <Button title="+1" accessibilityLabel="Adds Drink" color="blue" onPress={() => changeDrink(1)}></Button>
+        <Button title="-1" accessibilityLabel="Subtracts Drink" color="blue" onPress={() => changeDrink(-1)}></Button>
       </View>
       <Text>{`Subtotal: $${Object.keys(cartItems[0]).length * 9 + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
-      <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => addGyoza()}/>
-      <Button style={styles.button} title="Add Fountain Drink +$2.00" accessibilityLabel="Adds Fountain Drink" color="blue" onPress={() => addDrink()}/>
+      {/* <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => changeGyoza(1)}/>
+      <Button style={styles.button} title="Add Fountain Drink +$2.00" accessibilityLabel="Adds Fountain Drink" color="blue" onPress={() => changeDrink(1)}/> */}
       <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the order screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout')}/>
