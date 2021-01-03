@@ -5,11 +5,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
+// OUTSTANDING ISSUES
+  // NEED TO CREATE A HANDLE CHANGE FUNCTION FOR EACH INPUT
+
 function Checkout({ navigation, route }) {
   console.log('route.params: ', route.params)
   const [ave, setAve] = React.useState(false);
   const [slu, setSlu] = React.useState(false);
-  const [downtown, setDowntown] = React.useState(false)
+  const [downtown, setDowntown] = React.useState(false);
+  const [cc, setCc] = React.useState('');
+  const [exp, setExp] = React.useState('');
+  const [secCode, setCode] = React.useState('');
+  const [billingAddress, setBillingAdd] = React.useState('');
 
   var meals = route.params.subtotal;
   var gyoza = route.params.gyozaCount;
@@ -20,6 +27,11 @@ function Checkout({ navigation, route }) {
   var total = Number(subtotal) + Number(rounded);
   function handlePress(location, stateFunction) {
     stateFunction(!location)
+  }
+  function handleChange(e) {
+    const value = e.target.value;
+    console.log('value: ', value)
+    // stateFunction(value)
   }
   return (
     // LOOK FOR REWARDS!!!
@@ -35,6 +47,10 @@ function Checkout({ navigation, route }) {
         <Text>{`Subtotal: $${subtotal}`}</Text>
         <Text>{`Tax: $${rounded}`}</Text>
         <Text>{`Total: $${total}`}</Text>
+        <TextInput type="text" name="creditCardNum" style={styles.input} placeholder="Credit Card Number" onChange={handleChange}></TextInput>
+        <TextInput type="text" name="expiration" style={styles.input} placeholder="Expiration" onChange={handleChange}></TextInput>
+        <TextInput type="text" name="securityCode" style={styles.input} placeholder="Security Code" onChange={handleChange}></TextInput>
+        <TextInput type="text" name="billingAddress" style={styles.input} placeholder="Billing Address" onChange={handleChange}></TextInput>
       </View>
       <Button style={styles.button} title="Return to Cart" accessibilityLabel="Clicking this button will return to the cart screen" color="blue" onPress={() => navigation.navigate('Cart')}/>
       <Button style={styles.button} title="Submit Order" accessibilityLabel="Clicking this button will submit the order" color="blue" onPress={() => navigation.navigate('Login')}/>
@@ -63,7 +79,13 @@ const styles = StyleSheet.create({
   },
   grayedOut: {
     color: 'gray'
-  }
+  },
+  input: {
+    borderColor: 'grey',
+    borderWidth: 2,
+    width: 250,
+    height: 40
+  },
 });
 
 export default Checkout;
