@@ -182,9 +182,7 @@ function Order({ navigation, route }) {
         {/* Need to style it differently than container? */}
         <View style={styles.choices} title="Base">
           <View style={styles.selectionHeader}>
-            <Text>
-              {`${route.params ? route.params : 'No params'} `}
-            </Text>
+            <Text></Text>
             <Text>Step 1: Base (Choose Up To 3)</Text>
             <Text>Please choose 1 and up to 3</Text>
             <Text>

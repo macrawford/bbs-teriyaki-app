@@ -57,6 +57,31 @@ function Cart({ route, navigation}) {
   function handleDelete(item) {
     Firebase.database().ref('users/' + userId + '/cart/' + item).remove();
   }
+  var conversion = {
+    whiteRice: 'White Rice',
+    brownRice: 'Brown Rice',
+    yakisoba: 'Yakisoba',
+    cabbageSalad: 'Cabbage Salad',
+    veggieStirFry: 'Veggie Stir Fry',
+    broccoli: 'Broccoli',
+    mixedGreenSalad: 'Mixed Green Salad',
+    spicyChicken: 'Spicy Chicken',
+    regChicken: 'Regular Chicken',
+    shreddedPork: 'Shredded Pork',
+    beefBrisket: 'Beef Brisket',
+    tofu: 'Tofu',
+    regSauce: 'Regular Sauce',
+    spicySauce: 'Spicy Sauce',
+    noSauce: 'No Sauce',
+    sideRegSauce: 'Side Regular Sauce',
+    sideSpicySauce: 'Side Spicy Sauce',
+    saladDressing: 'Salad Dressing',
+    extraChicken: 'Extra Chicken',
+    extraPork: 'Extra Pork',
+    extraTofu: 'Extra Tofu',
+    extraBeef: 'Extra Beef',
+    // specialInstructions: specialInstructions
+  }
   return (
     <View style={styles.container}>
       <View style={styles.input}>
@@ -87,8 +112,17 @@ function Cart({ route, navigation}) {
                     var orderItems = order[item]['order'][indOrder];
                     if (orderItems === true) {
                       return (
-                        <Text key={indOrderIndex}>{indOrder}</Text>
+                        <Text key={indOrderIndex}>{conversion[indOrder]}</Text>
                       )
+                      // if (indOrder === 'whiteRice') {
+                      //   return (
+                      //     <Text key={indOrderIndex}>{converted[indOrder]}</Text>
+                      //   )
+                      // } else {
+                      //   return (
+                      //     <Text key={indOrderIndex}>{indOrder}</Text>
+                      //   )
+                      // }
                     }
                   })}
                   <View style={styles.editDelete}>
@@ -104,6 +138,7 @@ function Cart({ route, navigation}) {
           )
         })}
       </View>
+      <Text>{`Subtotal: $${Object.keys(state.cartItems[0]).length * 9}`}</Text>
       <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the order screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout')}/>
