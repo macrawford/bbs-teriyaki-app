@@ -42,8 +42,6 @@ function Cart({ route, navigation}) {
       var cartData = snapshot.val();
       var arrayForm = [];
       arrayForm.push(cartData)
-      console.log('arrayForm: ', arrayForm);
-      console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
       setCart(arrayForm)
     });
     // if (Firebase.database().ref('users/' + userId + '/gyoza')) {

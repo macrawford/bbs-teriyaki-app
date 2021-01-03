@@ -45,6 +45,13 @@ function Checkout({ navigation, route }) {
       setRewards(rewards)
     })
   }, [])
+  function useRewards() {
+    // OKAY SO USE REWARDS IS KIND OF WORKING BUT THE SUBTOTAL ON THE SCREEN DOESN'T ACTUALLY GET UPDATED
+    // THIS IS BECAUSE THE SUBTOTAL VARIABLE IS REFRESHED EVERYTIME A SETSTATE IS RUN
+    subtotal -= 9;
+    console.log('subtotal: ', subtotal)
+    setRewards(rewardCount - 9)
+  }
   function handleChangeCc(e) {
     const value = e;
     setCc(value);
@@ -69,12 +76,17 @@ function Checkout({ navigation, route }) {
     Firebase.database().ref('users/' + userId).update({
       rewardCount: rewardCount + byo
     })
+    // Firebase.database().ref('users/' + userId + '/cart/').remove();
+    // ^Removing because it screws up the cart screen, I think because it is listening for changes to cart and when the cart gets removed it screws up the whole screen and throws error
+    Firebase.database().ref('users/' + userId + '/fountainDrinks/').remove();
+    Firebase.database().ref('users/' + userId + '/gyoza/').remove();
+
     // firebase.database()
     // .ref('users')
     // .child(userId)
     // .child('rewardCount')
     // .set(firebase.database.ServerValue.increment(1))
-    navigation.navigate('Confirmation', {ave: ave, slu: slu, downtown: downtown})
+    navigation.navigate('Confirmation', {ave: ave, slu: slu, downtown: downtown, rewardCount: rewardCount, byo: byo})
   }
   return (
     // LOOK FOR REWARDS!!!
@@ -102,6 +114,7 @@ function Checkout({ navigation, route }) {
         </View>
       </View>
       <View>
+        {rewardCount >= 10 ? <Text style={styles.rewards} onPress={useRewards}>Use Rewards??</Text> : null}
       <Button style={styles.button} title="Return to Cart" accessibilityLabel="Clicking this button will return to the cart screen" color="blue" onPress={() => navigation.navigate('Cart')}/>
       {(ave || downtown || slu) && (cc !== '') && (exp !== '') && (secCode !== '') && (billingAddress !== '') ? <Button style={styles.button} title="Submit Order" accessibilityLabel="Clicking this button will submit the order" color="blue" onPress={handleSubmit}/> : <Button style={styles.button} title="Submit Order" accessibilityLabel="Add a location before moving on!" color="gray"/>}
       </View>
@@ -143,6 +156,11 @@ const styles = StyleSheet.create({
     width: 250,
     height: 80
   },
+  rewards: {
+    fontSize: 24,
+    color: 'green',
+    margin: 30
+  }
 });
 
 export default Checkout;
