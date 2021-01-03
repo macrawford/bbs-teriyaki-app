@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, componentDidMount } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, Button } from 'react-native';
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
@@ -127,7 +127,7 @@ function Cart({ route, navigation}) {
     // specialInstructions: specialInstructions
   }
   return (
-    <View style={styles.container}>
+    <ScrollView>
       <View style={styles.input}>
         {/* Rearrange this map function now that cartItems is objects inside of arrays
         Give each item in the cart an index - that index will be used when editing the cart - take that state and send it in params to the edit screen */}
@@ -206,7 +206,7 @@ function Cart({ route, navigation}) {
       <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
       <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout', { subtotal, gyozaCount, fountainDrink })}/>
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 

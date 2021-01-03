@@ -10,6 +10,7 @@ import Location from './client/Location.js';
 import Order from './client/Order.js';
 import Cart from './client/Cart.js';
 import Checkout from './client/Checkout.js';
+import Confirmation from './client/Confirmation.js';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,7 @@ function App() {
         <Stack.Screen name="Order" component={Order} />
         <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="Checkout" component={Checkout} />
+        <Stack.Screen name="Confirmation" component={Confirmation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

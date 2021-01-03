@@ -51,7 +51,7 @@ function Order({ navigation, route }) {
   const [extraBeef, setExtraBeef] = React.useState(false);
   const [extraCounter, setExtraCounter] = React.useState(0);
 
-  const [specialInstructions, setSpecialInstructions] = React.useState('');
+  const [specialInstructions, setSpecialInstructions] = React.useState(null);
 
   var order = {
     // Can also pass through as a straight object - not sure what will be easier to parse
@@ -126,11 +126,29 @@ function Order({ navigation, route }) {
       }
     }
   }
-  function handleChange(e) {
-    const value = e.target.value;
-    setSpecialInstructions(value)
-  }
 
+  var userId = Firebase.auth().currentUser.uid
+
+  function handleChange(e) {
+    const value = e;
+    console.log('value: ', value)
+    setSpecialInstructions(value)
+    console.log('specialInstructions: ', specialInstructions)
+  }
+  function handleSubmit() {
+    // WILL NEED A CONDITIONAL ABOUT IF ROUTE.PARAMS.ID EXISTS => GO TO THAT ROUTE AND UPDATE, NOT PUSH
+    if (route.params) {
+      Firebase.database().ref('users/' + userId + '/cart/' + route.params.id).update({
+        order
+      })
+    } else {
+      Firebase.database().ref('users/' + userId + '/cart').push({
+        order
+      })
+    }
+    navigation.navigate('Cart');
+    reinitializeState();
+  }
   function reinitializeState() {
     setWhiteRice(false)
     setBrownRice(false)
@@ -154,35 +172,18 @@ function Order({ navigation, route }) {
     setExtraPork(false)
     setExtraTofu(false)
     setExtraBeef(false)
-    setSpecialInstructions('')
+    setSpecialInstructions(null)
     setBaseCounter(0)
     setProteinCounter(0)
     setSauceCounter(0)
     setExtraCounter(0)
-  }
-
-  var userId = Firebase.auth().currentUser.uid
-
-  function handleSubmit() {
-    // WILL NEED A CONDITIONAL ABOUT IF ROUTE.PARAMS.ID EXISTS => GO TO THAT ROUTE AND UPDATE, NOT PUSH
-    if (route.params) {
-      Firebase.database().ref('users/' + userId + '/cart/' + route.params.id).update({
-        order
-      })
-    } else {
-      Firebase.database().ref('users/' + userId + '/cart').push({
-        order
-      })
-    }
-    navigation.navigate('Cart');
-    reinitializeState();
   }
     return (
       <ScrollView>
         {/* Need to style it differently than container? */}
         <View style={styles.choices} title="Base">
           <View style={styles.selectionHeader}>
-            <Text></Text>
+            <Text>BYO: $9.00</Text>
             <Text>Step 1: Base (Choose Up To 3)</Text>
             <Text>Please choose 1 and up to 3</Text>
             <Text>
@@ -288,7 +289,7 @@ function Order({ navigation, route }) {
             <Text>Special Instructions</Text>
             <Text>200 characters or less </Text>
           </View>
-          <TextInput type="text" name="specialInstructions" style={styles.inputBox} onChange={handleChange}></TextInput>
+          <TextInput type="text" name="specialInstructions" style={styles.inputBox} onChangeText={(e) => handleChange(e)}></TextInput>
         </View>
         <Button style={styles.button} title="Return to Location" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Location')}/>
         {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={handleSubmit}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
