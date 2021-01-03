@@ -30,6 +30,7 @@ function Cart({ route, navigation}) {
   var database = Firebase.database();
   var userId = Firebase.auth().currentUser.uid;
   var cart = Firebase.database().ref('users/' + userId + '/cart');
+  var addOns = 0;
   // useEffect(() => {
   //   cart.once('value').then((snapshot) => {
   //     var cartData = snapshot.val();
@@ -109,8 +110,8 @@ function Cart({ route, navigation}) {
     mixedGreenSalad: 'Mixed Green Salad',
     spicyChicken: 'Spicy Chicken',
     regChicken: 'Regular Chicken',
-    shreddedPork: 'Shredded Pork',
-    beefBrisket: 'Beef Brisket',
+    shreddedPork: 'Shredded Pork (+$1.00)',
+    beefBrisket: 'Beef Brisket (+$3.00)',
     tofu: 'Tofu',
     regSauce: 'Regular Sauce',
     spicySauce: 'Spicy Sauce',
@@ -118,10 +119,10 @@ function Cart({ route, navigation}) {
     sideRegSauce: 'Side Regular Sauce',
     sideSpicySauce: 'Side Spicy Sauce',
     saladDressing: 'Salad Dressing',
-    extraChicken: 'Extra Chicken',
-    extraPork: 'Extra Pork',
-    extraTofu: 'Extra Tofu',
-    extraBeef: 'Extra Beef',
+    extraChicken: 'Extra Chicken (+$3.00)',
+    extraPork: 'Extra Pork (+$3.00)',
+    extraTofu: 'Extra Tofu (+$3.00)',
+    extraBeef: 'Extra Beef (+$3.00)',
     // specialInstructions: specialInstructions
   }
   return (
@@ -153,6 +154,12 @@ function Cart({ route, navigation}) {
                     // console.log('state.cartItems', state.cartItems)
                     var orderItems = order[item]['order'][indOrder];
                     if (orderItems === true) {
+                      if (indOrder === 'shreddedPork') {
+                        addOns += 1;
+                      }
+                      if (indOrder === 'beefBrisket' || indOrder === 'extraBeef' || indOrder === 'extraTofu' || indOrder === 'extraChicken' || indOrder === 'extraPork') {
+                        addOns += 3;
+                      }
                       return (
                         <Text key={indOrderIndex}>{conversion[indOrder]}</Text>
                       )
@@ -165,6 +172,11 @@ function Cart({ route, navigation}) {
                       //     <Text key={indOrderIndex}>{indOrder}</Text>
                       //   )
                       // }
+                    }
+                    if (indOrder === 'specialInstructions' && orderItems !== '') {
+                      return (
+                        <Text key={indOrderIndex}>Special Instructions: {orderItems}</Text>
+                      )
                     }
                   })}
                   <View style={styles.editDelete}>
@@ -186,7 +198,7 @@ function Cart({ route, navigation}) {
         <Button title="+1" accessibilityLabel="Adds Drink" color="blue" onPress={() => changeDrink(1)}></Button>
         {fountainDrink > 0 ? <Button title="-1" accessibilityLabel="Subtracts Drink" color="blue" onPress={() => changeDrink(-1)}></Button> : null}
       </View>
-      <Text>{`Subtotal: $${Object.keys(cartItems[0]).length * 9 + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
+      <Text>{`Subtotal: $${Object.keys(cartItems[0]).length * 9 + (gyozaCount * 2) + (fountainDrink * 2) + addOns}`}</Text>
       {/* <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => changeGyoza(1)}/>
       <Button style={styles.button} title="Add Fountain Drink +$2.00" accessibilityLabel="Adds Fountain Drink" color="blue" onPress={() => changeDrink(1)}/> */}
       <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
