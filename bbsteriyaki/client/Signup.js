@@ -69,7 +69,7 @@ function Signup({ navigation }) {
           rewardCount: 0
         })
         // It appears cart and pastOrders won't actually be added since they are undefined at this point
-        navigation.navigate('Location')
+        navigation.navigate('Order')
       })
       .catch(error => {
         console.log('error: ', error)

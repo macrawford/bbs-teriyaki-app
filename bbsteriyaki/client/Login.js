@@ -38,7 +38,7 @@ function Login({ navigation }) {
       .signInWithEmailAndPassword(state.email, state.password)
       .then((user) => {
         console.log('user: ', user)
-        navigation.navigate('Location')
+        navigation.navigate('Order')
       })
       .catch(error => console.log('error: ', error))
   }

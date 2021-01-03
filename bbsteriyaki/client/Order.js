@@ -10,6 +10,7 @@ import 'firebase/database';
 
 // OUTANDING ERRORS
   // YOU ARE ALLOWED TO SELECT NO SAUCE AND OTHER SAUCES - YOU SHOULD NOT BE ABLE TO DO THAT
+  // NEED A FEATURE TO SKIP THIS PAGE AND GO STRAIGHT TO CART - FAIRLY EASY TO SET UP
 
 function Order({ navigation, route }) {
   var database = Firebase.database();
@@ -291,7 +292,7 @@ function Order({ navigation, route }) {
           </View>
           <TextInput type="text" name="specialInstructions" style={styles.inputBox} onChangeText={(e) => handleChange(e)}></TextInput>
         </View>
-        <Button style={styles.button} title="Return to Location" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Location')}/>
+        <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
         {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={handleSubmit}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
         <StatusBar style="auto" />
       </ScrollView>

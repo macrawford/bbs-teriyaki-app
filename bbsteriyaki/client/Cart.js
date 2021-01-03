@@ -11,14 +11,6 @@ import 'firebase/database';
 // OUTANDING ERRORS
   // GYOZA COUNT RESETS TO 0 WHENEVER YOU GO BACK AND EDIT AN ORDER
 
-// CART TO-DOs:
-// Map over the stringified object and format the order nicely on the screen
-// Allow editing of orders (currently you just go back to the previous screen)
-  // Probably necessitates route params that you pass on navigation
-// Allow adding of more orders (will need to reset the previous screen somehow - create )
-// Set up security rules so people can only access the info in their cart
-  // I think these items both need a database involved
-
 function Cart({ route, navigation}) {
   // const { order } = route.params;
   // const orders = [];
@@ -32,6 +24,7 @@ function Cart({ route, navigation}) {
   var cart = Firebase.database().ref('users/' + userId + '/cart');
   // var addOns = 0;
   var subtotal = 0;
+  var byo = 0;
   // useEffect(() => {
   //   cart.once('value').then((snapshot) => {
   //     var cartData = snapshot.val();
@@ -137,6 +130,7 @@ function Cart({ route, navigation}) {
             <View key={orderIndex}>
             {Object.keys(order).map((item, itemIndex) => {
               subtotal += 9;
+              byo += 1;
               // console.log('object.keys: ', Object.keys(order))
               // console.log('order first time thru: ', order)
               // console.log('item: ', item)
@@ -204,7 +198,7 @@ function Cart({ route, navigation}) {
       {/* <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => changeGyoza(1)}/>
       <Button style={styles.button} title="Add Fountain Drink +$2.00" accessibilityLabel="Adds Fountain Drink" color="blue" onPress={() => changeDrink(1)}/> */}
       <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
-      <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout', { subtotal, gyozaCount, fountainDrink })}/>
+      <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout', { subtotal, gyozaCount, fountainDrink, byo })}/>
       <StatusBar style="auto" />
     </ScrollView>
   );
