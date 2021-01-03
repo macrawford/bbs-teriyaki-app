@@ -30,7 +30,8 @@ function Cart({ route, navigation}) {
   var database = Firebase.database();
   var userId = Firebase.auth().currentUser.uid;
   var cart = Firebase.database().ref('users/' + userId + '/cart');
-  var addOns = 0;
+  // var addOns = 0;
+  var subtotal = 0;
   // useEffect(() => {
   //   cart.once('value').then((snapshot) => {
   //     var cartData = snapshot.val();
@@ -135,6 +136,7 @@ function Cart({ route, navigation}) {
           return (
             <View key={orderIndex}>
             {Object.keys(order).map((item, itemIndex) => {
+              subtotal += 9;
               // console.log('object.keys: ', Object.keys(order))
               // console.log('order first time thru: ', order)
               // console.log('item: ', item)
@@ -155,10 +157,10 @@ function Cart({ route, navigation}) {
                     var orderItems = order[item]['order'][indOrder];
                     if (orderItems === true) {
                       if (indOrder === 'shreddedPork') {
-                        addOns += 1;
+                        subtotal += 1;
                       }
                       if (indOrder === 'beefBrisket' || indOrder === 'extraBeef' || indOrder === 'extraTofu' || indOrder === 'extraChicken' || indOrder === 'extraPork') {
-                        addOns += 3;
+                        subtotal += 3;
                       }
                       return (
                         <Text key={indOrderIndex}>{conversion[indOrder]}</Text>
@@ -198,12 +200,11 @@ function Cart({ route, navigation}) {
         <Button title="+1" accessibilityLabel="Adds Drink" color="blue" onPress={() => changeDrink(1)}></Button>
         {fountainDrink > 0 ? <Button title="-1" accessibilityLabel="Subtracts Drink" color="blue" onPress={() => changeDrink(-1)}></Button> : null}
       </View>
-      <Text>{`Subtotal: $${Object.keys(cartItems[0]).length * 9 + (gyozaCount * 2) + (fountainDrink * 2) + addOns}`}</Text>
+      <Text>{`Subtotal: $${subtotal + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
       {/* <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => changeGyoza(1)}/>
       <Button style={styles.button} title="Add Fountain Drink +$2.00" accessibilityLabel="Adds Fountain Drink" color="blue" onPress={() => changeDrink(1)}/> */}
       <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
-      <Button style={styles.button} title="Return to Order" accessibilityLabel="Clicking this button will return to the order screen" color="blue" onPress={() => navigation.navigate('Order')}/>
-      <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout')}/>
+      <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout', { subtotal, gyozaCount, fountainDrink })}/>
       <StatusBar style="auto" />
     </View>
   );
