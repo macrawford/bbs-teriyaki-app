@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TextInput, Button, CheckBox, Pressable } from 'react-native';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
@@ -210,12 +211,13 @@ function Order({ navigation, route }) {
         <View style={styles.choices} title="Base">
           <Text style={styles.header}>Build Your Own: $9.00</Text>
           <View style={styles.selectionHeader}>
-            <Text style={styles.selectionHeaderText}>Step 1: Base (Choose Up To 3)</Text>
-            <Text style={styles.selectionHeaderText}>Please choose 1 and up to 3</Text>
-            <Text style={styles.required}>
-              {`${brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad ? 'Good to Go' : 'Required'} `}
-              {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
-            </Text>
+            <View style={styles.instructions}>
+              <Text style={styles.selectionHeaderBold}>Step 1: Base (Choose Up To 3)</Text>
+              <Text style={styles.selectionHeaderText}>Please choose 1 and up to 3</Text>
+            </View>
+            <View style={styles.requiredDiv}>
+              {(brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
+            </View>
           </View>
           <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(whiteRice, setWhiteRice, 3, baseCounter, setBaseCounter)}>
             {`White Rice: ${whiteRice ? 'Selected' : 'Not Selected '}`}
@@ -241,12 +243,13 @@ function Order({ navigation, route }) {
         </View>
         <View style={styles.choices} title="Protein">
           <View style={styles.selectionHeader}>
-            <Text>Step 2: Protein (Choose Up To 2)</Text>
-            <Text>Please choose 1 and up to 2</Text>
-            <Text>
-              {`${spicyChicken || regChicken || shreddedPork || beefBrisket || tofu ? 'Good to Go' : 'Required'} `}
-              {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
-            </Text>
+            <View style={styles.instructions}>
+              <Text style={styles.selectionHeaderBold}>Step 2: Protein (Choose Up To 2)</Text>
+              <Text style={styles.selectionHeaderText}>Please choose 1 and up to 2</Text>
+            </View>
+            <View style={styles.requiredDiv}>
+              {(spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
+            </View>
           </View>
           <Text style={ (spicyChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicyChicken, setSpicyChicken, 2, proteinCounter, setProteinCounter)}>
             {`Spicy Chicken: ${spicyChicken ? 'Selected' : 'Not Selected '}`}
@@ -266,12 +269,13 @@ function Order({ navigation, route }) {
         </View>
         <View style={styles.choices} title="Sauce">
           <View style={styles.selectionHeader}>
-            <Text>Step 3: Sauce (Choose Up To 2)</Text>
-            <Text>Please choose 1 and up to 2</Text>
-            <Text>
-              {`${regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing ? 'Good to Go' : 'Required'} `}
-              {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
-            </Text>
+            <View style={styles.instructions}>
+              <Text style={styles.selectionHeaderBold}>Step 3: Sauce (Choose Up To 2)</Text>
+              <Text style={styles.selectionHeaderText}>Please choose 1 and up to 2</Text>
+            </View>
+            <View style={styles.requiredDiv}>
+              {(regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
+            </View>
           </View>
           <Text style={ (regSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(regSauce, setRegSauce, 2, sauceCounter, setSauceCounter)}>
             {`Regular Sauce: ${regSauce ? 'Selected' : 'Not Selected '}`}
@@ -294,8 +298,10 @@ function Order({ navigation, route }) {
         </View>
         <View style={styles.choices} title="Extras">
           <View style={styles.selectionHeader}>
-            <Text>Step 4: Extras</Text>
-            <Text>Choose up to 1</Text>
+            <View style={styles.instructions}>
+              <Text style={styles.selectionHeaderBold}>Step 4: Extras</Text>
+              <Text style={styles.selectionHeaderText}>Choose up to 1</Text>
+            </View>
           </View>
           <Text style={ (extraChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraChicken, setExtraChicken, 1, extraCounter, setExtraCounter)}>
             {`Extra Chicken: ${extraChicken ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
@@ -312,8 +318,10 @@ function Order({ navigation, route }) {
         </View>
         <View style={styles.choices} title="Special Instructions">
           <View style={styles.selectionHeader}>
-            <Text>Special Instructions</Text>
-            <Text>200 characters or less </Text>
+            <View style={styles.instructions}>
+              <Text style={styles.selectionHeaderBold}>Special Instructions</Text>
+              <Text style={styles.selectionHeaderText}>200 characters or less</Text>
+            </View>
           </View>
           <TextInput type="text" name="specialInstructions" placeholder={specialInstructions} style={styles.inputBox} onChangeText={(e) => handleChange(e)}></TextInput>
         </View>
@@ -347,18 +355,40 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 18,
   },
+  instructions: {
+    flexDirection: 'column'
+  },
   selectionHeader: {
     backgroundColor: 'gainsboro',
-    flexDirection: 'column',
-    alignItems: 'stretch'
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    width: "100%",
+    paddingLeft: 16,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 16,
+    justifyContent: 'space-between'
   },
   selectionHeaderText: {
     fontSize: 18
   },
+  selectionHeaderBold: {
+    fontSize: 18,
+    fontWeight: '600'
+  },
   required: {
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
-    color: 'pink'
+    color: 'red',
+  },
+  goodToGo: {
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+    color: 'green',
+  },
+  requiredDiv: {
+    alignItems: 'flex-end',
+    justifyContent: 'center'
   },
   inputBox: {
     borderColor: 'grey',
@@ -373,10 +403,10 @@ const styles = StyleSheet.create({
     color: 'gray'
   },
   header: {
-    fontSize: 28,
-    fontWeight: '400',
-    marginTop: 10,
-    marginBottom: 10
+    fontSize: 24,
+    fontWeight: '600',
+    marginTop: 20,
+    marginBottom: 20
   }
 });
 
