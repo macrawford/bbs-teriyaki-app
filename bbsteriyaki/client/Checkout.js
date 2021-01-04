@@ -96,7 +96,6 @@ function Checkout({ navigation, route }) {
     <ScrollView>
       <View style={styles.input}>
         <View>
-          <Text style={styles.font}>THIS IS THE CHECKOUT PAGE</Text>
         </View>
         <View>
           <Text>Pick a Location:</Text>

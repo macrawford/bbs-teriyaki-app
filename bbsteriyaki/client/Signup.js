@@ -8,6 +8,8 @@ import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
 
+// STYLING TO-DOs:
+  // MAKE BUTTONS LOOK BETTER - RED RECTANGLES WITH WHITE SUBMIT
 function Signup({ navigation }) {
   var database = Firebase.database();
   const [state, setState] = React.useState({
@@ -93,11 +95,11 @@ function Signup({ navigation }) {
         </View>
         <View style={styles.input}>
           <Text style={styles.font}>Email: </Text>
-          <TextInput style={styles.inputBox} keyboardType='email-address' type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>
+          <TextInput style={styles.inputBoxEmail} keyboardType='email-address' type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>
         </View>
         <View style={styles.input}>
           <Text style={styles.font}>Password: </Text>
-          <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChangeText={(e) => handleChangePassword(e)}></TextInput>
+          <TextInput style={styles.inputBoxPassword} secureTextEntry={true} type="text" name="password" onChangeText={(e) => handleChangePassword(e)}></TextInput>
         </View>
         <View style={styles.buttonMargin}>
           <Button style={styles.button} title="Sign Up!" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={handleSignup}/>
@@ -118,11 +120,25 @@ const styles = StyleSheet.create({
   },
   input: {
     flexDirection: 'row',
+    paddingTop: 5
   },
   inputBox: {
     borderColor: 'grey',
     borderWidth: 2,
-    width: 125,
+    width: 155,
+    height: 25
+  },
+  inputBoxEmail: {
+    borderColor: 'grey',
+    borderWidth: 2,
+    width: 192,
+    height: 25
+  },
+  inputBoxPassword: {
+    borderColor: 'grey',
+    borderWidth: 2,
+    width: 164,
+    height: 25
   },
   logoContainer: {
     display: 'flex',
@@ -135,8 +151,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   font: {
-    fontFamily: 'Helvetica',
-    fontWeight: '400',
+    fontFamily: 'HelveticaNeue',
+    fontWeight: '500',
     fontSize: 16
   },
   logo: {

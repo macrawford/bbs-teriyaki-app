@@ -173,7 +173,7 @@ function Order({ navigation, route }) {
       })
     }
     navigation.navigate('Cart');
-    reinitializeState();
+    // reinitializeState();
   }
   function reinitializeState() {
   //   setWhiteRice(false)
@@ -205,23 +205,23 @@ function Order({ navigation, route }) {
     // setExtraCounter(0)
   }
     return (
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.container}>
         {/* Need to style it differently than container? */}
         <View style={styles.choices} title="Base">
+          <Text style={styles.header}>Build Your Own: $9.00</Text>
           <View style={styles.selectionHeader}>
-            <Text>BYO: $9.00</Text>
-            <Text>Step 1: Base (Choose Up To 3)</Text>
-            <Text>Please choose 1 and up to 3</Text>
-            <Text>
+            <Text style={styles.selectionHeaderText}>Step 1: Base (Choose Up To 3)</Text>
+            <Text style={styles.selectionHeaderText}>Please choose 1 and up to 3</Text>
+            <Text style={styles.required}>
               {`${brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad ? 'Good to Go' : 'Required'} `}
               {/* CHANGE GOOD TO GO TO A CHECKMARK LOGO OR SOMETHING COOL?? */}
             </Text>
           </View>
           <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(whiteRice, setWhiteRice, 3, baseCounter, setBaseCounter)}>
-            {`White rice: ${whiteRice ? 'Selected' : 'Not Selected '}`}
+            {`White Rice: ${whiteRice ? 'Selected' : 'Not Selected '}`}
           </Text>
           <Text style={ (brownRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(brownRice, setBrownRice, 3, baseCounter, setBaseCounter)}>
-            {`Brown rice: ${brownRice ? 'Selected' : 'Not Selected '}`}
+            {`Brown Rice: ${brownRice ? 'Selected' : 'Not Selected '}`}
           </Text>
           <Text style={ (yakisoba) ? styles.selected : styles.notSelected} onPress={() => handlePress(yakisoba, setYakisoba, 3, baseCounter, setBaseCounter)}>
             {`Yakisoba: ${yakisoba ? 'Selected' : 'Not Selected'}`}
@@ -317,8 +317,8 @@ function Order({ navigation, route }) {
           </View>
           <TextInput type="text" name="specialInstructions" placeholder={specialInstructions} style={styles.inputBox} onChangeText={(e) => handleChange(e)}></TextInput>
         </View>
-        <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
         {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={handleSubmit}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
+        <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
         <StatusBar style="auto" />
       </ScrollView>
     );
@@ -326,11 +326,11 @@ function Order({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     justifyContent: 'center',
-    color: 'red'
+    color: 'red',
     // Views cannot handle text styling -- only Text can handle font styling
   },
   choices: {
@@ -348,7 +348,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   selectionHeader: {
-    fontSize: 22,
+    backgroundColor: 'gainsboro',
+    flexDirection: 'column',
+    alignItems: 'stretch'
+  },
+  selectionHeaderText: {
+    fontSize: 18
+  },
+  required: {
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+    color: 'pink'
   },
   inputBox: {
     borderColor: 'grey',
@@ -361,6 +371,12 @@ const styles = StyleSheet.create({
   },
   keepAddingButton: {
     color: 'gray'
+  },
+  header: {
+    fontSize: 28,
+    fontWeight: '400',
+    marginTop: 10,
+    marginBottom: 10
   }
 });
 

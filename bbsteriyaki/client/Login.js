@@ -8,6 +8,9 @@ import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
 
+// STYLING TO-DOs:
+  // MAKE BUTTONS LOOK BETTER - RED RECTANGLES WITH WHITE SUBMIT
+
 function Login({ navigation }) {
   const [state, setState] = React.useState({
     email: "",
@@ -90,16 +93,18 @@ const styles = StyleSheet.create({
   inputBoxEmail: {
     borderColor: 'grey',
     borderWidth: 2,
-    width: 155,
+    width: 185,
+    height: 25
   },
   inputBoxPassword: {
     borderColor: 'grey',
     borderWidth: 2,
-    width: 125,
+    width: 155,
+    height: 25
   },
   font: {
-    fontFamily: 'Helvetica',
-    fontWeight: '400',
+    fontFamily: 'HelveticaNeue',
+    fontWeight: '500',
     fontSize: 16
   },
   logo: {
