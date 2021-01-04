@@ -110,9 +110,9 @@ function Checkout({ navigation, route }) {
           <Text>{`Total: $${total}`}</Text>
         </View>
         <View>
-          <TextInput type="text" name="creditCardNum" style={styles.input} placeholder="Credit Card Number" onChangeText={(e) => handleChangeCc(e)}></TextInput>
-          <TextInput type="text" name="expiration" style={styles.input} placeholder="Expiration" onChangeText={(e) => handleChangeExp(e)}></TextInput>
-          <TextInput type="text" name="securityCode" style={styles.input} placeholder="Security Code" onChangeText={(e) => handleChangeCode(e)}></TextInput>
+          <TextInput type="text" name="creditCardNum" style={styles.inputBox} placeholder="Credit Card Number" onChangeText={(e) => handleChangeCc(e)}></TextInput>
+          <TextInput type="text" name="expiration" style={styles.inputBox} placeholder="Expiration" onChangeText={(e) => handleChangeExp(e)}></TextInput>
+          <TextInput type="text" name="securityCode" style={styles.inputBox} placeholder="Security Code" onChangeText={(e) => handleChangeCode(e)}></TextInput>
           <TextInput type="text" name="billingAddress" style={styles.billAdd} placeholder="Billing Address" onChangeText={(e) => handleChangeBillAdd(e)}></TextInput>
         </View>
       </View>
@@ -136,18 +136,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1
   },
-  inputBox: {
-    borderColor: 'grey',
-    borderWidth: 2,
-    width: 125,
-  },
   font: {
     fontFamily: 'Helvetica-BoldOblique',
   },
   grayedOut: {
     color: 'gray'
   },
-  input: {
+  inputBox: {
     borderColor: 'grey',
     borderWidth: 2,
     width: 250,

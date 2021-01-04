@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, TextInput, Button, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TextInput, Button, Modal, TouchableHighlight, Image, Alert } from 'react-native';
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
@@ -78,27 +78,34 @@ function Signup({ navigation }) {
       })
   }
   return (
-    <View style={styles.container}>
-      <View style={styles.input}>
-        <Text style={styles.font}>First Name: </Text>
-        <TextInput style={styles.inputBox} type="text" name="firstName" onChangeText={(e) => handleChangeFirstName(e)}></TextInput>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image style={styles.logo} source={require('../BB_S.png')}></Image>
       </View>
-      <View style={styles.input}>
-        <Text style={styles.font}>Last Name: </Text>
-        <TextInput style={styles.inputBox} type="text" name="lastName" onChangeText={(e) => handleChangeLastName(e)}></TextInput>
+      <View style={styles.inputsAndButtons}>
+        <View style={styles.input}>
+          <Text style={styles.font}>First Name: </Text>
+          <TextInput style={styles.inputBox} type="text" name="firstName" onChangeText={(e) => handleChangeFirstName(e)}></TextInput>
+        </View>
+        <View style={styles.input}>
+          <Text style={styles.font}>Last Name: </Text>
+          <TextInput style={styles.inputBox} type="text" name="lastName" onChangeText={(e) => handleChangeLastName(e)}></TextInput>
+        </View>
+        <View style={styles.input}>
+          <Text style={styles.font}>Email: </Text>
+          <TextInput style={styles.inputBox} keyboardType='email-address' type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>
+        </View>
+        <View style={styles.input}>
+          <Text style={styles.font}>Password: </Text>
+          <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChangeText={(e) => handleChangePassword(e)}></TextInput>
+        </View>
+        <View style={styles.buttonMargin}>
+          <Button style={styles.button} title="Sign Up!" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={handleSignup}/>
+          <Button style={styles.button} title="Back to Login" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Login')}/>
+        </View>
+        <StatusBar style="auto" />
       </View>
-      <View style={styles.input}>
-        <Text style={styles.font}>Email: </Text>
-        <TextInput style={styles.inputBox} type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>
-      </View>
-      <View style={styles.input}>
-        <Text style={styles.font}>Password: </Text>
-        <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChangeText={(e) => handleChangePassword(e)}></TextInput>
-      </View>
-      <Button style={styles.button} title="Submit" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={handleSignup}/>
-      <Button style={styles.button} title="Back to Login" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Login')}/>
-      <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -117,8 +124,27 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     width: 125,
   },
+  logoContainer: {
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+  inputsAndButtons: {
+    flex: 1,
+    alignItems: 'center'
+  },
   font: {
-    fontFamily: 'Helvetica-BoldOblique',
+    fontFamily: 'Helvetica',
+    fontWeight: '400',
+    fontSize: 16
+  },
+  logo: {
+    height: 200,
+    width: 200
+  },
+  buttonMargin: {
+    marginTop: 10,
   }
 });
 

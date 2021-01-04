@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, TextInput, Button, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TextInput, Button, Modal, TouchableHighlight, Image, Alert } from 'react-native';
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
@@ -40,42 +40,74 @@ function Login({ navigation }) {
         console.log('user: ', user)
         navigation.navigate('Order')
       })
-      .catch(error => console.log('error: ', error))
+      .catch(error => {console.log('error: ', error)})
   }
   return (
-    <View style={styles.container}>
-      <View style={styles.input}>
-        <Text style={styles.font}>Email: </Text>
-        <TextInput style={styles.inputBox} type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image style={styles.logo} source={require('../BB_S.png')}></Image>
       </View>
-      <View style={styles.input}>
-        <Text style={styles.font}>Password: </Text>
-        <TextInput style={styles.inputBox} secureTextEntry={true} type="text" name="password" onChangeText={(e) => handleChangePassword(e)}></TextInput>
+      <View style={styles.inputsAndButtons}>
+        <View style={styles.input}>
+          <Text style={styles.font}>Email: </Text>
+          <TextInput style={styles.inputBoxEmail} keyboardType='email-address' type="text" name="email" onChangeText={(e) => handleChangeEmail(e)}></TextInput>
+        </View>
+        <View style={styles.input}>
+          <Text style={styles.font}>Password: </Text>
+          <TextInput style={styles.inputBoxPassword} secureTextEntry={true} type="text" name="password" onChangeText={(e) => handleChangePassword(e)}></TextInput>
+        </View>
+        <View style={styles.buttonMargin}>
+          <Button title="Submit" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={handleSubmit}/>
+          <Button title="Not Registered? Sign up" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Signup')}/>
+        </View>
+        <StatusBar style="auto" />
       </View>
-      <Button style={styles.button} title="Submit" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={handleSubmit}/>
-      <Button style={styles.button} title="Not Registered? Sign up" accessibilityLabel="Clicking this button submits your email and password" color="red" onPress={() => navigation.navigate('Signup')}/>
-      <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     flex: 1,
     backgroundColor: '#fff',
+
+  },
+  logoContainer: {
+    display: 'flex',
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end'
+  },
+  inputsAndButtons: {
+    flex: 1,
+    alignItems: 'center'
   },
   input: {
     flexDirection: 'row',
+    paddingTop: 5,
   },
-  inputBox: {
+  inputBoxEmail: {
+    borderColor: 'grey',
+    borderWidth: 2,
+    width: 155,
+  },
+  inputBoxPassword: {
     borderColor: 'grey',
     borderWidth: 2,
     width: 125,
   },
   font: {
-    fontFamily: 'Helvetica-BoldOblique',
+    fontFamily: 'Helvetica',
+    fontWeight: '400',
+    fontSize: 16
+  },
+  logo: {
+    height: 200,
+    width: 200
+  },
+  buttonMargin: {
+    marginTop: 10,
   }
 });
 
