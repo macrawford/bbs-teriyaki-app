@@ -9,7 +9,7 @@ import 'firebase/auth';
 import 'firebase/database';
 
 // OUTANDING ERRORS
-  // GYOZA COUNT RESETS TO 0 WHENEVER YOU GO BACK AND EDIT AN ORDER
+  // OKAY, SO I FIXED THE COUNTERS TO BE PASSED WITH STATE, BUT I'M STILL HAVING TROUBLE SOMETIMES WITH SPECIAL INSTRUCTIONS BEING PASSED THROUGH CORRECTLY
 
 function Cart({ route, navigation}) {
   // const { order } = route.params;
@@ -151,6 +151,7 @@ function Cart({ route, navigation}) {
                       if (indOrder === 'shreddedPork') {
                         subtotal += 1;
                       }
+                      //WILL NEED TO EXCLUDE COUNTERS IN THE MAPPING PROCESS- ACTUALLY I DON'T BECAUSE IT'S NOT TRUE (LINE 154) AND IT'S NOT SPECIALINSTRUCTIONS (LINE 175)
                       if (indOrder === 'beefBrisket' || indOrder === 'extraBeef' || indOrder === 'extraTofu' || indOrder === 'extraChicken' || indOrder === 'extraPork') {
                         subtotal += 3;
                       }
@@ -195,7 +196,38 @@ function Cart({ route, navigation}) {
       <Text>{`Subtotal: $${subtotal + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
       {/* <Button style={styles.button} title="Add Gyoza +$2.00" accessibilityLabel="Adds Gyoza" color="blue" onPress={() => changeGyoza(1)}/>
       <Button style={styles.button} title="Add Fountain Drink +$2.00" accessibilityLabel="Adds Fountain Drink" color="blue" onPress={() => changeDrink(1)}/> */}
-      <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Order')}/>
+      <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will add another order" color="blue" onPress={() => navigation.navigate('Order', {
+        order: {
+          beefBrisket: false,
+          broccoli: false,
+          brownRice: false,
+          cabbageSalad: false,
+          extraBeef: false,
+          extraChicken: false,
+          extraPork: false,
+          extraTofu: false,
+          mixedGreenSalad: false,
+          noSauce: false,
+          regChicken: false,
+          regSauce: false,
+          saladDressing: false,
+          shreddedPork: false,
+          sideRegSauce: false,
+          sideSpicySauce: false,
+          specialInstructions: "",
+          spicyChicken: false,
+          spicySauce: false,
+          tofu: false,
+          veggieStirFry: false,
+          whiteRice: false,
+          yakisoba: false,
+          baseCounter: 0,
+          sauceCounter: 0,
+          proteinCounter: 0,
+          extraCounter: 0
+        },
+        id: 'new'
+        })}/>
       <Button style={styles.button} title="Proceed to Checkout" accessibilityLabel="Clicking this button will proceed to the checkout screen" color="blue" onPress={() => navigation.navigate('Checkout', { subtotal, gyozaCount, fountainDrink, byo })}/>
       <StatusBar style="auto" />
     </ScrollView>

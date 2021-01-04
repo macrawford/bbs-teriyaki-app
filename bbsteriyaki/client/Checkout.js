@@ -10,6 +10,7 @@ import 'firebase/database';
 
 // OUTSTANDING ISSUES
   // ADD A DATE/TIME PICKER TO CHOOSE A TIME FOR PICKUP
+  // CART NOT BEING EMPTIED UPON ORDER SUBMISSION
 
 function Checkout({ navigation, route }) {
   var database = Firebase.database();
@@ -24,12 +25,13 @@ function Checkout({ navigation, route }) {
   const [secCode, setCode] = React.useState('');
   const [billingAddress, setBillingAdd] = React.useState('');
   const [rewardCount, setRewards] = React.useState(0);
+  const [rewardsUsed, setRewardsUsed] = React.useState(0);
 
   var meals = route.params.subtotal;
   var gyoza = route.params.gyozaCount;
   var drinks = route.params.fountainDrink;
   var byo = route.params.byo
-  var subtotal = (meals + (gyoza * 2) + (drinks * 2)).toFixed(2);
+  var subtotal = ((meals + (gyoza * 2) + (drinks * 2)).toFixed(2)) - (rewardsUsed * 9);
   var tax = subtotal *  0.101;
   var rounded = tax.toFixed(2);
   var total = Number(subtotal) + Number(rounded);
@@ -50,6 +52,7 @@ function Checkout({ navigation, route }) {
     // THIS IS BECAUSE THE SUBTOTAL VARIABLE IS REFRESHED EVERYTIME A SETSTATE IS RUN
     subtotal -= 9;
     console.log('subtotal: ', subtotal)
+    setRewardsUsed(rewardsUsed + 1)
     setRewards(rewardCount - 9)
   }
   function handleChangeCc(e) {

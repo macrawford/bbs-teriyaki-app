@@ -52,7 +52,7 @@ function Order({ navigation, route }) {
   const [extraBeef, setExtraBeef] = React.useState(false);
   const [extraCounter, setExtraCounter] = React.useState(0);
 
-  const [specialInstructions, setSpecialInstructions] = React.useState(null);
+  const [specialInstructions, setSpecialInstructions] = React.useState('');
 
   var order = {
     // Can also pass through as a straight object - not sure what will be easier to parse
@@ -78,12 +78,17 @@ function Order({ navigation, route }) {
     extraPork: extraPork,
     extraTofu: extraTofu,
     extraBeef: extraBeef,
-    specialInstructions: specialInstructions
+    specialInstructions: specialInstructions,
+    baseCounter: baseCounter,
+    proteinCounter: proteinCounter,
+    sauceCounter: sauceCounter,
+    extraCounter: extraCounter
   }
 
   useEffect(() => {
-    console.log('route params: ');
     if (route.params) {
+      console.log('route params: ', route.params.order);
+      console.log('special instructions: ', route.params.order['specialInstructions'])
       setWhiteRice(route.params.order['whiteRice'])
       setBrownRice(route.params.order['brownRice'])
       setYakisoba(route.params.order['yakisoba'])
@@ -106,14 +111,26 @@ function Order({ navigation, route }) {
       setExtraPork(route.params.order['extraPork'])
       setExtraTofu(route.params.order['extraTofu'])
       setExtraBeef(route.params.order['extraBeef'])
+      setBaseCounter(route.params.order['baseCounter'])
+      setProteinCounter(route.params.order['proteinCounter'])
+      setSauceCounter(route.params.order['sauceCounter'])
+      setExtraCounter(route.params.order['extraCounter'])
       setSpecialInstructions(route.params.order['specialInstructions'])
+      // WILL NEED TO SET COUNTERS HERE AS WELL
+
+      // if (route.params.order['specialInstructions']) {
+      //   console.log('IN HERE ORDER LINE 122')
+      //   handleChange(route.params.order['specialInstructions'])
+      // } else {
+      //   setSpecialInstructions('')
+      // }
     }
   }, [id]);
 
   function handlePress(item, stateFunction, max, counter, counterFunction) {
     if (item) {
-      stateFunction((!item));
       counterFunction(counter - 1)
+      stateFunction((!item));
     } else {
       if (counter >= max) {
         if (max === 1) {
@@ -122,10 +139,14 @@ function Order({ navigation, route }) {
           alert(`Only ${max} selections allowed`)
         }
       } else {
-        stateFunction((!item));
         counterFunction(counter + 1)
+        stateFunction((!item));
       }
     }
+    console.log('base counter: ', baseCounter)
+    console.log('extra Counter: ', extraCounter)
+    console.log('sauce counter: ', sauceCounter)
+    console.log('protein counter: ', proteinCounter)
   }
 
   var userId = Firebase.auth().currentUser.uid
@@ -138,7 +159,11 @@ function Order({ navigation, route }) {
   }
   function handleSubmit() {
     // WILL NEED A CONDITIONAL ABOUT IF ROUTE.PARAMS.ID EXISTS => GO TO THAT ROUTE AND UPDATE, NOT PUSH
-    if (route.params) {
+    console.log('base counter on submit: ', baseCounter)
+    console.log('extra Counter on submit: ', extraCounter)
+    console.log('sauce counter on submit: ', sauceCounter)
+    console.log('protein counter on submit: ', proteinCounter)
+    if (route.params && route.params.id !== 'new') {
       Firebase.database().ref('users/' + userId + '/cart/' + route.params.id).update({
         order
       })
@@ -151,33 +176,33 @@ function Order({ navigation, route }) {
     reinitializeState();
   }
   function reinitializeState() {
-    setWhiteRice(false)
-    setBrownRice(false)
-    setYakisoba(false)
-    setCabbageSalad(false)
-    setVeggieStirFry(false)
-    setBroccoli(false)
-    setMixedGreenSalad(false)
-    setSpicyChicken(false)
-    setRegChicken(false)
-    setShreddedPork(false)
-    setBeefBrisket(false)
-    setTofu(false)
-    setRegSauce(false)
-    setSpicySauce(false)
-    setNoSauce(false)
-    setSideRegSauce(false)
-    setSideSpicySauce(false)
-    setSaladDressing(false)
-    setExtraChicken(false)
-    setExtraPork(false)
-    setExtraTofu(false)
-    setExtraBeef(false)
-    setSpecialInstructions(null)
-    setBaseCounter(0)
-    setProteinCounter(0)
-    setSauceCounter(0)
-    setExtraCounter(0)
+  //   setWhiteRice(false)
+  //   setBrownRice(false)
+  //   setYakisoba(false)
+  //   setCabbageSalad(false)
+  //   setVeggieStirFry(false)
+  //   setBroccoli(false)
+  //   setMixedGreenSalad(false)
+  //   setSpicyChicken(false)
+  //   setRegChicken(false)
+  //   setShreddedPork(false)
+  //   setBeefBrisket(false)
+  //   setTofu(false)
+  //   setRegSauce(false)
+  //   setSpicySauce(false)
+  //   setNoSauce(false)
+  //   setSideRegSauce(false)
+  //   setSideSpicySauce(false)
+  //   setSaladDressing(false)
+  //   setExtraChicken(false)
+  //   setExtraPork(false)
+  //   setExtraTofu(false)
+  //   setExtraBeef(false)
+  //   setSpecialInstructions(null)
+    // setBaseCounter(0)
+    // setProteinCounter(0)
+    // setSauceCounter(0)
+    // setExtraCounter(0)
   }
     return (
       <ScrollView>
@@ -290,7 +315,7 @@ function Order({ navigation, route }) {
             <Text>Special Instructions</Text>
             <Text>200 characters or less </Text>
           </View>
-          <TextInput type="text" name="specialInstructions" style={styles.inputBox} onChangeText={(e) => handleChange(e)}></TextInput>
+          <TextInput type="text" name="specialInstructions" placeholder={specialInstructions} style={styles.inputBox} onChangeText={(e) => handleChange(e)}></TextInput>
         </View>
         <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
         {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={handleSubmit}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
