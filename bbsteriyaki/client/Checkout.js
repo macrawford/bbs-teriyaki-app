@@ -117,10 +117,13 @@ function Checkout({ navigation, route }) {
                 {downtown || ave ? <Text style={styles.grayedOut}>210 Westlake Ave N Seattle, WA 98109</Text> : <Text style={styles.nonGray} onPress={() => handlePress(slu, setSlu)}>210 Westlake Ave N Seattle, WA 98109</Text>}
               </View>
             </View>
-            <View>
-              <Text>{`Subtotal: $${subtotal}`}</Text>
-              <Text>{`Tax: $${rounded}`}</Text>
-              <Text>{`Total: $${total}`}</Text>
+            <View style={styles.rewardsDiv}>
+              {rewardCount >= 10 ? <Text style={styles.rewards} onPress={useRewards}>Use Rewards</Text> : null}
+            </View>
+            <View style={styles.totalsDiv}>
+              <Text style={styles.totalsFont}>{`Subtotal: $${subtotal}`}</Text>
+              <Text style={styles.totalsFont}>{`Tax: $${rounded}`}</Text>
+              <Text style={styles.totalsFont}>{`Total: $${total}`}</Text>
             </View>
           </View>
           <View>
@@ -131,9 +134,8 @@ function Checkout({ navigation, route }) {
           </View>
         </View>
         <View>
-          {rewardCount >= 10 ? <Text style={styles.rewards} onPress={useRewards}>Use Rewards??</Text> : null}
-        <Button style={styles.button} title="Return to Cart" accessibilityLabel="Clicking this button will return to the cart screen" color="red" onPress={() => navigation.navigate('Cart')}/>
-        {(ave || downtown || slu) && (cc !== '') && (exp !== '') && (secCode !== '') && (billingAddress !== '') ? <Button style={styles.button} title="Submit Order" accessibilityLabel="Clicking this button will submit the order" color="red" onPress={handleSubmit}/> : <Button style={styles.button} title="Submit Order" accessibilityLabel="Add a location before moving on!" color="gray"/>}
+          <Button style={styles.button} title="Return to Cart" accessibilityLabel="Clicking this button will return to the cart screen" color="red" onPress={() => navigation.navigate('Cart')}/>
+          {(ave || downtown || slu) && (cc !== '') && (exp !== '') && (secCode !== '') && (billingAddress !== '') ? <Button style={styles.button} title="Submit Order" accessibilityLabel="Clicking this button will submit the order" color="red" onPress={handleSubmit}/> : <Button style={styles.button} title="Submit Order" accessibilityLabel="Add a location before moving on!" color="gray"/>}
         </View>
         <StatusBar style="auto" />
       </View>
@@ -166,6 +168,13 @@ const styles = StyleSheet.create({
   locationLine: {
     flexDirection: 'row',
     paddingBottom: 15
+  },
+  totalsDiv: {
+    paddingBottom: 20
+  },
+  totalsFont: {
+    fontFamily: 'Helvetica',
+    fontSize: 20
   },
   subContainer: {
     marginLeft: 20,
@@ -209,7 +218,13 @@ const styles = StyleSheet.create({
   rewards: {
     fontSize: 24,
     color: 'green',
-    margin: 30
+    fontWeight: '500',
+    fontFamily: 'Helvetica'
+  },
+  rewardsDiv: {
+    paddingBottom: 15,
+    paddingTop: 5,
+    alignItems: 'center'
   }
 });
 
