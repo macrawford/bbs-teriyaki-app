@@ -104,7 +104,7 @@ function Checkout({ navigation, route }) {
           <View style={styles.locationAndTotal}>
             <View>
               <View style={styles.locationLine}>
-                <Text style={styles.chooseLocationText}>Choose a Location </Text>
+                <Text style={styles.chooseLocationText}>Click a Location </Text>
                 <Entypo name="location-pin" size={32} color="black" />
               </View>
               <View style={styles.indLocation}>
@@ -113,7 +113,7 @@ function Checkout({ navigation, route }) {
               <View style={styles.indLocation}>
                 {slu || ave ? <Text style={styles.grayedOut}>1111 3rd Ave Seattle, WA 98101</Text> : <Text style={styles.nonGray} onPress={() => handlePress(downtown, setDowntown)}>1111 3rd Ave Seattle, WA 98101</Text>}
               </View>
-              <View style={styles.indLocation}>
+              <View style={styles.indLocationLast}>
                 {downtown || ave ? <Text style={styles.grayedOut}>210 Westlake Ave N Seattle, WA 98109</Text> : <Text style={styles.nonGray} onPress={() => handlePress(slu, setSlu)}>210 Westlake Ave N Seattle, WA 98109</Text>}
               </View>
             </View>
@@ -121,9 +121,18 @@ function Checkout({ navigation, route }) {
               {rewardCount >= 10 ? <Text style={styles.rewards} onPress={useRewards}>Use Rewards</Text> : null}
             </View>
             <View style={styles.totalsDiv}>
-              <Text style={styles.totalsFont}>{`Subtotal: $${subtotal}`}</Text>
-              <Text style={styles.totalsFont}>{`Tax: $${rounded}`}</Text>
-              <Text style={styles.totalsFont}>{`Total: $${total}`}</Text>
+              <View style={styles.indTotalDiv}>
+                <Text style={styles.totalsFont}>Subtotal: </Text>
+                <Text style={styles.totalsNum}>{`$${subtotal}`}</Text>
+              </View>
+              <View style={styles.indTotalDiv}>
+                <Text style={styles.totalsFont}>Tax: </Text>
+                <Text style={styles.totalsNum}>{`$${rounded}`}</Text>
+              </View>
+              <View style={styles.indTotalDiv}>
+                <Text style={styles.totalsFont}>Total: </Text>
+                <Text style={styles.totalsNum}>{`$${total}`}</Text>
+              </View>
             </View>
           </View>
           <View>
@@ -160,7 +169,14 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   indLocation: {
-    paddingBottom: 15
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: 'silver'
+  },
+  indLocationLast: {
+    paddingTop: 15,
+    paddingBottom: 15,
   },
   locationAndTotal: {
     paddingTop: 25
@@ -172,7 +188,16 @@ const styles = StyleSheet.create({
   totalsDiv: {
     paddingBottom: 20
   },
+  indTotalDiv: {
+    flexDirection: 'row',
+    paddingBottom: 6
+  },
   totalsFont: {
+    fontFamily: 'Helvetica',
+    fontWeight: '600',
+    fontSize: 20
+  },
+  totalsNum: {
     fontFamily: 'Helvetica',
     fontSize: 20
   },
@@ -195,7 +220,8 @@ const styles = StyleSheet.create({
   grayedOut: {
     color: 'silver',
     fontFamily: 'Helvetica',
-    fontSize: 18
+    fontSize: 18,
+    fontWeight: '300'
   },
   nonGray: {
     color: 'black',
@@ -207,7 +233,8 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     borderWidth: 2,
     width: 250,
-    height: 40
+    height: 40,
+    marginBottom: 5
   },
   billAdd: {
     borderColor: 'grey',

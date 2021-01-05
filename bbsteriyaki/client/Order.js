@@ -21,6 +21,7 @@ function Order({ navigation, route }) {
   } else {
     id = 0;
   }
+  console.log('id: ', id)
   // ^ This is used for the useEffect function
 
   const [whiteRice, setWhiteRice] = React.useState(false);
@@ -220,7 +221,7 @@ function Order({ navigation, route }) {
               <Text style={styles.selectionHeaderText}>Please choose 1 and up to 3</Text>
             </View>
             <View style={styles.requiredDiv}>
-              {(brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) ? <AntDesign name="check" size={40} color="green"/> : <Text style={styles.required}>Required</Text>}
+              {(brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
           <View style={styles.ingredientsContainer}>
@@ -263,7 +264,7 @@ function Order({ navigation, route }) {
               <Text style={styles.selectionHeaderText}>Please choose 1 and up to 2</Text>
             </View>
             <View style={styles.requiredDiv}>
-              {(spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) ? <AntDesign name="check" size={40} color="green"/> : <Text style={styles.required}>Required</Text>}
+              {(spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
           <View style={styles.ingredientsContainer}>
@@ -300,7 +301,7 @@ function Order({ navigation, route }) {
               <Text style={styles.selectionHeaderText}>Please choose 1 and up to 2</Text>
             </View>
             <View style={styles.requiredDiv}>
-              {(regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing) ? <AntDesign name="check" size={40} color="green"/> : <Text style={styles.required}>Required</Text>}
+              {(regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
           <View style={styles.ingredientsContainer}>

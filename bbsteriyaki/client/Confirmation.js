@@ -38,7 +38,7 @@ function Confirmation ({ navigation, route }) {
         {params.slu ? <Text style={styles.font}>{`${firstName}, thank you for your order. It will be ready in 15 minutes at 210 Westlake Ave N Seattle, WA 98109.`}</Text> : null}
         {params.downtown ? <Text style={styles.font}>{`${firstName}, thank you for your order. It will be ready in 15 minutes at 1111 3rd Ave Seattle, WA 98101.`}</Text> : null}
         <View style={styles.rewards}>
-          {rewardsCount < 9 ? <Text style={styles.font}>{`You earned ${rewardsAdded} reward points today for a total of ${rewardsCount} reward points. Keep earning and when you hit 10 points you'll be eligible for a free meal!`}</Text> : <Text style={styles.font}>{`You earned ${rewardsAdded} reward points today for a total of ${rewardsCount} reward points. Redeem those points next time for a free meal!`}</Text>}
+          {rewardsCount < 9 ? <Text style={styles.font}>{`You earned ${rewardsAdded} reward points today for a total of ${rewardsCount} reward points. Keep earning and when you hit 9 points you'll be eligible for a free meal!`}</Text> : <Text style={styles.font}>{`You earned ${rewardsAdded} reward points today for a total of ${rewardsCount} reward points. Redeem those points next time for a free meal!`}</Text>}
         </View>
         <Button title="Return to Login Screen" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}></Button>
       </View>
