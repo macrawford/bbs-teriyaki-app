@@ -219,27 +219,38 @@ function Order({ navigation, route }) {
               {(brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
-          <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(whiteRice, setWhiteRice, 3, baseCounter, setBaseCounter)}>
-            {`White Rice: ${whiteRice ? 'Selected' : 'Not Selected '}`}
-          </Text>
-          <Text style={ (brownRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(brownRice, setBrownRice, 3, baseCounter, setBaseCounter)}>
-            {`Brown Rice: ${brownRice ? 'Selected' : 'Not Selected '}`}
-          </Text>
-          <Text style={ (yakisoba) ? styles.selected : styles.notSelected} onPress={() => handlePress(yakisoba, setYakisoba, 3, baseCounter, setBaseCounter)}>
-            {`Yakisoba: ${yakisoba ? 'Selected' : 'Not Selected'}`}
-          </Text>
-          <Text style={ (cabbageSalad) ? styles.selected : styles.notSelected} onPress={() => handlePress(cabbageSalad, setCabbageSalad, 3, baseCounter, setBaseCounter)}>
-            {`Cabbage Salad: ${cabbageSalad ? 'Selected' : 'Not Selected'}`}
-          </Text>
-          <Text style={ (veggieStirFry) ? styles.selected : styles.notSelected} onPress={() => handlePress(veggieStirFry, setVeggieStirFry, 3, baseCounter, setBaseCounter)}>
-            {`Veggie Stir Fry: ${veggieStirFry ? 'Selected' : 'Not Selected'}`}
-          </Text>
-          <Text style={ (broccoli) ? styles.selected : styles.notSelected} onPress={() => handlePress(broccoli, setBroccoli, 3, baseCounter, setBaseCounter)}>
-            {`Broccoli: ${broccoli ? 'Selected' : 'Not Selected'}`}
-          </Text>
-          <Text style={ (mixedGreenSalad) ? styles.selected : styles.notSelected} onPress={() => handlePress(mixedGreenSalad, setMixedGreenSalad, 3, baseCounter, setBaseCounter)}>
-            {`Mixed Green Salad: ${mixedGreenSalad ? 'Selected' : 'Not Selected'}`}
-          </Text>
+          <View style={styles.ingredientsContainer}>
+            <View style={styles.ingredientsMargin}>
+              <View style={styles.ingredients}>
+                {whiteRice ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(whiteRice, setWhiteRice, 3, baseCounter, setBaseCounter)}>  White Rice</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {brownRice ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (brownRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(brownRice, setBrownRice, 3, baseCounter, setBaseCounter)}>  Brown Rice</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {yakisoba ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (yakisoba) ? styles.selected : styles.notSelected} onPress={() => handlePress(yakisoba, setYakisoba, 3, baseCounter, setBaseCounter)}>  Yakisoba</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {cabbageSalad ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (cabbageSalad) ? styles.selected : styles.notSelected} onPress={() => handlePress(cabbageSalad, setCabbageSalad, 3, baseCounter, setBaseCounter)}>  Cabbage Salad</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {veggieStirFry ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (veggieStirFry) ? styles.selected : styles.notSelected} onPress={() => handlePress(veggieStirFry, setVeggieStirFry, 3, baseCounter, setBaseCounter)}>  Veggie Stir Fry</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {broccoli ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (broccoli) ? styles.selected : styles.notSelected} onPress={() => handlePress(broccoli, setBroccoli, 3, baseCounter, setBaseCounter)}>  Broccoli</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {mixedGreenSalad ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (mixedGreenSalad) ? styles.selected : styles.notSelected} onPress={() => handlePress(mixedGreenSalad, setMixedGreenSalad, 3, baseCounter, setBaseCounter)}>  Mixed Green Salad</Text>
+              </View>
+            </View>
+          </View>
         </View>
         <View style={styles.choices} title="Protein">
           <View style={styles.selectionHeader}>
@@ -259,18 +270,22 @@ function Order({ navigation, route }) {
                 {/* <FontAwesome name="square-o" size={24} color="black" /> */}
                 <Text style={ (spicyChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicyChicken, setSpicyChicken, 2, proteinCounter, setProteinCounter)}>  Spicy Chicken</Text>
               </View>
-              <Text style={ (regChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(regChicken, setRegChicken, 2, proteinCounter, setProteinCounter)}>
-                {`Regular Chicken: ${regChicken ? 'Selected' : 'Not Selected '}`}
-              </Text>
-              <Text style={ (shreddedPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(shreddedPork, setShreddedPork, 2, proteinCounter, setProteinCounter)}>
-                {`Shredded Pork: ${shreddedPork ? 'Selected (+$1.00)' : 'Not Selected (+$1.00)'}`}
-              </Text>
-              <Text style={ (beefBrisket) ? styles.selected : styles.notSelected} onPress={() => handlePress(beefBrisket, setBeefBrisket, 2, proteinCounter, setProteinCounter)}>
-                {`Beef Brisket: ${beefBrisket ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
-              </Text>
-              <Text style={ (tofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(tofu, setTofu, 2, proteinCounter, setProteinCounter)}>
-                {`Tofu: ${tofu ? 'Selected' : 'Not Selected'}`}
-              </Text>
+              <View style={styles.ingredients}>
+                {regChicken ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (regChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(regChicken, setRegChicken, 2, proteinCounter, setProteinCounter)}>  Regular Chicken</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {shreddedPork ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (shreddedPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(shreddedPork, setShreddedPork, 2, proteinCounter, setProteinCounter)}>  Shredded Pork</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {beefBrisket ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (beefBrisket) ? styles.selected : styles.notSelected} onPress={() => handlePress(beefBrisket, setBeefBrisket, 2, proteinCounter, setProteinCounter)}>  Beef Brisket</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {tofu ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (tofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(tofu, setTofu, 2, proteinCounter, setProteinCounter)}>  Tofu </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -284,24 +299,34 @@ function Order({ navigation, route }) {
               {(regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
-          <Text style={ (regSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(regSauce, setRegSauce, 2, sauceCounter, setSauceCounter)}>
-            {`Regular Sauce: ${regSauce ? 'Selected' : 'Not Selected '}`}
-          </Text>
-          <Text style={ (spicySauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicySauce, setSpicySauce, 2, sauceCounter, setSauceCounter)}>
-            {`Spicy Sauce: ${spicySauce ? 'Selected' : 'Not Selected '}`}
-          </Text>
-          <Text style={ (noSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(noSauce, setNoSauce, 2, sauceCounter, setSauceCounter)}>
-            {`No Sauce: ${noSauce ? 'Selected' : 'Not Selected'}`}
-          </Text>
-          <Text style={ (sideRegSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(sideRegSauce, setSideRegSauce, 2, sauceCounter, setSauceCounter)}>
-            {`Regular Sauce on Side: ${sideRegSauce ? 'Selected' : 'Not Selected'}`}
-          </Text>
-          <Text style={ (sideSpicySauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(sideSpicySauce, setSideSpicySauce, 2, sauceCounter, setSauceCounter)}>
-            {`Spicy Sauce on Side: ${sideSpicySauce ? 'Selected' : 'Not Selected'}`}
-          </Text>
-          <Text style={ (saladDressing) ? styles.selected : styles.notSelected} onPress={() => handlePress(saladDressing, setSaladDressing, 2, sauceCounter, setSauceCounter)}>
-            {`Salad Dressing on Side: ${saladDressing ? 'Selected' : 'Not Selected'}`}
-          </Text>
+          <View style={styles.ingredientsContainer}>
+            <View style={styles.ingredientsMargin}>
+              <View style={styles.ingredients}>
+                {regSauce ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (regSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(regSauce, setRegSauce, 2, sauceCounter, setSauceCounter)}>  Regular Sauce</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {spicySauce ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (spicySauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicySauce, setSpicySauce, 2, sauceCounter, setSauceCounter)}>  Spicy Sauce</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {noSauce ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (noSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(noSauce, setNoSauce, 2, sauceCounter, setSauceCounter)}>  No Sauce</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {sideRegSauce ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (sideRegSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(sideRegSauce, setSideRegSauce, 2, sauceCounter, setSauceCounter)}>  Regular Sauce on Side</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {sideSpicySauce ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (sideSpicySauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(sideSpicySauce, setSideSpicySauce, 2, sauceCounter, setSauceCounter)}>  Spicy Sauce on Side</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {saladDressing ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (saladDressing) ? styles.selected : styles.notSelected} onPress={() => handlePress(saladDressing, setSaladDressing, 2, sauceCounter, setSauceCounter)}>  Salad Dressing on Side</Text>
+              </View>
+            </View>
+          </View>
         </View>
         <View style={styles.choices} title="Extras">
           <View style={styles.selectionHeader}>
@@ -310,18 +335,26 @@ function Order({ navigation, route }) {
               <Text style={styles.selectionHeaderText}>Choose up to 1</Text>
             </View>
           </View>
-          <Text style={ (extraChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraChicken, setExtraChicken, 1, extraCounter, setExtraCounter)}>
-            {`Extra Chicken: ${extraChicken ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
-          </Text>
-          <Text style={ (extraPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraPork, setExtraPork, 1, extraCounter, setExtraCounter)}>
-          { `Extra Pork: ${extraPork ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
-          </Text>
-          <Text style={ (extraTofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraTofu, setExtraTofu, 1, extraCounter, setExtraCounter)}>
-            {`Extra Tofu: ${extraTofu ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
-          </Text>
-          <Text style={ (extraBeef) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraBeef, setExtraBeef, 1, extraCounter, setExtraCounter)}>
-            {`Extra Beef: ${extraBeef ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
-          </Text>
+          <View style={styles.ingredientsContainer}>
+            <View style={styles.ingredientsMargin}>
+              <View style={styles.ingredients}>
+                {extraChicken ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (extraChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraChicken, setExtraChicken, 1, extraCounter, setExtraCounter)}>  Extra Chicken (+$3.00)</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {extraPork ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (extraPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraPork, setExtraPork, 1, extraCounter, setExtraCounter)}>  Extra Pork (+$3.00)</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {extraTofu ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (extraTofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraTofu, setExtraTofu, 1, extraCounter, setExtraCounter)}>  Extra Tofu (+$3.00)</Text>
+              </View>
+              <View style={styles.ingredients}>
+                {extraBeef ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                <Text style={ (extraBeef) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraBeef, setExtraBeef, 1, extraCounter, setExtraCounter)}>  Extra Beef (+$3.00)</Text>
+              </View>
+            </View>
+          </View>
         </View>
         <View style={styles.choices} title="Special Instructions">
           <View style={styles.selectionHeader}>
@@ -369,8 +402,8 @@ const styles = StyleSheet.create({
   },
   ingredients: {
     flexDirection: 'row',
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: 4,
+    paddingBottom: 4,
     height: 40
   },
   instructions: {
