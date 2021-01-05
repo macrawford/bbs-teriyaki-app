@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TextInput, Button, CheckBox, Pressable } from 'react-native';
-import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
@@ -251,21 +251,28 @@ function Order({ navigation, route }) {
               {(spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
-          <Text style={ (spicyChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicyChicken, setSpicyChicken, 2, proteinCounter, setProteinCounter)}>
-            {`Spicy Chicken: ${spicyChicken ? 'Selected' : 'Not Selected '}`}
-          </Text>
-          <Text style={ (regChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(regChicken, setRegChicken, 2, proteinCounter, setProteinCounter)}>
-            {`Regular Chicken: ${regChicken ? 'Selected' : 'Not Selected '}`}
-          </Text>
-          <Text style={ (shreddedPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(shreddedPork, setShreddedPork, 2, proteinCounter, setProteinCounter)}>
-            {`Shredded Pork: ${shreddedPork ? 'Selected (+$1.00)' : 'Not Selected (+$1.00)'}`}
-          </Text>
-          <Text style={ (beefBrisket) ? styles.selected : styles.notSelected} onPress={() => handlePress(beefBrisket, setBeefBrisket, 2, proteinCounter, setProteinCounter)}>
-            {`Beef Brisket: ${beefBrisket ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
-          </Text>
-          <Text style={ (tofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(tofu, setTofu, 2, proteinCounter, setProteinCounter)}>
-            {`Tofu: ${tofu ? 'Selected' : 'Not Selected'}`}
-          </Text>
+          <View style={styles.ingredientsContainer}>
+            <View style={styles.ingredientsMargin}>
+              <View style={styles.ingredients}>
+                {spicyChicken ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
+                {/* <Feather name="check-square" size={24} color="red" /> */}
+                {/* <FontAwesome name="square-o" size={24} color="black" /> */}
+                <Text style={ (spicyChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(spicyChicken, setSpicyChicken, 2, proteinCounter, setProteinCounter)}>  Spicy Chicken</Text>
+              </View>
+              <Text style={ (regChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(regChicken, setRegChicken, 2, proteinCounter, setProteinCounter)}>
+                {`Regular Chicken: ${regChicken ? 'Selected' : 'Not Selected '}`}
+              </Text>
+              <Text style={ (shreddedPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(shreddedPork, setShreddedPork, 2, proteinCounter, setProteinCounter)}>
+                {`Shredded Pork: ${shreddedPork ? 'Selected (+$1.00)' : 'Not Selected (+$1.00)'}`}
+              </Text>
+              <Text style={ (beefBrisket) ? styles.selected : styles.notSelected} onPress={() => handlePress(beefBrisket, setBeefBrisket, 2, proteinCounter, setProteinCounter)}>
+                {`Beef Brisket: ${beefBrisket ? 'Selected (+$3.00)' : 'Not Selected (+$3.00)'}`}
+              </Text>
+              <Text style={ (tofu) ? styles.selected : styles.notSelected} onPress={() => handlePress(tofu, setTofu, 2, proteinCounter, setProteinCounter)}>
+                {`Tofu: ${tofu ? 'Selected' : 'Not Selected'}`}
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={styles.choices} title="Sauce">
           <View style={styles.selectionHeader}>
@@ -346,14 +353,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selected: {
-    fontFamily: 'Helvetica',
-    color: 'green',
+    fontFamily: 'Helvetica-Bold',
     fontSize: 18,
   },
   notSelected: {
-    fontFamily: 'Helvetica-BoldOblique',
-    color: 'red',
+    fontFamily: 'Helvetica',
     fontSize: 18,
+  },
+  ingredientsContainer: {
+    width: '100%'
+  },
+  ingredientsMargin: {
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  ingredients: {
+    flexDirection: 'row',
+    paddingTop: 8,
+    paddingBottom: 8,
+    height: 40
   },
   instructions: {
     flexDirection: 'column'
