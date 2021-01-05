@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, ScrollView, Button } from 'react-native';
+import { AntDesign, Entypo } from '@expo/vector-icons';
+
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
@@ -93,43 +95,86 @@ function Checkout({ navigation, route }) {
   }
   return (
     // LOOK FOR REWARDS!!!
-    <ScrollView>
-      <View style={styles.input}>
-        <View>
-        </View>
-        <View>
-          <Text>Pick a Location:</Text>
-          {slu || downtown ? <Text style={styles.grayedOut}>Location: 4221 University Way NE Seattle, WA 98112</Text> : <Text onPress={() => handlePress(ave, setAve)}>Location: 4221 University Way NE Seattle, WA 98112</Text>}
-          {slu || ave ? <Text style={styles.grayedOut}>Location: 1111 3rd Ave Seattle, WA 98101</Text> : <Text onPress={() => handlePress(downtown, setDowntown)}>Location: 1111 3rd Ave Seattle, WA 98101</Text>}
-          {downtown || ave ? <Text style={styles.grayedOut}>Location: 210 Westlake Ave N Seattle, WA 98109</Text> : <Text onPress={() => handlePress(slu, setSlu)}>Location: 210 Westlake Ave N Seattle, WA 98109</Text>}
-        </View>
-        <View>
-          <Text>{`Subtotal: $${subtotal}`}</Text>
-          <Text>{`Tax: $${rounded}`}</Text>
-          <Text>{`Total: $${total}`}</Text>
-        </View>
-        <View>
-          <TextInput type="text" name="creditCardNum" style={styles.inputBox} placeholder="Credit Card Number" onChangeText={(e) => handleChangeCc(e)}></TextInput>
-          <TextInput type="text" name="expiration" style={styles.inputBox} placeholder="Expiration" onChangeText={(e) => handleChangeExp(e)}></TextInput>
-          <TextInput type="text" name="securityCode" style={styles.inputBox} placeholder="Security Code" onChangeText={(e) => handleChangeCode(e)}></TextInput>
-          <TextInput type="text" name="billingAddress" style={styles.billAdd} placeholder="Billing Address" onChangeText={(e) => handleChangeBillAdd(e)}></TextInput>
-        </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.ccHeader}>
+        <AntDesign name="creditcard" size={48} color="black" />
       </View>
-      <View>
-        {rewardCount >= 10 ? <Text style={styles.rewards} onPress={useRewards}>Use Rewards??</Text> : null}
-      <Button style={styles.button} title="Return to Cart" accessibilityLabel="Clicking this button will return to the cart screen" color="blue" onPress={() => navigation.navigate('Cart')}/>
-      {(ave || downtown || slu) && (cc !== '') && (exp !== '') && (secCode !== '') && (billingAddress !== '') ? <Button style={styles.button} title="Submit Order" accessibilityLabel="Clicking this button will submit the order" color="blue" onPress={handleSubmit}/> : <Button style={styles.button} title="Submit Order" accessibilityLabel="Add a location before moving on!" color="gray"/>}
+      <View style={styles.subContainer}>
+        <View style={styles.input}>
+          <View style={styles.locationAndTotal}>
+            <View>
+              <View style={styles.locationLine}>
+                <Text style={styles.chooseLocationText}>Choose a Location </Text>
+                <Entypo name="location-pin" size={32} color="black" />
+              </View>
+              <View style={styles.indLocation}>
+                {slu || downtown ? <Text style={styles.grayedOut}>4221 University Way NE Seattle, WA 98112</Text> : <Text style={styles.nonGray} onPress={() => handlePress(ave, setAve)}>4221 University Way NE Seattle, WA 98112</Text>}
+              </View>
+              <View style={styles.indLocation}>
+                {slu || ave ? <Text style={styles.grayedOut}>1111 3rd Ave Seattle, WA 98101</Text> : <Text style={styles.nonGray} onPress={() => handlePress(downtown, setDowntown)}>1111 3rd Ave Seattle, WA 98101</Text>}
+              </View>
+              <View style={styles.indLocation}>
+                {downtown || ave ? <Text style={styles.grayedOut}>210 Westlake Ave N Seattle, WA 98109</Text> : <Text style={styles.nonGray} onPress={() => handlePress(slu, setSlu)}>210 Westlake Ave N Seattle, WA 98109</Text>}
+              </View>
+            </View>
+            <View>
+              <Text>{`Subtotal: $${subtotal}`}</Text>
+              <Text>{`Tax: $${rounded}`}</Text>
+              <Text>{`Total: $${total}`}</Text>
+            </View>
+          </View>
+          <View>
+            <TextInput type="text" name="creditCardNum" style={styles.inputBox} placeholder="Credit Card Number" onChangeText={(e) => handleChangeCc(e)}></TextInput>
+            <TextInput type="text" name="expiration" style={styles.inputBox} placeholder="Expiration" onChangeText={(e) => handleChangeExp(e)}></TextInput>
+            <TextInput type="text" name="securityCode" style={styles.inputBox} placeholder="Security Code" onChangeText={(e) => handleChangeCode(e)}></TextInput>
+            <TextInput type="text" name="billingAddress" style={styles.billAdd} placeholder="Billing Address" onChangeText={(e) => handleChangeBillAdd(e)}></TextInput>
+          </View>
+        </View>
+        <View>
+          {rewardCount >= 10 ? <Text style={styles.rewards} onPress={useRewards}>Use Rewards??</Text> : null}
+        <Button style={styles.button} title="Return to Cart" accessibilityLabel="Clicking this button will return to the cart screen" color="red" onPress={() => navigation.navigate('Cart')}/>
+        {(ave || downtown || slu) && (cc !== '') && (exp !== '') && (secCode !== '') && (billingAddress !== '') ? <Button style={styles.button} title="Submit Order" accessibilityLabel="Clicking this button will submit the order" color="red" onPress={handleSubmit}/> : <Button style={styles.button} title="Submit Order" accessibilityLabel="Add a location before moving on!" color="gray"/>}
+        </View>
+        <StatusBar style="auto" />
       </View>
-      <StatusBar style="auto" />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    backgroundColor: '#fff',
+  container: {
+    flexGrow: 1,
+    width: '100%',
+    backgroundColor: 'white',
+  },
+  ccHeader: {
+    flexDirection: 'column',
+    backgroundColor: 'gainsboro',
+    width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingLeft: 16,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 16,
+  },
+  indLocation: {
+    paddingBottom: 15
+  },
+  locationAndTotal: {
+    paddingTop: 25
+  },
+  locationLine: {
+    flexDirection: 'row',
+    paddingBottom: 15
+  },
+  subContainer: {
+    marginLeft: 20,
+    marginRight: 20
+  },
+  chooseLocationText: {
+    fontFamily: 'Helvetica',
+    fontSize: 28,
+    fontWeight: '400'
   },
   input: {
     flexDirection: 'column',
@@ -139,7 +184,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica-BoldOblique',
   },
   grayedOut: {
-    color: 'gray'
+    color: 'silver',
+    fontFamily: 'Helvetica',
+    fontSize: 18
+  },
+  nonGray: {
+    color: 'black',
+    fontFamily: 'Helvetica',
+    fontSize: 18,
+    fontWeight: '400'
   },
   inputBox: {
     borderColor: 'grey',

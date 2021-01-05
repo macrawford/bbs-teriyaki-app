@@ -88,8 +88,8 @@ function Order({ navigation, route }) {
 
   useEffect(() => {
     if (route.params) {
-      console.log('route params: ', route.params.order);
-      console.log('special instructions: ', route.params.order['specialInstructions'])
+      // console.log('route params: ', route.params.order);
+      // console.log('special instructions: ', route.params.order['specialInstructions'])
       setWhiteRice(route.params.order['whiteRice'])
       setBrownRice(route.params.order['brownRice'])
       setYakisoba(route.params.order['yakisoba'])
@@ -144,10 +144,10 @@ function Order({ navigation, route }) {
         stateFunction((!item));
       }
     }
-    console.log('base counter: ', baseCounter)
-    console.log('extra Counter: ', extraCounter)
-    console.log('sauce counter: ', sauceCounter)
-    console.log('protein counter: ', proteinCounter)
+    // console.log('base counter: ', baseCounter)
+    // console.log('extra Counter: ', extraCounter)
+    // console.log('sauce counter: ', sauceCounter)
+    // console.log('protein counter: ', proteinCounter)
   }
 
   var userId = Firebase.auth().currentUser.uid
@@ -160,10 +160,10 @@ function Order({ navigation, route }) {
   }
   function handleSubmit() {
     // WILL NEED A CONDITIONAL ABOUT IF ROUTE.PARAMS.ID EXISTS => GO TO THAT ROUTE AND UPDATE, NOT PUSH
-    console.log('base counter on submit: ', baseCounter)
-    console.log('extra Counter on submit: ', extraCounter)
-    console.log('sauce counter on submit: ', sauceCounter)
-    console.log('protein counter on submit: ', proteinCounter)
+    // console.log('base counter on submit: ', baseCounter)
+    // console.log('extra Counter on submit: ', extraCounter)
+    // console.log('sauce counter on submit: ', sauceCounter)
+    // console.log('protein counter on submit: ', proteinCounter)
     if (route.params && route.params.id !== 'new') {
       Firebase.database().ref('users/' + userId + '/cart/' + route.params.id).update({
         order
@@ -216,7 +216,7 @@ function Order({ navigation, route }) {
               <Text style={styles.selectionHeaderText}>Please choose 1 and up to 3</Text>
             </View>
             <View style={styles.requiredDiv}>
-              {(brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
+              {(brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) ? <AntDesign name="check" size={40} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
           <View style={styles.ingredientsContainer}>
@@ -259,7 +259,7 @@ function Order({ navigation, route }) {
               <Text style={styles.selectionHeaderText}>Please choose 1 and up to 2</Text>
             </View>
             <View style={styles.requiredDiv}>
-              {(spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
+              {(spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) ? <AntDesign name="check" size={40} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
           <View style={styles.ingredientsContainer}>
@@ -296,7 +296,7 @@ function Order({ navigation, route }) {
               <Text style={styles.selectionHeaderText}>Please choose 1 and up to 2</Text>
             </View>
             <View style={styles.requiredDiv}>
-              {(regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing) ? <AntDesign name="check" size={32} color="green"/> : <Text style={styles.required}>Required</Text>}
+              {(regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing) ? <AntDesign name="check" size={40} color="green"/> : <Text style={styles.required}>Required</Text>}
             </View>
           </View>
           <View style={styles.ingredientsContainer}>
