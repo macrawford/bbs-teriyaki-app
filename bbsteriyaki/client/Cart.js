@@ -4,7 +4,7 @@ import React, { useState, useEffect, componentDidMount } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TextInput, ScrollView, Button } from 'react-native';
-import { Ionicons, FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5, FontAwesome, AntDesign } from '@expo/vector-icons';
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
@@ -12,6 +12,7 @@ import 'firebase/database';
 // OUTANDING ERRORS
   // OKAY, SO I FIXED THE COUNTERS TO BE PASSED WITH STATE, BUT I'M STILL HAVING TROUBLE SOMETIMES WITH SPECIAL INSTRUCTIONS BEING PASSED THROUGH CORRECTLY
   // ALSO, WHEN YOU DELETE ALL ORDERS IN THE CART, AND SELECT 'ADD NEW ORDER', IT THROWS AN ERROR
+  // ADD IN WHAT IS GF, VEGAN, ETC
 
 
 function Cart({ route, navigation}) {
@@ -56,14 +57,14 @@ function Cart({ route, navigation}) {
     Firebase.database().ref('users/' + userId + '/gyoza').on('value', (snapshot) => {
       var gyozaData = snapshot.val();
       if (gyozaData !== null) {
-        console.log('gyozaData: ', gyozaData['gyozaCount'])
+        // console.log('gyozaData: ', gyozaData['gyozaCount'])
         setGyoza(gyozaData['gyozaCount'])
       }
     });
     Firebase.database().ref('users/' + userId + '/fountainDrinks').on('value', (snapshot) => {
       var fountainData = snapshot.val();
       if (fountainData !== null) {
-        console.log('fountainData: ', fountainData['fountainDrink'])
+        // console.log('fountainData: ', fountainData['fountainDrink'])
         setDrink(fountainData['fountainDrink'])
       }
     });
@@ -128,7 +129,7 @@ function Cart({ route, navigation}) {
       </View>
       <View style={styles.input}>
         {cartItems.map((order, orderIndex) => {
-          console.log('orderIndex: ', orderIndex)
+          // console.log('orderIndex: ', orderIndex)
           return (
             <View style={styles.orderContainer} key={orderIndex}>
             {Object.keys(order).map((item, itemIndex) => {
@@ -137,9 +138,9 @@ function Cart({ route, navigation}) {
               return (
                 <View style={styles.orderMargin} key={item}>
                   <View style={styles.byoDiv}>
-                    <Text style={styles.byoText}>BYO: </Text>
+                    <Text style={styles.byoText}>BYO: $9</Text>
                   </View>
-
+                  <View style={styles.ingredientsDiv}>
                   {Object.keys(order[item]['order']).map((indOrder, indOrderIndex) => {
                     var orderItems = order[item]['order'][indOrder];
                     if (orderItems === true) {
@@ -159,11 +160,12 @@ function Cart({ route, navigation}) {
                       )
                     }
                   })}
+                  </View>
                   <View style={styles.editDelete}>
-                    <AntDesign name="delete" size={32} color="black" onPress={() => handleDelete(item)}/>
-                    <Button title="Edit this order" color="red" onPress={() => {
+                    <AntDesign name="delete" size={32} color="red" onPress={() => handleDelete(item)}/>
+                    <FontAwesome style={styles.editIcon} name="edit" size={32} color="black" onPress={() => {
                       navigation.navigate('Order', { order: order[item]['order'], id: item })
-                    }}></Button>
+                    }}/>
                   </View>
                 </View>
               )
@@ -171,14 +173,28 @@ function Cart({ route, navigation}) {
             </View>
           )
         })}
-        <Text>{`Gyoza x ${gyozaCount} $${gyozaCount * 2}`}</Text>
-        <Button title="+1" accessibilityLabel="Adds Gyoza" color="red" onPress={() => changeGyoza(1)}></Button>
-        {gyozaCount > 0 ? <Button title="-1" accessibilityLabel="Subtracts Gyoza" color="red" onPress={() => changeGyoza(-1)}></Button> : null}
-        <Text>{`Fountain drink x ${fountainDrink} $${fountainDrink * 2}`}</Text>
-        <Button title="+1" accessibilityLabel="Adds Drink" color="red" onPress={() => changeDrink(1)}></Button>
-        {fountainDrink > 0 ? <Button title="-1" accessibilityLabel="Subtracts Drink" color="red" onPress={() => changeDrink(-1)}></Button> : null}
+        <View style={styles.orderMargin}>
+          <View style={styles.byoDiv}>
+            <Text style={styles.gyozaText}>{`Gyoza x ${gyozaCount}: $${gyozaCount * 2}`}</Text>
+            <View style={styles.editDelete}>
+              <AntDesign style={styles.add} name="pluscircleo" size={28} color="black" title="+1" accessibilityLabel="Adds Gyoza" onPress={() => changeGyoza(1)}/>
+              {gyozaCount > 0 ? <AntDesign style={styles.subtract} name="minuscircleo" size={28} color="black" title="-1" accessibilityLabel="Subtracts Gyoza" onPress={() => changeGyoza(-1)}/> : null}
+            </View>
+          </View>
+          <View style={styles.byoDiv}>
+            <Text style={styles.gyozaText}>{`Fountain drink x ${fountainDrink}: $${fountainDrink * 2}`}</Text>
+            <View style={styles.editDelete}>
+            <AntDesign style={styles.add} name="pluscircleo" size={28} color="black" title="+1" accessibilityLabel="Adds Drink" onPress={() => changeDrink(1)}/>
+              {fountainDrink > 0 ? <AntDesign style={styles.subtract} name="minuscircleo" size={28} color="black" title="-1" accessibilityLabel="Subtracts drink" onPress={() => changeDrink(-1)}/> : null}
+            </View>
+          </View>
+        </View>
       </View>
-      <Text>{`Subtotal: $${subtotal + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
+      <View style={styles.orderMargin}>
+        <View style={styles.byoDiv}>
+          <Text style={styles.subtotalText}>{`Subtotal: $${subtotal + (gyozaCount * 2) + (fountainDrink * 2)}`}</Text>
+        </View>
+      </View>
       <Button style={styles.button} title="Add Another Order" accessibilityLabel="Clicking this button will add another order" color="red" onPress={() => navigation.navigate('Order', {
         order: {
           beefBrisket: false,
@@ -223,6 +239,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '600'
   },
+  gyozaText: {
+    fontFamily: 'Helvetica',
+    fontSize: 22,
+    fontWeight: '500'
+  },
+  subtotalText: {
+    fontFamily: 'Helvetica',
+    fontSize: 28,
+    fontWeight: '400'
+  },
   byoDiv : {
     paddingBottom: 8
   },
@@ -244,10 +270,25 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
   },
+  editIcon: {
+    paddingTop: 2,
+    paddingLeft: 15
+  },
+  add: {
+    paddingTop: 8,
+    paddingLeft: 30
+  },
+  subtract: {
+    paddingTop: 8,
+    paddingLeft: 15
+  },
   indIngredient: {
     fontFamily: 'Helvetica',
     fontSize: 18,
     fontWeight: '300'
+  },
+  ingredientsDiv: {
+    paddingBottom: 10
   },
   specialInstructions: {
     fontFamily: 'Helvetica',
