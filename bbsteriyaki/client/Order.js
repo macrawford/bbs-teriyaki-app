@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, ScrollView, TextInput, Button, CheckBox, Pressable } from 'react-native';
-import { Ionicons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, AntDesign, Feather, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
@@ -209,7 +209,11 @@ function Order({ navigation, route }) {
       <ScrollView contentContainerStyle={styles.container}>
         {/* Need to style it differently than container? */}
         <View style={styles.choices} title="Base">
-          <Text style={styles.header}>Build Your Own: $9.00</Text>
+          <View style={styles.headerDiv}>
+            <Text style={styles.header}>Build Your Own: </Text>
+            <Text style={styles.headerPrice}>$9.00</Text>
+            {/* <MaterialCommunityIcons style={styles.forkKnife} name="silverware-fork-knife" size={40} color="black" /> */}
+          </View>
           <View style={styles.selectionHeader}>
             <View style={styles.instructions}>
               <Text style={styles.selectionHeaderBold}>Step 1: Base (Choose Up To 3)</Text>
@@ -464,10 +468,39 @@ const styles = StyleSheet.create({
     color: 'gray'
   },
   header: {
+    fontFamily: 'Helvetica-Bold',
     fontSize: 24,
-    fontWeight: '600',
-    marginTop: 20,
-    marginBottom: 20
+    fontWeight: '700',
+    marginTop: 30,
+    marginBottom: 30,
+    marginLeft: 20,
+    color: 'black',
+    // textDecorationLine: 'underline',
+    // textShadowOffset: { height: 1, width: 1 },
+    // textShadowRadius: 1,
+    // textShadowColor: 'black',
+  },
+  headerPrice: {
+    fontFamily: 'Helvetica',
+    fontSize: 24,
+    fontWeight: '400',
+    marginTop: 30,
+    marginBottom: 30,
+    color: 'black',
+    // textDecorationLine: 'underline',
+    // textShadowOffset: { height: 1, width: 1 },
+    // textShadowRadius: 1,
+    // textShadowColor: 'black',
+  },
+  forkKnife: {
+    marginTop: 30,
+    marginBottom: 30,
+    marginLeft: 30,
+  },
+  headerDiv: {
+    width: '100%',
+    backgroundColor: '#F5F5F5',
+    flexDirection: 'row',
   }
 });
 
