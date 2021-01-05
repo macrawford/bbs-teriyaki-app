@@ -221,7 +221,7 @@ function Order({ navigation, route }) {
           </View>
           <View style={styles.ingredientsContainer}>
             <View style={styles.ingredientsMargin}>
-              <View style={styles.ingredients}>
+              <View style={styles.ingredientsTop}>
                 {whiteRice ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
                 <Text style={ (whiteRice) ? styles.selected : styles.notSelected} onPress={() => handlePress(whiteRice, setWhiteRice, 3, baseCounter, setBaseCounter)}>  White Rice</Text>
               </View>
@@ -264,7 +264,7 @@ function Order({ navigation, route }) {
           </View>
           <View style={styles.ingredientsContainer}>
             <View style={styles.ingredientsMargin}>
-              <View style={styles.ingredients}>
+              <View style={styles.ingredientsTop}>
                 {spicyChicken ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
                 {/* <Feather name="check-square" size={24} color="red" /> */}
                 {/* <FontAwesome name="square-o" size={24} color="black" /> */}
@@ -276,11 +276,11 @@ function Order({ navigation, route }) {
               </View>
               <View style={styles.ingredients}>
                 {shreddedPork ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
-                <Text style={ (shreddedPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(shreddedPork, setShreddedPork, 2, proteinCounter, setProteinCounter)}>  Shredded Pork</Text>
+                <Text style={ (shreddedPork) ? styles.selected : styles.notSelected} onPress={() => handlePress(shreddedPork, setShreddedPork, 2, proteinCounter, setProteinCounter)}>  Shredded Pork (+$1.00)</Text>
               </View>
               <View style={styles.ingredients}>
                 {beefBrisket ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
-                <Text style={ (beefBrisket) ? styles.selected : styles.notSelected} onPress={() => handlePress(beefBrisket, setBeefBrisket, 2, proteinCounter, setProteinCounter)}>  Beef Brisket</Text>
+                <Text style={ (beefBrisket) ? styles.selected : styles.notSelected} onPress={() => handlePress(beefBrisket, setBeefBrisket, 2, proteinCounter, setProteinCounter)}>  Beef Brisket (+$3.00)</Text>
               </View>
               <View style={styles.ingredients}>
                 {tofu ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
@@ -301,7 +301,7 @@ function Order({ navigation, route }) {
           </View>
           <View style={styles.ingredientsContainer}>
             <View style={styles.ingredientsMargin}>
-              <View style={styles.ingredients}>
+              <View style={styles.ingredientsTop}>
                 {regSauce ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
                 <Text style={ (regSauce) ? styles.selected : styles.notSelected} onPress={() => handlePress(regSauce, setRegSauce, 2, sauceCounter, setSauceCounter)}>  Regular Sauce</Text>
               </View>
@@ -337,7 +337,7 @@ function Order({ navigation, route }) {
           </View>
           <View style={styles.ingredientsContainer}>
             <View style={styles.ingredientsMargin}>
-              <View style={styles.ingredients}>
+              <View style={styles.ingredientsTop}>
                 {extraChicken ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
                 <Text style={ (extraChicken) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraChicken, setExtraChicken, 1, extraCounter, setExtraCounter)}>  Extra Chicken (+$3.00)</Text>
               </View>
@@ -351,7 +351,7 @@ function Order({ navigation, route }) {
               </View>
               <View style={styles.ingredients}>
                 {extraBeef ? <FontAwesome name="check-square" size={24} color="red" /> : <Feather name="square" size={24} color="red" />}
-                <Text style={ (extraBeef) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraBeef, setExtraBeef, 1, extraCounter, setExtraCounter)}>  Extra Beef (+$3.00)</Text>
+                <Text style={ (extraBeef) ? styles.selected : styles.notSelected} onPress={() => handlePress(extraBeef, setExtraBeef, 1, extraCounter, setExtraCounter)}>  Extra Beef (+$4.00)</Text>
               </View>
             </View>
           </View>
@@ -365,8 +365,10 @@ function Order({ navigation, route }) {
           </View>
           <TextInput type="text" name="specialInstructions" placeholder={specialInstructions} style={styles.inputBox} onChangeText={(e) => handleChange(e)}></TextInput>
         </View>
-        {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="blue" onPress={handleSubmit}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
-        <Button style={styles.button} title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="blue" onPress={() => navigation.navigate('Login')}/>
+        {((brownRice || whiteRice || yakisoba || cabbageSalad || veggieStirFry || broccoli || mixedGreenSalad) && (spicyChicken || regChicken || shreddedPork || beefBrisket || tofu) && (regSauce || spicySauce || noSauce || sideRegSauce || sideSpicySauce || saladDressing)) ? <Button style={styles.button} title="Add to Cart" accessibilityLabel="Clicking this button will proceed to the order screen" color="red" onPress={handleSubmit}/> : <Button style={styles.keepAddingButton}title="Keep Adding!" color="grey" onPress={() => alert(`Make sure you have added all the important stuff!`)}/>}
+        <View style={styles.bottomButton}>
+          <Button title="Return to Login" accessibilityLabel="Clicking this button will return to the login screen" color="red" onPress={() => navigation.navigate('Login')}/>
+        </View>
         <StatusBar style="auto" />
       </ScrollView>
     );
@@ -402,8 +404,15 @@ const styles = StyleSheet.create({
   },
   ingredients: {
     flexDirection: 'row',
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: 2,
+    paddingBottom: 2,
+    height: 40
+  },
+  ingredientsTop: {
+    flexDirection: 'row',
+    paddingTop: 2,
+    paddingBottom: 2,
+    marginTop: 8,
     height: 40
   },
   instructions: {
@@ -445,10 +454,11 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     borderWidth: 2,
     width: 250,
-    height: 100
+    height: 100,
+    marginTop: 10
   },
-  button: {
-    color: 'blue'
+  bottomButton: {
+    marginBottom: 10
   },
   keepAddingButton: {
     color: 'gray'

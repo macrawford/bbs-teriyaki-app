@@ -10,6 +10,7 @@ import 'firebase/database';
 
 // STYLING TO-DOs:
   // MAKE BUTTONS LOOK BETTER - RED RECTANGLES WITH WHITE SUBMIT
+
 function Signup({ navigation }) {
   var database = Firebase.database();
   const [state, setState] = React.useState({
