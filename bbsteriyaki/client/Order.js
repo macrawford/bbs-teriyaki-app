@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   ingredientsContainer: {
-    width: '100%'
+    width: '100%',
   },
   ingredientsMargin: {
     marginLeft: 20,
