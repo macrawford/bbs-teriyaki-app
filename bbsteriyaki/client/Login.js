@@ -8,17 +8,11 @@ import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
 
-// STYLING TO-DOs:
-  // MAKE BUTTONS LOOK BETTER - RED RECTANGLES WITH WHITE SUBMIT
-
 function Login({ navigation }) {
   const [state, setState] = React.useState({
     email: "",
     password: ""
   });
-  // useEffect(() => {
-  //   console.log('Password: ', typeof password)
-  // });
 
   function handleChangeEmail(e) {
     const value = e;
@@ -28,7 +22,7 @@ function Login({ navigation }) {
     })
   }
   // THERE IS NO E.TARGET.VALUE in REACT NATIVE
-  // ALSO YOU HAVE TO DO HANDLECHANGETEXT IN REACT NATIVE IT APPEARS
+  // ALSO YOU HAVE TO DO HANDLECHANGETEXT IN REACT NATIVE
   function handleChangePassword(e) {
     const value = e;
     setState({

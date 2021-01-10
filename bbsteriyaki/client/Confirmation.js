@@ -34,9 +34,10 @@ function Confirmation ({ navigation, route }) {
         <Image style={styles.image} source={require('../BB_S.png')}></Image>
       </View>
       <View style={styles.subContainer}>
-        {params.ave ? <Text style={styles.font}>{`${firstName}, thank you for your order. It will be ready in 15 minutes at 4221 University Way NE Seattle, WA 98112.`}</Text> : null}
-        {params.slu ? <Text style={styles.font}>{`${firstName}, thank you for your order. It will be ready in 15 minutes at 210 Westlake Ave N Seattle, WA 98109.`}</Text> : null}
-        {params.downtown ? <Text style={styles.font}>{`${firstName}, thank you for your order. It will be ready in 15 minutes at 1111 3rd Ave Seattle, WA 98101.`}</Text> : null}
+        {params.ave ? <Text style={styles.font}>{`Thank you for your order, ${firstName}. It will be ready in 15 minutes at 4221 University Way NE Seattle, WA 98112.`}</Text> : null}
+        {params.slu ? <Text style={styles.font}>{`Thank you for your order, ${firstName}. It will be ready in 15 minutes at 210 Westlake Ave N Seattle, WA 98109.`}</Text> : null}
+        {params.downtown ? <Text style={styles.font}>{`Thank you for your order, ${firstName}. It will be ready in 15 minutes at 1111 3rd Ave Seattle, WA 98101.`}</Text> : null}
+        <View style={styles.border}></View>
         <View style={styles.rewards}>
           {rewardsCount < 9 ? <Text style={styles.font}>{`You earned ${rewardsAdded} reward points today for a total of ${rewardsCount} reward points. Keep earning and when you hit 9 points you'll be eligible for a free meal!`}</Text> : <Text style={styles.font}>{`You earned ${rewardsAdded} reward points today for a total of ${rewardsCount} reward points. Redeem those points next time for a free meal!`}</Text>}
         </View>
@@ -62,6 +63,15 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+  },
+  border: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'silver',
+    paddingTop: 25,
+    marginLeft: 50,
+    marginRight: 50,
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   logoContainer: {
     flex: 1,

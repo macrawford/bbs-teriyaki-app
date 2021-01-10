@@ -9,10 +9,6 @@ import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
 
-// OUTANDING ERRORS
-  // YOU ARE ALLOWED TO SELECT NO SAUCE AND OTHER SAUCES - YOU SHOULD NOT BE ABLE TO DO THAT
-  // NEED A FEATURE TO SKIP THIS PAGE AND GO STRAIGHT TO CART - FAIRLY EASY TO SET UP
-
 function Order({ navigation, route }) {
   var database = Firebase.database();
   var id;
@@ -21,8 +17,6 @@ function Order({ navigation, route }) {
   } else {
     id = 0;
   }
-  console.log('id: ', id)
-  // ^ This is used for the useEffect function
 
   const [whiteRice, setWhiteRice] = React.useState(false);
   const [brownRice, setBrownRice] = React.useState(false);
@@ -57,7 +51,6 @@ function Order({ navigation, route }) {
   const [specialInstructions, setSpecialInstructions] = React.useState('');
 
   var order = {
-    // Can also pass through as a straight object - not sure what will be easier to parse
     whiteRice: whiteRice,
     brownRice: brownRice,
     yakisoba: yakisoba,
@@ -155,16 +148,9 @@ function Order({ navigation, route }) {
 
   function handleChange(e) {
     const value = e;
-    console.log('value: ', value)
     setSpecialInstructions(value)
-    console.log('specialInstructions: ', specialInstructions)
   }
   function handleSubmit() {
-    // WILL NEED A CONDITIONAL ABOUT IF ROUTE.PARAMS.ID EXISTS => GO TO THAT ROUTE AND UPDATE, NOT PUSH
-    // console.log('base counter on submit: ', baseCounter)
-    // console.log('extra Counter on submit: ', extraCounter)
-    // console.log('sauce counter on submit: ', sauceCounter)
-    // console.log('protein counter on submit: ', proteinCounter)
     if (route.params && route.params.id !== 'new') {
       Firebase.database().ref('users/' + userId + '/cart/' + route.params.id).update({
         order
@@ -177,43 +163,13 @@ function Order({ navigation, route }) {
     navigation.navigate('Cart');
     // reinitializeState();
   }
-  function reinitializeState() {
-  //   setWhiteRice(false)
-  //   setBrownRice(false)
-  //   setYakisoba(false)
-  //   setCabbageSalad(false)
-  //   setVeggieStirFry(false)
-  //   setBroccoli(false)
-  //   setMixedGreenSalad(false)
-  //   setSpicyChicken(false)
-  //   setRegChicken(false)
-  //   setShreddedPork(false)
-  //   setBeefBrisket(false)
-  //   setTofu(false)
-  //   setRegSauce(false)
-  //   setSpicySauce(false)
-  //   setNoSauce(false)
-  //   setSideRegSauce(false)
-  //   setSideSpicySauce(false)
-  //   setSaladDressing(false)
-  //   setExtraChicken(false)
-  //   setExtraPork(false)
-  //   setExtraTofu(false)
-  //   setExtraBeef(false)
-  //   setSpecialInstructions(null)
-    // setBaseCounter(0)
-    // setProteinCounter(0)
-    // setSauceCounter(0)
-    // setExtraCounter(0)
-  }
+
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        {/* Need to style it differently than container? */}
         <View style={styles.choices} title="Base">
           <View style={styles.headerDiv}>
             <Text style={styles.header}>Build Your Own: </Text>
             <Text style={styles.headerPrice}>$9.00</Text>
-            {/* <MaterialCommunityIcons style={styles.forkKnife} name="silverware-fork-knife" size={40} color="black" /> */}
           </View>
           <View style={styles.selectionHeader}>
             <View style={styles.instructions}>
@@ -476,10 +432,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginLeft: 20,
     color: 'black',
-    // textDecorationLine: 'underline',
-    // textShadowOffset: { height: 1, width: 1 },
-    // textShadowRadius: 1,
-    // textShadowColor: 'black',
   },
   headerPrice: {
     fontFamily: 'Helvetica',
@@ -488,10 +440,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 30,
     color: 'black',
-    // textDecorationLine: 'underline',
-    // textShadowOffset: { height: 1, width: 1 },
-    // textShadowRadius: 1,
-    // textShadowColor: 'black',
   },
   forkKnife: {
     marginTop: 30,

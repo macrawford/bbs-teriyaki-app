@@ -8,9 +8,6 @@ import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
 
-// STYLING TO-DOs:
-  // MAKE BUTTONS LOOK BETTER - RED RECTANGLES WITH WHITE SUBMIT
-
 function Signup({ navigation }) {
   var database = Firebase.database();
   const [state, setState] = React.useState({
@@ -19,13 +16,7 @@ function Signup({ navigation }) {
     email: "",
     password: ""
   });
-  // useEffect(() => {
-  //   console.log('Email: ', state.email)
-  //   console.log('firstName: ', state.firstName)
-  //   console.log('lastName: ', state.lastName)
-  // });
-  // const [modalVisible, setModalVisible] = useState(false)
-  // LEFT OFF HERE ADDING MODAL- FOLLOW REACT DOCS SHOULDN'T BE TOO HARD- BOOKMARKED UNDER MODAL - REACT-NATIVE
+
   function handleChangeFirstName(e) {
     const value = e;
     setState({
@@ -47,8 +38,6 @@ function Signup({ navigation }) {
       email: value
     });
   };
-  // THERE IS NO E.TARGET.VALUE in REACT NATIVE
-  // ALSO YOU HAVE TO DO HANDLECHANGETEXT IN REACT NATIVE IT APPEARS
   function handleChangePassword(e) {
     const value = e;
     setState({
@@ -60,24 +49,20 @@ function Signup({ navigation }) {
   function handleSignup() {
     Firebase.auth()
       .createUserWithEmailAndPassword(state.email, state.password)
-      // MOST IMPT MIGHT HAVE BEEN CALLING IT STATE.EMAIL
       .then((user) => {
         console.log('user: ', user);
         Firebase.database().ref('users/' + user.user.uid).set({
           firstName: state.firstName,
           lastName: state.lastName,
           email: user.user.email,
-          // cart: {},
           // pastOrders: {},
           rewardCount: 0
         })
-        // It appears cart and pastOrders won't actually be added since they are undefined at this point
         navigation.navigate('Order')
       })
       .catch(error => {
         console.log('error: ', error)
         alert(error)
-        // ^Can probably do something cleaner than this- the alert isn't very specific at this point
       })
   }
   return (

@@ -9,38 +9,16 @@ import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
 
-// OUTANDING ERRORS
-  // OKAY, SO I FIXED THE COUNTERS TO BE PASSED WITH STATE, BUT I'M STILL HAVING TROUBLE SOMETIMES WITH SPECIAL INSTRUCTIONS BEING PASSED THROUGH CORRECTLY
-  // ALSO, WHEN YOU DELETE ALL ORDERS IN THE CART, AND SELECT 'ADD NEW ORDER', IT THROWS AN ERROR
-  // ADD IN WHAT IS GF, VEGAN, ETC
-
-
 function Cart({ route, navigation}) {
-  // const { order } = route.params;
-  // const orders = [];
-  // orders.push(JSON.stringify(order))
-  // console.log('ORDER: ', orders)
   const [cartItems, setCart] = React.useState([{}]);
   const [gyozaCount, setGyoza] = React.useState(0);
   const [fountainDrink, setDrink] = React.useState(0);
   var database = Firebase.database();
   var userId = Firebase.auth().currentUser.uid;
   var cart = Firebase.database().ref('users/' + userId + '/cart');
-  // var addOns = 0;
   var subtotal = 0;
   var byo = 0;
-  // useEffect(() => {
-  //   cart.once('value').then((snapshot) => {
-  //     var cartData = snapshot.val();
-  //     var arrayForm = [];
-  //     arrayForm.push(cartData)
-  //     console.log('arrayForm: ', arrayForm);
-  //     console.log('cartdata[beefBrisket]: ', cartData['beefBrisket'])
-  //     setState({
-  //       cartItems: arrayForm
-  //     })
-  //   })
-  // }, []);
+
   useEffect(() => {
     cart.on('value', (snapshot) => {
       var cartData = snapshot.val();
@@ -48,37 +26,21 @@ function Cart({ route, navigation}) {
       arrayForm.push(cartData)
       setCart(arrayForm)
     });
-    // if (Firebase.database().ref('users/' + userId + '/gyoza')) {
-    //   console.log('Exists!')
-    // }
-    // if (Firebase.database().ref('users/' + userId + '/fountainDrinks')) {
-    //   console.log('Exists!')
-    // }
+
     Firebase.database().ref('users/' + userId + '/gyoza').on('value', (snapshot) => {
       var gyozaData = snapshot.val();
       if (gyozaData !== null) {
-        // console.log('gyozaData: ', gyozaData['gyozaCount'])
         setGyoza(gyozaData['gyozaCount'])
       }
     });
     Firebase.database().ref('users/' + userId + '/fountainDrinks').on('value', (snapshot) => {
       var fountainData = snapshot.val();
       if (fountainData !== null) {
-        // console.log('fountainData: ', fountainData['fountainDrink'])
         setDrink(fountainData['fountainDrink'])
       }
     });
   }, []);
-  // useEffect(() => {
-  //   Firebase.database().ref('users/' + userId + '/gyoza').update({
-  //     gyozaCount
-  //   })
-  // }, [gyozaCount])
-  // useEffect(() => {
-  //   Firebase.database().ref('users/' + userId + '/fountainDrinks').update({
-  //     fountainDrink
-  //   })
-  // }, [fountainDrink])
+
   function handleDelete(item) {
     Firebase.database().ref('users/' + userId + '/cart/' + item).remove();
   }
@@ -119,17 +81,14 @@ function Cart({ route, navigation}) {
     extraPork: 'Extra Pork (+$3.00)',
     extraTofu: 'Extra Tofu (+$3.00)',
     extraBeef: 'Extra Beef (+$3.00)',
-    // specialInstructions: specialInstructions
   }
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.cartHeader}>
-        {/* <Text style={styles.cartText}>Your Cart</Text> */}
         <Ionicons name="cart-outline" size={48} color="black" />
       </View>
       <View style={styles.input}>
         {cartItems.map((order, orderIndex) => {
-          // console.log('orderIndex: ', orderIndex)
           return (
             <View style={styles.orderContainer} key={orderIndex}>
             {Object.keys(order).map((item, itemIndex) => {

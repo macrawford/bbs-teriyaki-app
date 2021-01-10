@@ -3,16 +3,12 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, TextInput, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, Button, TouchableOpacity } from 'react-native';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 
 import Firebase from '../firebase.js';
 import 'firebase/auth';
 import 'firebase/database';
-
-// OUTSTANDING ISSUES
-  // ADD A DATE/TIME PICKER TO CHOOSE A TIME FOR PICKUP
-  // CART NOT BEING EMPTIED UPON ORDER SUBMISSION
 
 function Checkout({ navigation, route }) {
   var database = Firebase.database();
@@ -36,7 +32,7 @@ function Checkout({ navigation, route }) {
   var subtotal = ((meals + (gyoza * 2) + (drinks * 2)).toFixed(2)) - (rewardsUsed * 9);
   var tax = subtotal *  0.101;
   var rounded = tax.toFixed(2);
-  var total = Number(subtotal) + Number(rounded);
+  var total = (Number(subtotal) + Number(rounded)).toFixed(2);
 
   function handlePress(location, stateFunction) {
     stateFunction(!location)
@@ -50,8 +46,6 @@ function Checkout({ navigation, route }) {
     })
   }, [])
   function useRewards() {
-    // OKAY SO USE REWARDS IS KIND OF WORKING BUT THE SUBTOTAL ON THE SCREEN DOESN'T ACTUALLY GET UPDATED
-    // THIS IS BECAUSE THE SUBTOTAL VARIABLE IS REFRESHED EVERYTIME A SETSTATE IS RUN
     subtotal -= 9;
     console.log('subtotal: ', subtotal)
     setRewardsUsed(rewardsUsed + 1)
@@ -60,7 +54,6 @@ function Checkout({ navigation, route }) {
   function handleChangeCc(e) {
     const value = e;
     setCc(value);
-    // stateFunction(value)
   };
   function handleChangeExp(e) {
     const value = e;
@@ -70,31 +63,21 @@ function Checkout({ navigation, route }) {
   function handleChangeCode(e) {
     const value = e;
     setCode(value);
-    // stateFunction(value)
   };
   function handleChangeBillAdd(e) {
     const value = e;
     setBillingAdd(value);
-    // stateFunction(value)
   };
   function handleSubmit() {
     Firebase.database().ref('users/' + userId).update({
       rewardCount: rewardCount + byo
     })
     // Firebase.database().ref('users/' + userId + '/cart/').remove();
-    // ^Removing because it screws up the cart screen, I think because it is listening for changes to cart and when the cart gets removed it screws up the whole screen and throws error
     Firebase.database().ref('users/' + userId + '/fountainDrinks/').remove();
     Firebase.database().ref('users/' + userId + '/gyoza/').remove();
-
-    // firebase.database()
-    // .ref('users')
-    // .child(userId)
-    // .child('rewardCount')
-    // .set(firebase.database.ServerValue.increment(1))
     navigation.navigate('Confirmation', {ave: ave, slu: slu, downtown: downtown, rewardCount: rewardCount, byo: byo})
   }
   return (
-    // LOOK FOR REWARDS!!!
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.ccHeader}>
         <AntDesign name="creditcard" size={48} color="black" />
@@ -117,9 +100,6 @@ function Checkout({ navigation, route }) {
                 {downtown || ave ? <Text style={styles.grayedOut}>210 Westlake Ave N Seattle, WA 98109</Text> : <Text style={styles.nonGray} onPress={() => handlePress(slu, setSlu)}>210 Westlake Ave N Seattle, WA 98109</Text>}
               </View>
             </View>
-            <View style={styles.rewardsDiv}>
-              {rewardCount >= 10 ? <Text style={styles.rewards} onPress={useRewards}>Use Rewards</Text> : null}
-            </View>
             <View style={styles.totalsDiv}>
               <View style={styles.indTotalDiv}>
                 <Text style={styles.totalsFont}>Subtotal: </Text>
@@ -134,6 +114,11 @@ function Checkout({ navigation, route }) {
                 <Text style={styles.totalsNum}>{`$${total}`}</Text>
               </View>
             </View>
+            <View style={styles.rewardsDiv}>
+
+                {rewardCount >= 10 ? <TouchableOpacity style={styles.rewardsOpacity}><Text style={styles.rewards} onPress={useRewards}>Use Rewards!</Text></TouchableOpacity> : null}
+
+            </View>
           </View>
           <View>
             <TextInput type="text" name="creditCardNum" style={styles.inputBox} placeholder="Credit Card Number" onChangeText={(e) => handleChangeCc(e)}></TextInput>
@@ -144,7 +129,7 @@ function Checkout({ navigation, route }) {
         </View>
         <View>
           <Button style={styles.button} title="Return to Cart" accessibilityLabel="Clicking this button will return to the cart screen" color="red" onPress={() => navigation.navigate('Cart')}/>
-          {(ave || downtown || slu) && (cc !== '') && (exp !== '') && (secCode !== '') && (billingAddress !== '') ? <Button style={styles.button} title="Submit Order" accessibilityLabel="Clicking this button will submit the order" color="red" onPress={handleSubmit}/> : <Button style={styles.button} title="Submit Order" accessibilityLabel="Add a location before moving on!" color="gray"/>}
+          {(ave || downtown || slu) && (cc !== '') && (exp !== '') && (secCode !== '') && (billingAddress !== '') ? <Button style={styles.button} title="Submit Order" accessibilityLabel="Clicking this button will submit the order" color="red" onPress={handleSubmit}/> : <Button style={styles.button} title="Submit Order" accessibilityLabel="Add a location before moving on!" color="gray" onPress={() => alert(`Make sure you have added all payment fields and chosen a location`)}/>}
         </View>
         <StatusBar style="auto" />
       </View>
@@ -176,7 +161,7 @@ const styles = StyleSheet.create({
   },
   indLocationLast: {
     paddingTop: 15,
-    paddingBottom: 15,
+    paddingBottom: 30,
   },
   locationAndTotal: {
     paddingTop: 25
@@ -186,7 +171,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15
   },
   totalsDiv: {
-    paddingBottom: 20
+    paddingBottom: 10
   },
   indTotalDiv: {
     flexDirection: 'row',
@@ -243,15 +228,19 @@ const styles = StyleSheet.create({
     height: 80
   },
   rewards: {
-    fontSize: 24,
-    color: 'green',
+    fontSize: 20,
+    color: 'white',
     fontWeight: '500',
-    fontFamily: 'Helvetica'
+    fontFamily: 'Helvetica',
+  },
+  rewardsOpacity: {
+    backgroundColor: 'red',
+    padding: 10,
+    width: '46%'
   },
   rewardsDiv: {
-    paddingBottom: 15,
-    paddingTop: 5,
-    alignItems: 'center'
+    paddingBottom: 30,
+    // alignItems: 'center'
   }
 });
 
