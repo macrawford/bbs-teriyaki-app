@@ -4,6 +4,6 @@ In this project, I built an app for a local Seattle restaurant chain, BB's Teriy
 
 To build this app, I used a variety of tools. Primarily I used React Native, with Expo providing some of the functionality. I handled all data, plus user authentication, using Firebase.
 
-## Order Screen
+## Order + Cart Screens
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/order.gif "order")
-![Alt Text] ()
+![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/cart1.gif "cart 1")
