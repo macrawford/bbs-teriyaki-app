@@ -1,3 +1,3 @@
 # bbs-teriyaki-app
 
-![Alt Text](Animated GIF-downsized_large.gif)
+![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/Animated GIF-downsized_large.gif)
