@@ -7,3 +7,4 @@ To build this app, I used a variety of tools. Primarily I used React Native, wit
 ## Order + Cart Screens
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/order.gif "order")
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/cart1.gif "cart 1")
+![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/cart2.gif "cart 2")
