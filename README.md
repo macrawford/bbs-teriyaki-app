@@ -8,3 +8,8 @@ To build this app, I used a variety of tools. Primarily I used React Native, wit
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/order.gif "order")
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/cart1.gif "cart 1")
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/cart2.gif "cart 2")
+
+## Checkout + Confirmation Screens
+![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/choosingLocation.gif "choosing location")
+![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/rewards.gif "rewards")
+![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/confirmation.gif "confirmation")
