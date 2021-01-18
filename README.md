@@ -6,6 +6,9 @@ In this project, I built an app for a local Seattle restaurant chain, BB's Teriy
 
 To build this app, I used a variety of tools. Primarily I used React Native, with Expo providing some of the functionality. I handled all data, plus user authentication, using Google Firebase.
 
+
+:rooster: **_Want to skip to the fun part? Keep scrolling down to see GIFs of the app in action_** :rooster:
+
 ## Getting Started
 
 Due to the complex set-up, I recommend that those interested in exploring this app check out the screen-grab GIFs below and explore the codebase on GitHub. If you are interested in getting the app up and running, you will need to install Expo and create a Google Firebase database. The Firebase setup was particularly time-consuming, so I'll reserve that only for the brave!
