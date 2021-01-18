@@ -20,13 +20,17 @@ In addition to installing Expo and setting up Google Firebase, you'll want to do
 
 Starting with 'npm start' will take you to an Expo webpage where you can select 'Run on iOS simulator', 'Run on Android simulator' or choose from other options. This app was designed with iOS in mind.
 
-## Order Screen
+## Usage
+
+For those who just want to see what this app is all about, I have included GIFs with relevant information.
+
+### Order Screen
 
 This screen allows you to select items. It limits you to the max number and will not let you advance without selecting the required items.
 
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/order.gif "order")
 
-## Cart Screens
+### Cart Screens
 
 This screen allows you to delete and edit orders, as well as add Gyoza and fountain drinks.
 
@@ -40,7 +44,7 @@ Choosing a location (left) and using rewards (right).
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/choosingLocation.gif "choosing location")
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/rewards.gif "rewards")
 
-## Confirmation
+### Confirmation
 
 Confirmation that your order has been submitted to the correct location.
 
