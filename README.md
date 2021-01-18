@@ -1,4 +1,4 @@
-<img src="https://github.com/macrawford/bbs-teriyaki-app/blob/main/bbsteriyaki/BB_S.png" width="30%" height="30%">
+<img src="https://github.com/macrawford/bbs-teriyaki-app/blob/main/bbsteriyaki/BB_S.png" width="20%" height="20%">
 
 # BB's Teriyaki (Mobile App)
 
