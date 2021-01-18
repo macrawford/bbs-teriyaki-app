@@ -6,6 +6,10 @@ In this project, I built an app for a local Seattle restaurant chain, BB's Teriy
 
 To build this app, I used a variety of tools. Primarily I used React Native, with Expo providing some of the functionality. I handled all data, plus user authentication, using Firebase.
 
+## Getting Started
+
+### Installation
+
 ## Order Screen
 
 This screen allows you to select items. It limits you to the max number and will not let you advance without selecting the required items.
