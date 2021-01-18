@@ -8,7 +8,7 @@ To build this app, I used a variety of tools. Primarily I used React Native, wit
 
 ## Getting Started
 
-Due to the complex set-up, I recommend that those interested in exploring this app check out the screen-grab GIFs below and explore the codebase on GitHub. If you are interested in getting the app up and running, you will need to install Expo and create a Google Firebase database. The Firebase setup was time-consuming, so I'll reserve that only for the brave!
+Due to the complex set-up, I recommend that those interested in exploring this app check out the screen-grab GIFs below and explore the codebase on GitHub. If you are interested in getting the app up and running, you will need to install Expo and create a Google Firebase database. The Firebase setup was particularly time-consuming, so I'll reserve that only for the brave!
 
 ### Instructions
 
@@ -18,7 +18,7 @@ In addition to installing Expo and setting up Google Firebase, you'll want to do
 2. Run 'npm install'.
 3. Start the app with 'npm start'.
 
-Starting with 'npm start' will take you to an Expo webpage where you can select 'Run on iOS simulator', 'Run on Android simulator' or choose from other options. This app was designed with iOS in mind.
+Starting with 'npm start' will take you to an Expo webpage where you can select 'Run on iOS simulator', 'Run on Android simulator' or choose from other options. You will need XTools installed to run on iOS simulator. This app was designed with iOS in mind.
 
 ## Usage
 
