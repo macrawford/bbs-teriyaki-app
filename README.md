@@ -4,11 +4,21 @@
 
 In this project, I built an app for a local Seattle restaurant chain, BB's Teriyaki. ([Check them out here](https://bbsteriyaki.com/). The food is delicious!!) The purpose of this app is to allow customers to order for pickup, and build rewards on their profiles. BB's currently uses Toast but the owner would like to move towards their own app as they expand further.
 
-To build this app, I used a variety of tools. Primarily I used React Native, with Expo providing some of the functionality. I handled all data, plus user authentication, using Firebase.
+To build this app, I used a variety of tools. Primarily I used React Native, with Expo providing some of the functionality. I handled all data, plus user authentication, using Google Firebase.
 
 ## Getting Started
 
-### Installation
+Due to the complex set-up, I recommend that those interested in exploring this app check out the screen-grab GIFs below and explore the codebase on GitHub. If you are interested in getting the app up and running, you will need to install Expo and create a Google Firebase database. The Firebase setup was time-consuming, so I'll reserve that only for the brave!
+
+### Instructions
+
+In addition to installing Expo and setting up Google Firebase, you'll want to do the following:
+
+1. Fork and clone the repo.
+2. Run 'npm install'.
+3. Start the app with 'npm start'.
+
+Starting with 'npm start' will take you to an Expo webpage where you can select 'Run on iOS simulator', 'Run on Android simulator' or choose from other options. This app was designed with iOS in mind.
 
 ## Order Screen
 
