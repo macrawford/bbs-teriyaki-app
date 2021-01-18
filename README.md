@@ -31,3 +31,7 @@ Choosing a location (left) and using rewards (right).
 Confirmation that your order has been submitted to the correct location.
 
 ![Alt Text](https://github.com/macrawford/bbs-teriyaki-app/blob/main/confirmation.gif "confirmation")
+
+## Contributing
+
+I may be looking for contributers as this app moves towards deployment in late 2021. If you are interested in contributing, please send me a direct message on LinkedIn or send me an email!
