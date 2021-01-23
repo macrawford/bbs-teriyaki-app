@@ -62,3 +62,9 @@ I may be looking for contributers as this app moves towards deployment in late 2
 - [React-Navigation](https://github.com/react-navigation/react-navigation)
 - [Expo Vector Icons](https://docs.expo.io/guides/icons/)
 - [BB's Teriyaki](https://bbsteriyaki.com/)
+
+## Contact:
+
+- [Email](matthew.crawford92@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/-matthewcrawford-/)
+- [Github](https://github.com/macrawford)
