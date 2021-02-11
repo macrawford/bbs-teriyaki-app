@@ -21,7 +21,7 @@ In addition to installing Expo and setting up Google Firebase, you'll want to do
 2. Run 'npm install'.
 3. Start the app with 'npm start'.
 
-Starting with 'npm start' will take you to an Expo webpage where you can select 'Run on iOS simulator', 'Run on Android simulator' or choose from other options. You will need XTools installed to run on iOS simulator. This app was designed with iOS in mind.
+Starting with 'npm start' will take you to an Expo webpage where you can select 'Run on iOS simulator', 'Run on Android simulator' or choose from other options. You will need XTools installed to run on iOS simulator.
 
 ## Usage
 
